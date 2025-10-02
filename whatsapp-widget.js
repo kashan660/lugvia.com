@@ -30,7 +30,9 @@ class WhatsAppWidget {
         
         // Fallback configuration if not set via admin panel
         if (!this.whatsappNumber || !this.isEnabled) {
-            this.whatsappNumber = '+1234567890'; // Replace with your actual WhatsApp number
+            // TODO: Replace with your actual WhatsApp Business number (include country code)
+            // Example: '+1234567890' for US number or '+447123456789' for UK number
+            this.whatsappNumber = '+15551234567'; // CHANGE THIS TO YOUR WHATSAPP NUMBER
             this.isEnabled = true;
             this.defaultMessage = 'Hello! I\'m interested in your moving services. Can you help me?';
         }
