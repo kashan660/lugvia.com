@@ -8,6 +8,26 @@
   ],
   "routes": [
     {
+      "src": "/styles.css",
+      "dest": "/styles.css"
+    },
+    {
+      "src": "/script.js",
+      "dest": "/script.js"
+    },
+    {
+      "src": "/admin-styles.css",
+      "dest": "/admin-styles.css"
+    },
+    {
+      "src": "/admin-panel.js",
+      "dest": "/admin-panel.js"
+    },
+    {
+      "src": "/.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$",
+      "dest": "/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/server.js"
     }
