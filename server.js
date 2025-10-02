@@ -69,11 +69,13 @@ const authService = new AuthService();
 // Create authentication middleware
 const authenticateToken = authService.requireAuth();
 
+// Static files middleware - must be first to avoid interference
+app.use(express.static('.'));
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static('.'));
 
 // Cloudflare-compatible security headers
 app.use((req, res, next) => {
