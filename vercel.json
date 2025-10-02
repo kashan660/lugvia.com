@@ -1,15 +1,8 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://lugvia.com/api/$1"
+      "destination": "https://us-central1-lugvia-61bf1.cloudfunctions.net/api/$1"
     }
   ],
   "env": {
