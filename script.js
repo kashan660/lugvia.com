@@ -1123,4 +1123,3 @@ window.FIREBASE_CONFIG = {
     return originalFetch(input, newInit);
   };
 })();
-}
