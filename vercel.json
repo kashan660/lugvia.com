@@ -8,8 +8,68 @@
   ],
   "routes": [
     {
+      "src": "/styles.css",
+      "dest": "/styles.css"
+    },
+    {
+      "src": "/script.js",
+      "dest": "/script.js"
+    },
+    {
+      "src": "/admin-styles.css",
+      "dest": "/admin-styles.css"
+    },
+    {
+      "src": "/admin-panel.js",
+      "dest": "/admin-panel.js"
+    },
+    {
+      "src": "/admin.js",
+      "dest": "/admin.js"
+    },
+    {
+      "src": "/ai-chat-styles.css",
+      "dest": "/ai-chat-styles.css"
+    },
+    {
+      "src": "/ai-chat.js",
+      "dest": "/ai-chat.js"
+    },
+    {
+      "src": "/blog-styles.css",
+      "dest": "/blog-styles.css"
+    },
+    {
+      "src": "/support-styles.css",
+      "dest": "/support-styles.css"
+    },
+    {
+      "src": "/support.js",
+      "dest": "/support.js"
+    },
+    {
+      "src": "/analytics.js",
+      "dest": "/analytics.js"
+    },
+    {
+      "src": "/whatsapp-widget.js",
+      "dest": "/whatsapp-widget.js"
+    },
+    {
+      "src": "/service-animations.js",
+      "dest": "/service-animations.js"
+    },
+    {
+      "src": "/(.*\\.(png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|eot))$",
+      "dest": "/$1"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/server.js"
+    },
+    {
       "src": "/(.*)",
-      "dest": "server.js"
+      "dest": "/server.js"
     }
   ],
   "env": {
