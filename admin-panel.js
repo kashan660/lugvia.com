@@ -228,7 +228,7 @@ class AdminPanel {
 }
 
 // Navigation functions
-function showSection(sectionName) {
+function showSection(sectionName, clickedElement) {
     // Hide all sections
     document.querySelectorAll('.admin-section').forEach(section => {
         section.classList.remove('active');
@@ -240,10 +240,21 @@ function showSection(sectionName) {
     });
     
     // Show selected section
-    document.getElementById(sectionName).classList.add('active');
+    const targetSection = document.getElementById(sectionName);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
     
     // Add active class to clicked tab
-    event.target.classList.add('active');
+    if (clickedElement) {
+        clickedElement.classList.add('active');
+    } else {
+        // Fallback: find the tab by section name
+        const tab = document.querySelector(`[onclick*="${sectionName}"]`);
+        if (tab) {
+            tab.classList.add('active');
+        }
+    }
     
     // Reload dashboard data when dashboard is shown
     if (sectionName === 'dashboard' && window.adminPanel) {
