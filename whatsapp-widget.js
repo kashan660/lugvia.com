@@ -99,7 +99,7 @@ class WhatsAppWidget {
                 position: fixed;
                 bottom: 20px;
                 right: 20px;
-                z-index: 9999;
+                z-index: 99999;
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             }
 
@@ -120,6 +120,10 @@ class WhatsAppWidget {
                 font-weight: 500;
                 max-width: 200px;
                 animation: pulse 2s infinite;
+                /* Temporary visibility test */
+                border: 3px solid red !important;
+                min-width: 150px;
+                min-height: 50px;
             }
 
             .whatsapp-button:hover {
