@@ -22,34 +22,47 @@ class WhatsAppWidget {
     }
 
     async loadSettings() {
-        console.log('WhatsApp Widget: Loading settings from API...');
+        console.log('WhatsApp Widget: Loading settings...');
+        
+        // Use fallback configuration directly for now (API requires authentication)
+        console.log('WhatsApp Widget: Using fallback configuration');
+        // TODO: Replace with your actual WhatsApp Business number (include country code)
+        // Example: '+1234567890' for US number or '+447123456789' for UK number
+        this.whatsappNumber = '+15551234567'; // CHANGE THIS TO YOUR WHATSAPP NUMBER
+        this.isEnabled = true;
+        this.defaultMessage = 'Hello! I\'m interested in your moving services. Can you help me?';
+        console.log('WhatsApp Widget: Fallback applied - Number:', this.whatsappNumber, 'Enabled:', this.isEnabled);
+        
+        // Optionally try to load from API (but don't depend on it)
         try {
             const response = await fetch('/api/admin/whatsapp-settings');
             if (response.ok) {
                 const data = await response.json();
                 console.log('WhatsApp Widget: API response:', data);
-                this.whatsappNumber = data.whatsapp_number || '';
-                this.isEnabled = data.is_enabled || false;
-                this.defaultMessage = data.default_message || this.defaultMessage;
-                console.log('WhatsApp Widget: Settings from API - Number:', this.whatsappNumber, 'Enabled:', this.isEnabled);
+                
+                // Only override if API has valid settings
+                if (data.whatsapp_number && data.is_enabled) {
+                    this.whatsappNumber = data.whatsapp_number;
+                    this.isEnabled = data.is_enabled;
+                    this.defaultMessage = data.default_message || this.defaultMessage;
+                    console.log('WhatsApp Widget: Settings updated from API - Number:', this.whatsappNumber, 'Enabled:', this.isEnabled);
+                }
             }
         } catch (error) {
-            console.log('WhatsApp Widget: API error, using fallback:', error);
-        }
-        
-        // Fallback configuration if not set via admin panel
-        if (!this.whatsappNumber || !this.isEnabled) {
-            console.log('WhatsApp Widget: Using fallback configuration');
-            // TODO: Replace with your actual WhatsApp Business number (include country code)
-            // Example: '+1234567890' for US number or '+447123456789' for UK number
-            this.whatsappNumber = '+15551234567'; // CHANGE THIS TO YOUR WHATSAPP NUMBER
-            this.isEnabled = true;
-            this.defaultMessage = 'Hello! I\'m interested in your moving services. Can you help me?';
-            console.log('WhatsApp Widget: Fallback applied - Number:', this.whatsappNumber, 'Enabled:', this.isEnabled);
+            console.log('WhatsApp Widget: API not available, using fallback:', error.message);
         }
     }
 
     createWidget() {
+        console.log('WhatsApp Widget: Creating widget DOM element...');
+        
+        // Remove existing widget if it exists
+        const existingWidget = document.getElementById('whatsapp-widget');
+        if (existingWidget) {
+            console.log('WhatsApp Widget: Removing existing widget');
+            existingWidget.remove();
+        }
+        
         // Create widget container
         const widget = document.createElement('div');
         widget.id = 'whatsapp-widget';
@@ -72,6 +85,8 @@ class WhatsAppWidget {
         
         // Append to body
         document.body.appendChild(widget);
+        console.log('WhatsApp Widget: Widget added to DOM. Element:', widget);
+        console.log('WhatsApp Widget: Widget position in DOM:', document.getElementById('whatsapp-widget'));
     }
 
     addStyles() {
