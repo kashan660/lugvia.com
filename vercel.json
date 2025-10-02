@@ -24,7 +24,7 @@
       "dest": "/admin-panel.js"
     },
     {
-      "src": "/.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$",
+      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))$",
       "dest": "/$1"
     },
     {
