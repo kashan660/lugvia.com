@@ -27,6 +27,13 @@ class WhatsAppWidget {
         } catch (error) {
             console.log('WhatsApp settings not configured yet');
         }
+        
+        // Fallback configuration if not set via admin panel
+        if (!this.whatsappNumber || !this.isEnabled) {
+            this.whatsappNumber = '+1234567890'; // Replace with your actual WhatsApp number
+            this.isEnabled = true;
+            this.defaultMessage = 'Hello! I\'m interested in your moving services. Can you help me?';
+        }
     }
 
     createWidget() {
