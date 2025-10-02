@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lugvia Admin Panel</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <div class="admin-logo">
+                <img src="logo.svg" alt="Lugvia" class="logo-svg">
+                <span class="admin-title">Admin Panel</span>
+            </div>
+            <div class="admin-user">
+                    <span class="admin-welcome">Welcome, Admin</span>
+                    <button id="logout-btn" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+        </div>
+    </header>
+
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar">
+        <nav class="admin-nav">
+            <ul>
+                <li><a href="#dashboard" class="nav-link active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#blogs" class="nav-link" data-section="blogs"><i class="fas fa-blog"></i> Blog Management</a></li>
+                <li><a href="#services" class="nav-link" data-section="services"><i class="fas fa-truck"></i> Services</a></li>
+                <li><a href="#quotes" class="nav-link" data-section="quotes"><i class="fas fa-calculator"></i> Quote Requests</a></li>
+                <li><a href="#customers" class="nav-link" data-section="customers"><i class="fas fa-users"></i> Customers</a></li>
+                <li><a href="#tickets" class="nav-link" data-section="tickets"><i class="fas fa-ticket-alt"></i> Support Tickets</a></li>
+                <li><a href="#newsletter" class="nav-link" data-section="newsletter"><i class="fas fa-envelope"></i> Newsletter</a></li>
+                <li><a href="#notifications" class="nav-link" data-section="notifications"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="#pricing" class="nav-link" data-section="pricing"><i class="fas fa-dollar-sign"></i> Pricing</a></li>
+                <li><a href="#whatsapp" class="nav-link" data-section="whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+                <li><a href="#analytics" class="nav-link" data-section="analytics"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="#seo" class="nav-link" data-section="seo"><i class="fas fa-search"></i> SEO Tools</a></li>
+                <li><a href="#security" class="nav-link" data-section="security"><i class="fas fa-shield-alt"></i> Security</a></li>
+                <li><a href="#cloudflare" class="nav-link" data-section="cloudflare"><i class="fas fa-cloud"></i> Cloudflare</a></li>
+                <li><a href="#bin-search" class="nav-link" data-section="bin-search"><i class="fas fa-credit-card"></i> BIN Search</a></li>
+                <li><a href="#smtp" class="nav-link" data-section="smtp"><i class="fas fa-envelope-open"></i> SMTP Config</a></li>
+                <li><a href="#settings" class="nav-link" data-section="settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="admin-section active">
+            <div class="section-header">
+                <h1>Dashboard</h1>
+                <p>Overview of your Lugvia website</p>
+            </div>
+            
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-blog"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalBlogs">0</h3>
+                        <p>Total Blogs</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calculator"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalQuotes">0</h3>
+                        <p>Quote Requests</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalCustomers">0</h3>
+                        <p>Customers</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-truck"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalServices">0</h3>
+                        <p>Services</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalSubscribers">0</h3>
+                        <p>Newsletter Subscribers</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-bell"></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalNotifications">0</h3>
+                        <p>Notifications Sent</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-charts">
+                <div class="chart-container">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="recentActivity">
+                        <!-- Activity items will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Management Section -->
+        <section id="blogs" class="admin-section">
+            <div class="section-header">
+                <h1>Blog Management</h1>
+                <button class="btn btn-primary" onclick="showAddBlogModal()"><i class="fas fa-plus"></i> Add New Blog</button>
+            </div>
+            
+            <div class="content-table">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="blogsTableBody">
+                        <!-- Blog entries will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="admin-section">
+            <div class="section-header">
+                <h1>Services Management</h1>
+                <button class="btn btn-primary" onclick="showAddServiceModal()"><i class="fas fa-plus"></i> Add New Service</button>
+            </div>
+            
+            <div class="content-table">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Service Name</th>
+                            <th>Description</th>
+                            <th>Base Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="servicesTableBody">
+                        <!-- Service entries will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Quote Requests Section -->
+        <section id="quotes" class="admin-section">
+            <div class="section-header">
+                <h1>Quote Requests</h1>
+                <div class="section-filters">
+                    <select id="quoteStatusFilter">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="responded">Responded</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="content-table">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="quotesTableBody">
+                        <!-- Quote entries will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Customers Section -->
+        <section id="customers" class="admin-section">
+            <div class="section-header">
+                <h1>Customer Management</h1>
+                <button class="btn btn-primary" onclick="showAddCustomerModal()"><i class="fas fa-plus"></i> Add Customer</button>
+            </div>
+            
+            <div class="content-table">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customersTableBody">
+                        <!-- Customer entries will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Support Tickets Section -->
+        <section id="tickets" class="admin-section">
+            <div class="section-header">
+                <h1>Support Tickets</h1>
+                <div class="section-filters">
+                    <select id="ticketStatusFilter">
+                        <option value="all">All Status</option>
+                        <option value="open">Open</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                    <select id="ticketPriorityFilter">
+                        <option value="all">All Priority</option>
+                        <option value="critical">Critical</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                    <select id="ticketCategoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="quote">Quote & Pricing</option>
+                        <option value="booking">Booking & Scheduling</option>
+                        <option value="moving">Moving Services</option>
+                        <option value="billing">Billing & Payment</option>
+                        <option value="technical">Technical Support</option>
+                        <option value="complaint">Complaint</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="tickets-stats">
+                <div class="ticket-stat-card">
+                    <div class="stat-icon open"><i class="fas fa-ticket-alt"></i></div>
+                    <div class="stat-info">
+                        <h3 id="openTickets">0</h3>
+                        <p>Open Tickets</p>
+                    </div>
+                </div>
+                <div class="ticket-stat-card">
+                    <div class="stat-icon progress"><i class="fas fa-clock"></i></div>
+                    <div class="stat-info">
+                        <h3 id="inProgressTickets">0</h3>
+                        <p>In Progress</p>
+                    </div>
+                </div>
+                <div class="ticket-stat-card">
+                    <div class="stat-icon resolved"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="resolvedTickets">0</h3>
+                        <p>Resolved</p>
+                    </div>
+                </div>
+                <div class="ticket-stat-card">
+                    <div class="stat-icon critical"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="criticalTickets">0</h3>
+                        <p>Critical</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-table">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Customer</th>
+                            <th>Subject</th>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ticketsTableBody">
+                        <!-- Ticket entries will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="admin-section">
+            <div class="section-header">
+                <h1>Pricing Management</h1>
+                <button class="btn btn-primary" onclick="showAddPricingModal()"><i class="fas fa-plus"></i> Add Pricing Rule</button>
+            </div>
+            
+            <div class="content-table">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Service Type</th>
+                            <th>Base Rate</th>
+                            <th>Per Mile</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pricingTableBody">
+                        <!-- Pricing entries will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="admin-section">
+            <div class="section-header">
+                <h1>Website Settings</h1>
+            </div>
+            
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <h3>General Settings</h3>
+                    <form id="generalSettingsForm">
+                        <div class="form-group">
+                            <label for="siteName">Site Name</label>
+                            <input type="text" id="siteName" value="Lugvia">
+                        </div>
+                        <div class="form-group">
+                            <label for="siteTagline">Tagline</label>
+                            <input type="text" id="siteTagline" value="Moving Made Simple">
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Contact Email</label>
+                            <input type="email" id="contactEmail" value="info@lugvia.com">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+                
+                <div class="settings-card">
+                    <h3>API Settings</h3>
+                    <form id="apiSettingsForm">
+                        <div class="form-group">
+                            <label for="apiEndpoint">API Endpoint</label>
+                            <input type="url" id="apiEndpoint" value="http://localhost:4001">
+                        </div>
+                        <div class="form-group">
+                            <label for="apiKey">API Key</label>
+                            <input type="password" id="apiKey" placeholder="Enter API key">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update API Settings</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Management Section -->
+        <section id="newsletter" class="admin-section">
+            <div class="section-header">
+                <h1>Newsletter Management</h1>
+                <button class="btn btn-primary" onclick="showSendNewsletterModal()"><i class="fas fa-paper-plane"></i> Send Newsletter</button>
+            </div>
+            
+            <div class="newsletter-stats">
+                <div class="stat-row">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Subscribers:</span>
+                        <span class="stat-value" id="subscriberCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Active Subscribers:</span>
+                        <span class="stat-value" id="activeSubscriberCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Newsletters Sent:</span>
+                        <span class="stat-value" id="newslettersSent">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-table">
+                <h3>Subscribers</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Subscribed Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subscribersTableBody">
+                        <!-- Subscribers will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Notifications Management Section -->
+        <section id="notifications" class="admin-section">
+            <div class="section-header">
+                <h1>Notifications Management</h1>
+                <button class="btn btn-primary" onclick="showSendNotificationModal()"><i class="fas fa-bell"></i> Send Notification</button>
+            </div>
+            
+            <div class="notification-stats">
+                <div class="stat-row">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Sent:</span>
+                        <span class="stat-value" id="totalNotificationsSent">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Success Rate:</span>
+                        <span class="stat-value" id="notificationSuccessRate">100%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Last Sent:</span>
+                        <span class="stat-value" id="lastNotificationSent">Never</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-table">
+                <h3>Notification History</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Message</th>
+                            <th>Type</th>
+                            <th>Sent Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="notificationsTableBody">
+                        <!-- Notifications will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- WhatsApp Section -->
+        <section id="whatsapp" class="admin-section">
+            <div class="section-header">
+                <h1>WhatsApp Configuration</h1>
+                <p>Manage WhatsApp integration settings</p>
+            </div>
+            
+            <div class="settings-form">
+                <form id="whatsappForm">
+                    <div class="form-group">
+                        <label for="whatsappNumber">WhatsApp Number</label>
+                        <input type="tel" id="whatsappNumber" placeholder="+1234567890">
+                    </div>
+                    <div class="form-group">
+                        <label for="businessHours">Business Hours</label>
+                        <input type="text" id="businessHours" placeholder="Mon-Fri 9AM-6PM">
+                    </div>
+                    <div class="form-group">
+                        <label for="defaultMessage">Default Message</label>
+                        <textarea id="defaultMessage" rows="3" placeholder="Hello! I'm interested in your moving services."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="autoReply">Auto Reply Message</label>
+                        <textarea id="autoReply" rows="3" placeholder="Thank you for contacting us! We'll get back to you soon."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="whatsappEnabled">
+                            Enable WhatsApp Widget
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save WhatsApp Settings</button>
+                </form>
+                <div id="whatsappSuccess" class="alert alert-success" style="display: none;"></div>
+                <div id="whatsappError" class="alert alert-error" style="display: none;"></div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="admin-section">
+            <div class="section-header">
+                <h1>Analytics Configuration</h1>
+                <p>Manage Google Analytics and tracking settings</p>
+            </div>
+            
+            <div class="settings-form">
+                <form id="analyticsForm">
+                    <div class="form-group">
+                        <label for="gaTrackingId">Google Analytics Tracking ID</label>
+                        <input type="text" id="gaTrackingId" placeholder="G-XXXXXXXXXX">
+                    </div>
+                    <div class="form-group">
+                        <label for="gtmContainerId">Google Tag Manager Container ID</label>
+                        <input type="text" id="gtmContainerId" placeholder="GTM-XXXXXXX">
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="analyticsEnabled">
+                            Enable Analytics Tracking
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="trackEvents">
+                            Enable Event Tracking
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Analytics Settings</button>
+                </form>
+                <div id="analyticsSuccess" class="alert alert-success" style="display: none;"></div>
+                <div id="analyticsError" class="alert alert-error" style="display: none;"></div>
+            </div>
+        </section>
+
+        <!-- SEO Tools Section -->
+        <section id="seo" class="admin-section">
+            <div class="section-header">
+                <h1>SEO Management</h1>
+                <p>Optimize your website for search engines</p>
+            </div>
+            
+            <div class="seo-tools">
+                <div class="seo-card">
+                    <h3>Meta Tags</h3>
+                    <form id="metaTagsForm">
+                        <div class="form-group">
+                            <label for="siteTitle">Site Title</label>
+                            <input type="text" id="siteTitle" placeholder="Lugvia - Professional Moving Services">
+                        </div>
+                        <div class="form-group">
+                            <label for="metaDescription">Meta Description</label>
+                            <textarea id="metaDescription" rows="3" placeholder="Professional moving services with reliable, efficient, and affordable solutions."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="metaKeywords">Meta Keywords</label>
+                            <input type="text" id="metaKeywords" placeholder="moving, relocation, packing, storage">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Meta Tags</button>
+                    </form>
+                </div>
+                
+                <div class="seo-card">
+                    <h3>Google Search Console</h3>
+                    <form id="searchConsoleForm">
+                        <div class="form-group">
+                            <label for="googleSiteVerification">Google Site Verification</label>
+                            <input type="text" id="googleSiteVerification" placeholder="google-site-verification code">
+                        </div>
+                        <div class="form-group">
+                            <label for="bingVerification">Bing Site Verification</label>
+                            <input type="text" id="bingVerification" placeholder="bing verification code">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Verification</button>
+                    </form>
+                </div>
+                
+                <div class="seo-card">
+                    <h3>Sitemap Management</h3>
+                    <div class="sitemap-actions">
+                        <button class="btn btn-secondary" onclick="generateSitemap()">Generate Sitemap</button>
+                        <button class="btn btn-secondary" onclick="submitToGoogle()">Submit to Google</button>
+                        <button class="btn btn-secondary" onclick="checkIndexStatus()">Check Index Status</button>
+                    </div>
+                    <div id="sitemapStatus" class="status-info"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section id="security" class="admin-section">
+            <div class="section-header">
+                <h1>Security Settings</h1>
+                <p>Manage website security and protection</p>
+            </div>
+            
+            <div class="security-settings">
+                <div class="security-card">
+                    <h3>CAPTCHA Configuration</h3>
+                    <form id="captchaForm">
+                        <div class="form-group">
+                            <label for="recaptchaSiteKey">reCAPTCHA Site Key</label>
+                            <input type="text" id="recaptchaSiteKey" placeholder="6Lc...">
+                        </div>
+                        <div class="form-group">
+                            <label for="recaptchaSecretKey">reCAPTCHA Secret Key</label>
+                            <input type="password" id="recaptchaSecretKey" placeholder="6Lc...">
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="captchaEnabled">
+                                Enable CAPTCHA on Forms
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save CAPTCHA Settings</button>
+                    </form>
+                </div>
+                
+                <div class="security-card">
+                    <h3>Login Security</h3>
+                    <form id="loginSecurityForm">
+                        <div class="form-group">
+                            <label for="maxLoginAttempts">Max Login Attempts</label>
+                            <input type="number" id="maxLoginAttempts" value="5" min="3" max="10">
+                        </div>
+                        <div class="form-group">
+                            <label for="lockoutDuration">Lockout Duration (minutes)</label>
+                            <input type="number" id="lockoutDuration" value="15" min="5" max="60">
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="twoFactorEnabled">
+                                Enable Two-Factor Authentication
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Security Settings</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cloudflare Section -->
+        <section id="cloudflare" class="admin-section">
+            <div class="section-header">
+                <h1>Cloudflare Integration</h1>
+                <p>Manage Cloudflare CDN and security settings</p>
+            </div>
+            
+            <div class="cloudflare-settings">
+                <form id="cloudflareForm">
+                    <div class="form-group">
+                        <label for="cloudflareApiKey">Cloudflare API Key</label>
+                        <input type="password" id="cloudflareApiKey" placeholder="Your Cloudflare API key">
+                    </div>
+                    <div class="form-group">
+                        <label for="cloudflareEmail">Cloudflare Email</label>
+                        <input type="email" id="cloudflareEmail" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="cloudflareZoneId">Zone ID</label>
+                        <input type="text" id="cloudflareZoneId" placeholder="Zone ID from Cloudflare dashboard">
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="cloudflareEnabled">
+                            Enable Cloudflare Integration
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Cloudflare Settings</button>
+                </form>
+                
+                <div class="cloudflare-actions">
+                    <h3>Quick Actions</h3>
+                    <button class="btn btn-secondary" onclick="purgeCache()">Purge Cache</button>
+                    <button class="btn btn-secondary" onclick="checkSSLStatus()">Check SSL Status</button>
+                    <button class="btn btn-secondary" onclick="toggleDevelopmentMode()">Toggle Development Mode</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- BIN Search Section -->
+        <section id="bin-search" class="admin-section">
+            <div class="section-header">
+                <h1>BIN Search Tool</h1>
+                <p>Bank Identification Number lookup for payment processing</p>
+            </div>
+            
+            <div class="bin-search-tool">
+                <div class="search-form">
+                    <form id="binSearchForm">
+                        <div class="form-group">
+                            <label for="binNumber">BIN Number (First 6-8 digits)</label>
+                            <input type="text" id="binNumber" placeholder="123456" maxlength="8">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search BIN</button>
+                    </form>
+                </div>
+                
+                <div id="binResults" class="bin-results" style="display: none;">
+                    <h3>BIN Information</h3>
+                    <div class="result-grid">
+                        <div class="result-item">
+                            <label>Bank Name:</label>
+                            <span id="bankName">-</span>
+                        </div>
+                        <div class="result-item">
+                            <label>Card Type:</label>
+                            <span id="cardType">-</span>
+                        </div>
+                        <div class="result-item">
+                            <label>Card Brand:</label>
+                            <span id="cardBrand">-</span>
+                        </div>
+                        <div class="result-item">
+                            <label>Country:</label>
+                            <span id="country">-</span>
+                        </div>
+                        <div class="result-item">
+                            <label>Currency:</label>
+                            <span id="currency">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bin-api-settings">
+                    <h3>API Configuration</h3>
+                    <form id="binApiForm">
+                        <div class="form-group">
+                            <label for="binApiKey">BIN API Key</label>
+                            <input type="password" id="binApiKey" placeholder="Your BIN lookup API key">
+                        </div>
+                        <div class="form-group">
+                            <label for="binApiProvider">API Provider</label>
+                            <select id="binApiProvider">
+                                <option value="binlist">BinList.net</option>
+                                <option value="binlookup">BinLookup.io</option>
+                                <option value="neutrinoapi">NeutrinoAPI</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save API Settings</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- SMTP Configuration Section -->
+        <section id="smtp" class="admin-section">
+            <div class="section-header">
+                <h1>SMTP Configuration</h1>
+                <p>Configure email server settings for notifications</p>
+            </div>
+            
+            <div class="smtp-settings">
+                <form id="smtpForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="smtpHost">SMTP Host</label>
+                            <input type="text" id="smtpHost" placeholder="smtp.gmail.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="smtpPort">SMTP Port</label>
+                            <input type="number" id="smtpPort" placeholder="587">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="smtpUsername">Username</label>
+                            <input type="email" id="smtpUsername" placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="smtpPassword">Password</label>
+                            <input type="password" id="smtpPassword" placeholder="Your email password">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="smtpFromName">From Name</label>
+                        <input type="text" id="smtpFromName" placeholder="Lugvia Support">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="smtpFromEmail">From Email</label>
+                        <input type="email" id="smtpFromEmail" placeholder="noreply@lugvia.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="smtpSecure">
+                            Use SSL/TLS
+                        </label>
+                    </div>
+                    
+                    <div class="smtp-actions">
+                        <button type="submit" class="btn btn-primary">Save SMTP Settings</button>
+                        <button type="button" class="btn btn-secondary" onclick="testSmtpConnection()">Test Connection</button>
+                    </div>
+                </form>
+                
+                <div id="smtpTestResult" class="test-result" style="display: none;"></div>
+                
+                <div class="email-templates">
+                    <h3>Email Templates</h3>
+                    <div class="template-list">
+                        <div class="template-item">
+                            <span>Welcome Email</span>
+                            <button class="btn btn-sm btn-secondary" onclick="editTemplate('welcome')">Edit</button>
+                        </div>
+                        <div class="template-item">
+                            <span>Quote Confirmation</span>
+                            <button class="btn btn-sm btn-secondary" onclick="editTemplate('quote')">Edit</button>
+                        </div>
+                        <div class="template-item">
+                            <span>Password Reset</span>
+                            <button class="btn btn-sm btn-secondary" onclick="editTemplate('reset')">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <!-- Add Blog Modal -->
+    <div id="addBlogModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Blog Post</h2>
+                <span class="close" onclick="closeModal('addBlogModal')">&times;</span>
+            </div>
+            <form id="addBlogForm">
+                <div class="form-group">
+                    <label for="blogTitle">Title *</label>
+                    <input type="text" id="blogTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="blogAuthor">Author *</label>
+                    <input type="text" id="blogAuthor" required>
+                </div>
+                <div class="form-group">
+                    <label for="blogExcerpt">Excerpt</label>
+                    <textarea id="blogExcerpt" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="blogContent">Content *</label>
+                    <textarea id="blogContent" rows="10" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="blogImage">Featured Image URL</label>
+                    <input type="url" id="blogImage">
+                </div>
+                <div class="form-group">
+                    <label for="blogStatus">Status</label>
+                    <select id="blogStatus">
+                        <option value="draft">Draft</option>
+                        <option value="published">Published</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addBlogModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Blog Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Service Modal -->
+    <div id="addServiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Service</h2>
+                <span class="close" onclick="closeModal('addServiceModal')">&times;</span>
+            </div>
+            <form id="addServiceForm">
+                <div class="form-group">
+                    <label for="serviceName">Service Name *</label>
+                    <input type="text" id="serviceName" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceDescription">Description *</label>
+                    <textarea id="serviceDescription" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="serviceBasePrice">Base Price ($) *</label>
+                    <input type="number" id="serviceBasePrice" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceFeatures">Features (comma-separated)</label>
+                    <textarea id="serviceFeatures" rows="3" placeholder="Feature 1, Feature 2, Feature 3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="serviceStatus">Status</label>
+                    <select id="serviceStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addServiceModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Service</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Modal (Reusable) -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="editModalTitle">Edit Item</h2>
+                <span class="close" onclick="closeModal('editModal')">&times;</span>
+            </div>
+            <div id="editModalBody">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h2>Confirm Delete</h2>
+                <span class="close" onclick="closeModal('deleteModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="deleteMessage">Are you sure you want to delete this item?</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('deleteModal')">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send Newsletter Modal -->
+    <div id="sendNewsletterModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Send Newsletter</h2>
+                <span class="close" onclick="closeModal('sendNewsletterModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="sendNewsletterForm">
+                    <div class="form-group">
+                        <label for="newsletterSubject">Subject:</label>
+                        <input type="text" id="newsletterSubject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newsletterContent">Content:</label>
+                        <textarea id="newsletterContent" name="content" rows="8" required placeholder="Enter your newsletter content here..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="newsletterType">Type:</label>
+                        <select id="newsletterType" name="type">
+                            <option value="promotional">Promotional</option>
+                            <option value="informational">Informational</option>
+                            <option value="update">Company Update</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('sendNewsletterModal')">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="sendNewsletter()">Send Newsletter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Send Notification Modal -->
+    <div id="sendNotificationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Send Notification</h2>
+                <span class="close" onclick="closeModal('sendNotificationModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="sendNotificationForm">
+                    <div class="form-group">
+                        <label for="notificationMessage">Message:</label>
+                        <textarea id="notificationMessage" name="message" rows="4" required placeholder="Enter notification message..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="notificationType">Type:</label>
+                        <select id="notificationType" name="type">
+                            <option value="info">Info</option>
+                            <option value="success">Success</option>
+                            <option value="warning">Warning</option>
+                            <option value="error">Error</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="notificationDuration">Duration (seconds):</label>
+                        <input type="number" id="notificationDuration" name="duration" value="5" min="1" max="30">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('sendNotificationModal')">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="sendNotification()">Send Notification</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

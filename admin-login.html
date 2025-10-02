@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lugvia Admin Login</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Google reCAPTCHA -->
+
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="logo.svg" alt="Lugvia" class="login-logo">
+                <h1>Admin Login</h1>
+                <p>Access the Lugvia administration panel</p>
+            </div>
+            
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i>
+                        Username
+                    </label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <div class="password-input">
+                        <input type="password" id="password" name="password" required autocomplete="current-password">
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <span class="checkmark"></span>
+                        Remember me
+                    </label>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
+                
+                <div id="loginError" class="login-error" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="errorMessage">Invalid username or password</span>
+                </div>
+            </form>
+            
+            <div class="login-footer">
+                <div class="default-credentials">
+                    <h4>Default Credentials:</h4>
+                    <p><strong>Username:</strong> admin</p>
+                    <p><strong>Password:</strong> lugvia2024</p>
+                </div>
+                <div class="login-links">
+                    <a href="index.html" class="back-link">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Website
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+
+
+        // Authentication Logic
+        class AdminAuth {
+            constructor() {
+                this.init();
+            }
+            
+            init() {
+                // Check if already logged in
+                if (this.isAuthenticated()) {
+                    window.location.href = 'admin.html';
+                    return;
+                }
+                
+                this.setupEventListeners();
+            }
+            
+            setupEventListeners() {
+                document.getElementById('loginForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+                
+                // Enter key support
+                document.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.handleLogin();
+                    }
+                });
+            }
+            
+            async handleLogin() {
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                const rememberMe = document.getElementById('rememberMe').checked;
+                
+                // Clear previous errors
+                this.hideError();
+                
+                // Validate inputs
+                if (!username || !password) {
+                    this.showError('Please enter both username and password');
+                    return;
+                }
+                
+                // Show loading state
+                const submitBtn = document.querySelector('.login-btn');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Authenticating...';
+                submitBtn.disabled = true;
+                
+                try {
+                    await this.login(rememberMe);
+                } catch (error) {
+                    this.showError('Authentication failed. Please try again.');
+                    this.shakeForm();
+                } finally {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            }
+            
+            async validateCredentials(username, password) {
+                // SECURITY: Server-side authentication required
+                // Never store credentials in client-side code
+                try {
+                    const response = await fetch('/api/admin/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username, password })
+                    });
+                    
+                    const result = await response.json();
+                    return response.ok && result.success;
+                } catch (error) {
+                    console.error('Authentication error:', error);
+                    return false;
+                }
+            }
+            
+            async login(rememberMe) {
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                
+                // Validate credentials with server
+                const isValid = await this.validateCredentials(username, password);
+                
+                if (!isValid) {
+                    this.showError('Invalid username or password');
+                    return;
+                }
+                
+                const sessionData = {
+                    authenticated: true,
+                    loginTime: new Date().toISOString(),
+                    username: username
+                };
+                
+                // Store session
+                if (rememberMe) {
+                    localStorage.setItem('lugvia_admin_session', JSON.stringify(sessionData));
+                } else {
+                    sessionStorage.setItem('lugvia_admin_session', JSON.stringify(sessionData));
+                }
+                
+                // Show success and redirect
+                this.showSuccess();
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 1000);
+            }
+            
+            isAuthenticated() {
+                const sessionData = this.getSessionData();
+                if (!sessionData) return false;
+                
+                // Check if session is still valid (24 hours)
+                const loginTime = new Date(sessionData.loginTime);
+                const now = new Date();
+                const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
+                
+                return hoursDiff < 24;
+            }
+            
+            getSessionData() {
+                let sessionData = localStorage.getItem('lugvia_admin_session');
+                if (!sessionData) {
+                    sessionData = sessionStorage.getItem('lugvia_admin_session');
+                }
+                
+                try {
+                    return sessionData ? JSON.parse(sessionData) : null;
+                } catch (e) {
+                    return null;
+                }
+            }
+            
+            showError(message) {
+                const errorDiv = document.getElementById('loginError');
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.textContent = message;
+                errorDiv.style.display = 'block';
+            }
+            
+            hideError() {
+                document.getElementById('loginError').style.display = 'none';
+            }
+            
+            showSuccess() {
+                const errorDiv = document.getElementById('loginError');
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.textContent = 'Login successful! Redirecting...';
+                errorDiv.className = 'login-success';
+                errorDiv.style.display = 'block';
+            }
+            
+            shakeForm() {
+                const form = document.querySelector('.login-card');
+                form.classList.add('shake');
+                setTimeout(() => {
+                    form.classList.remove('shake');
+                }, 500);
+            }
+        }
+        
+        // Password toggle functionality
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'fas fa-eye';
+            }
+        }
+        
+        // Initialize authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            new AdminAuth();
+        });
+    </script>
+</body>
+</html>

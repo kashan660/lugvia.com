@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Lugvia</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <img src="logo.svg" alt="Lugvia - Moving Made Simple" class="logo-svg">
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#calculator" class="nav-link">Get Quote</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#services" class="nav-link">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#companies" class="nav-link">Partners</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="ai-chat.html" class="nav-link">AI Assistant</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#contact" class="nav-link active">Contact</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section service-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Contact Us</h1>
+                    <p>Get in touch with our moving experts. We're here to help make your move stress-free and successful.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h2>Get In Touch</h2>
+                        <p>Ready to start planning your move? Contact us today for a free quote and consultation.</p>
+                        
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h3>Phone</h3>
+                                    <p>(555) 123-MOVE</p>
+                                    <span>Mon-Fri: 8AM-6PM, Sat: 9AM-4PM</span>
+                                </div>
+                            </div>
+                            <div class="contact-method">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h3>Email</h3>
+                                    <p>info@lugvia.com</p>
+                                    <span>We respond within 24 hours</span>
+                                </div>
+                            </div>
+                            <div class="contact-method">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h3>Office</h3>
+                                    <p>123 Moving Street<br>Suite 100<br>City, State 12345</p>
+                                </div>
+                            </div>
+                            <div class="contact-method">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <h3>Business Hours</h3>
+                                    <p>Monday - Friday: 8:00 AM - 6:00 PM<br>
+                                    Saturday: 9:00 AM - 4:00 PM<br>
+                                    Sunday: Closed</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="emergency-contact">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Emergency Moving Support</h3>
+                            <p>For urgent moving day issues, call our 24/7 emergency line:</p>
+                            <p class="emergency-number">(555) 911-MOVE</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-container">
+                        <form class="contact-form" id="contactForm">
+                            <h2>Send Us a Message</h2>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name *</label>
+                                    <input type="text" id="firstName" name="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name *</label>
+                                    <input type="text" id="lastName" name="lastName" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" name="phone">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject">Subject *</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="">Select a topic</option>
+                                    <option value="quote">Request a Quote</option>
+                                    <option value="booking">Booking Question</option>
+                                    <option value="support">Customer Support</option>
+                                    <option value="complaint">File a Complaint</option>
+                                    <option value="feedback">General Feedback</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="moveDate">Preferred Move Date</label>
+                                    <input type="date" id="moveDate" name="moveDate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="moveType">Type of Move</label>
+                                    <select id="moveType" name="moveType">
+                                        <option value="">Select move type</option>
+                                        <option value="local">Local Move</option>
+                                        <option value="long-distance">Long Distance</option>
+                                        <option value="commercial">Commercial Move</option>
+                                        <option value="storage">Storage Only</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Message *</label>
+                                <textarea id="message" name="message" rows="5" placeholder="Please provide details about your moving needs or question..." required></textarea>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="newsletter" name="newsletter">
+                                    <span class="checkmark"></span>
+                                    I would like to receive moving tips and special offers via email
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                            <div class="form-message" id="contactMessage"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="map-section">
+            <div class="container">
+                <h2>Visit Our Office</h2>
+                <div class="map-placeholder">
+                    <div class="map-content">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Our Location</h3>
+                        <p>123 Moving Street, Suite 100<br>City, State 12345</p>
+                        <p>Free parking available</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quick-actions">
+            <div class="container">
+                <h2>Quick Actions</h2>
+                <div class="actions-grid">
+                    <a href="index.html#quote" class="action-card">
+                        <i class="fas fa-calculator"></i>
+                        <h3>Get Free Quote</h3>
+                        <p>Instant online quote for your move</p>
+                    </a>
+                    <a href="support.html" class="action-card">
+                        <i class="fas fa-headset"></i>
+                        <h3>Customer Support</h3>
+                        <p>Submit a support ticket</p>
+                    </a>
+                    <a href="ai-chat.html" class="action-card">
+                        <i class="fas fa-robot"></i>
+                        <h3>AI Assistant</h3>
+                        <p>Chat with our AI helper</p>
+                    </a>
+                    <a href="help-center.html" class="action-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Help Center</h3>
+                        <p>Find answers to common questions</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lugvia</h3>
+                    <p>Your trusted partner for stress-free moving across America.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="local-moving.html">Local Moving</a></li>
+                        <li><a href="long-distance.html">Long Distance</a></li>
+                        <li><a href="packing-services.html">Packing Services</a></li>
+                        <li><a href="storage.html">Storage</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section newsletter-section">
+                    <h4>Stay Updated</h4>
+                    <p>Get moving tips, special offers, and updates delivered to your inbox.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <div class="newsletter-input-group">
+                            <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                            <button type="submit" class="btn btn-primary newsletter-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="newsletter-message" id="newsletterMessage"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Lugvia.com. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const messageDiv = document.getElementById('contactMessage');
+            messageDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending message...';
+            messageDiv.className = 'form-message loading';
+            
+            // Simulate form submission
+            setTimeout(() => {
+                messageDiv.innerHTML = '<i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully. We\'ll get back to you within 24 hours.';
+                messageDiv.className = 'form-message success';
+                this.reset();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

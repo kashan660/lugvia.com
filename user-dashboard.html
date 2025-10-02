@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Lugvia</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .user-info h1 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .referral-link {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .referral-link input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-family: monospace;
+            font-size: 14px;
+            color: #2c3e50;
+            outline: none;
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        th {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-registered {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-paid {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .share-whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .share-email {
+            background: #ea4335;
+            color: white;
+        }
+
+        .share-copy {
+            background: #667eea;
+            color: white;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .share-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="user-info">
+                <h1>Welcome back, <span id="userName">User</span>!</h1>
+                <p>Manage your referrals and track your earnings</p>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Earnings Overview -->
+            <div class="card">
+                <h2>
+                    <span class="card-icon">💰</span>
+                    Earnings Overview
+                </h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalEarnings">$0.00</div>
+                        <div class="stat-label">Total Earnings</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="pendingEarnings">$0.00</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="paidEarnings">$0.00</div>
+                        <div class="stat-label">Paid</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalReferrals">0</div>
+                        <div class="stat-label">Referrals</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referral Link -->
+            <div class="card">
+                <h2>
+                    <span class="card-icon">🔗</span>
+                    Your Referral Link
+                </h2>
+                <div class="referral-link">
+                    <input type="text" id="referralLink" readonly>
+                    <button class="copy-btn" onclick="copyReferralLink()">Copy</button>
+                </div>
+                <div class="share-buttons">
+                    <a href="#" class="share-btn share-whatsapp" onclick="shareWhatsApp()">
+                        📱 WhatsApp
+                    </a>
+                    <a href="#" class="share-btn share-email" onclick="shareEmail()">
+                        ✉️ Email
+                    </a>
+                    <button class="share-btn share-copy" onclick="copyReferralLink()">
+                        📋 Copy Link
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Referrals Table -->
+        <div class="card">
+            <h2>
+                <span class="card-icon">👥</span>
+                Your Referrals
+            </h2>
+            <div id="referralsLoading" class="loading">
+                <div class="spinner"></div>
+                Loading referrals...
+            </div>
+            <div id="referralsContent" style="display: none;">
+                <div class="table-container">
+                    <table id="referralsTable">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Commission</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="referralsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+                <div id="noReferrals" class="empty-state" style="display: none;">
+                    <div class="empty-state-icon">👥</div>
+                    <h3>No referrals yet</h3>
+                    <p>Share your referral link to start earning commissions!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings History -->
+        <div class="card">
+            <h2>
+                <span class="card-icon">📊</span>
+                Earnings History
+            </h2>
+            <div id="earningsLoading" class="loading">
+                <div class="spinner"></div>
+                Loading earnings...
+            </div>
+            <div id="earningsContent" style="display: none;">
+                <div class="table-container">
+                    <table id="earningsTable">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="earningsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+                <div id="noEarnings" class="empty-state" style="display: none;">
+                    <div class="empty-state-icon">💰</div>
+                    <h3>No earnings yet</h3>
+                    <p>Complete referrals to start earning commissions!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let referralLink = '';
+
+        // Load user data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+        });
+
+        async function loadUserData() {
+            try {
+                const response = await fetch('/api/auth/me', {
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        window.location.href = '/login.html';
+                        return;
+                    }
+                    throw new Error('Failed to load user data');
+                }
+
+                const data = await response.json();
+                currentUser = data.user;
+                
+                // Update UI with user data
+                document.getElementById('userName').textContent = currentUser.first_name;
+                document.getElementById('totalEarnings').textContent = `$${(currentUser.total_earnings || 0).toFixed(2)}`;
+                document.getElementById('totalReferrals').textContent = currentUser.total_referrals || 0;
+                
+                // Update earnings summary
+                if (data.earnings) {
+                    document.getElementById('pendingEarnings').textContent = `$${(data.earnings.total_pending || 0).toFixed(2)}`;
+                    document.getElementById('paidEarnings').textContent = `$${(data.earnings.total_paid || 0).toFixed(2)}`;
+                }
+
+                // Load referral link
+                await loadReferralLink();
+                
+                // Load referrals and earnings
+                await loadReferrals();
+                await loadEarnings();
+                
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                alert('Failed to load user data. Please refresh the page.');
+            }
+        }
+
+        async function loadReferralLink() {
+            try {
+                const response = await fetch('/api/auth/referral-link', {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    referralLink = data.referral_link;
+                    document.getElementById('referralLink').value = referralLink;
+                }
+            } catch (error) {
+                console.error('Error loading referral link:', error);
+            }
+        }
+
+        async function loadReferrals() {
+            try {
+                const response = await fetch('/api/auth/referrals', {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    displayReferrals(data.referrals);
+                }
+            } catch (error) {
+                console.error('Error loading referrals:', error);
+            } finally {
+                document.getElementById('referralsLoading').style.display = 'none';
+                document.getElementById('referralsContent').style.display = 'block';
+            }
+        }
+
+        async function loadEarnings() {
+            try {
+                const response = await fetch('/api/auth/earnings', {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    displayEarnings(data.earnings);
+                }
+            } catch (error) {
+                console.error('Error loading earnings:', error);
+            } finally {
+                document.getElementById('earningsLoading').style.display = 'none';
+                document.getElementById('earningsContent').style.display = 'block';
+            }
+        }
+
+        function displayReferrals(referrals) {
+            const tbody = document.getElementById('referralsTableBody');
+            const noReferrals = document.getElementById('noReferrals');
+            const table = document.getElementById('referralsTable');
+            
+            if (!referrals || referrals.length === 0) {
+                table.style.display = 'none';
+                noReferrals.style.display = 'block';
+                return;
+            }
+            
+            table.style.display = 'table';
+            noReferrals.style.display = 'none';
+            
+            tbody.innerHTML = referrals.map(referral => `
+                <tr>
+                    <td>${referral.email || referral.referred_email || 'Pending'}</td>
+                    <td><span class="status-badge status-${referral.status}">${referral.status}</span></td>
+                    <td>$${(referral.commission_amount || 0).toFixed(2)}</td>
+                    <td>${new Date(referral.created_at).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        function displayEarnings(earnings) {
+            const tbody = document.getElementById('earningsTableBody');
+            const noEarnings = document.getElementById('noEarnings');
+            const table = document.getElementById('earningsTable');
+            
+            if (!earnings || earnings.length === 0) {
+                table.style.display = 'none';
+                noEarnings.style.display = 'block';
+                return;
+            }
+            
+            table.style.display = 'table';
+            noEarnings.style.display = 'none';
+            
+            tbody.innerHTML = earnings.map(earning => `
+                <tr>
+                    <td>${earning.description || 'Commission'}</td>
+                    <td>$${earning.amount.toFixed(2)}</td>
+                    <td><span class="status-badge status-${earning.status}">${earning.status}</span></td>
+                    <td>${new Date(earning.created_at).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        function copyReferralLink() {
+            const input = document.getElementById('referralLink');
+            input.select();
+            document.execCommand('copy');
+            
+            // Show feedback
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            btn.style.background = '#27ae60';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 2000);
+        }
+
+        function shareWhatsApp() {
+            const message = `Check out Lugvia - Professional Moving Services! Get a quote using my referral link: ${referralLink}`;
+            const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        function shareEmail() {
+            const subject = 'Professional Moving Services - Lugvia';
+            const body = `Hi!\n\nI wanted to share Lugvia with you - they provide excellent moving services.\n\nGet a quote using my referral link: ${referralLink}\n\nBest regards!`;
+            const url = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(url);
+        }
+
+        async function logout() {
+            try {
+                const response = await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    window.location.href = '/login.html';
+                } else {
+                    throw new Error('Logout failed');
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+                // Force redirect even if logout fails
+                window.location.href = '/login.html';
+            }
+        }
+    </script>
+</body>
+</html>

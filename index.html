@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lugvia - Best Moving Companies USA | Professional Moving Services Nationwide</title>
+    <meta name="description" content="Find the best moving companies in USA with Lugvia. Professional interstate moving services, local movers, long distance relocation experts. Get instant quotes from top-rated American moving companies nationwide.">
+    <meta name="keywords" content="moving companies USA, best movers America, interstate moving services, long distance movers, local moving companies, professional movers USA, nationwide moving services, American moving companies, residential movers, commercial moving, moving quotes USA, relocation services America, cross country movers, state to state moving, city to city movers, affordable moving companies, licensed movers USA, insured moving services, full service movers, packing services USA">
+    <meta name="author" content="Lugvia Moving Services">
+    <meta name="robots" content="index, follow">
+    <meta name="geo.region" content="US">
+    <meta name="geo.country" content="USA">
+    <meta name="geo.placename" content="United States">
+    <meta property="og:title" content="Lugvia - Best Moving Companies USA | Professional Moving Services">
+    <meta property="og:description" content="Find top-rated moving companies across America. Professional interstate and local moving services with instant quotes. Licensed, insured movers nationwide.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lugvia.com">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Lugvia - Best Moving Companies USA">
+    <meta name="twitter:description" content="Professional moving services across America. Get instant quotes from top-rated movers.">
+    <link rel="canonical" href="https://lugvia.com">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MovingCompany",
+        "name": "Lugvia Moving Services",
+        "description": "America's premier moving concierge service connecting customers with licensed, DOT-registered moving companies across all 50 states.",
+        "url": "https://lugvia.com",
+        "logo": "https://lugvia.com/logo.png",
+        "telephone": "+1-800-LUGVIA",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "US",
+            "addressRegion": "Nationwide"
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "United States"
+        },
+        "serviceType": [
+            "Interstate Moving Services",
+            "Long Distance Moving",
+            "Local Moving Services",
+            "Residential Moving",
+            "Commercial Moving",
+            "Packing Services",
+            "Moving Coordination"
+        ],
+        "priceRange": "$$",
+        "hasCredential": "DOT Licensed Partners",
+        "knowsAbout": [
+            "USA Moving Regulations",
+            "Interstate Moving Laws",
+            "Federal DOT Requirements",
+            "American Moving Standards"
+        ]
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <img src="logo.svg" alt="Lugvia - Moving Made Simple" class="logo-svg">
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#calculator" class="nav-link">Get Quote</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#services" class="nav-link">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#companies" class="nav-link">Partners</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="ai-chat.html" class="nav-link">AI Assistant</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+                
+                <!-- Authentication Menu -->
+                <div class="auth-menu" id="authMenu">
+                    <!-- Guest Menu -->
+                    <div class="guest-menu" id="guestMenu">
+                        <a href="/login" class="auth-btn login-btn">Sign In</a>
+                        <a href="/login?register=true" class="auth-btn register-btn">Join & Earn</a>
+                    </div>
+                    
+                    <!-- User Menu -->
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <div class="user-dropdown">
+                            <button class="user-btn" id="userBtn">
+                                <span class="user-name" id="userName">User</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-content" id="dropdownContent">
+                                <a href="/user-dashboard" class="dropdown-item">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    Dashboard
+                                </a>
+                                <a href="#" class="dropdown-item" onclick="copyReferralLink()">
+                                    <i class="fas fa-share-alt"></i>
+                                    Share & Earn
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item" onclick="logout()">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Sign Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">America's #1 Moving Concierge Service</h1>
+                <p class="hero-subtitle">Connect with the best moving companies across the USA. From coast to coast, we coordinate your entire relocation with licensed, insured American movers. Get instant quotes for interstate, long-distance, and local moves nationwide.</p>
+                <div class="hero-features">
+                    <div class="feature">
+                        <span class="feature-icon">🇺🇸</span>
+                        <span>Nationwide USA Coverage</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">💰</span>
+                        <span>Best Rates Guaranteed</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">🛡️</span>
+                        <span>Licensed & Insured Movers</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#calculator" class="btn btn-primary">Get Your Personal Quote</a>
+                    <a href="#services" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="hero-image.png" alt="Lugvia Professional Moving Team - America's Best Moving Companies" class="hero-main-image">
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="calculator-section">
+        <div class="container">
+            <h2 class="section-title">Moving Cost Calculator</h2>
+            <p class="section-subtitle">Get instant quotes from multiple moving companies</p>
+            
+            <div class="calculator-container">
+                <div class="calculator-layout">
+                    <form id="movingForm" class="calculator-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fromCity">From City</label>
+                            <select id="fromCity" required>
+                                <option value="">Select origin city</option>
+                                <option value="new-york">New York, NY</option>
+                                <option value="los-angeles">Los Angeles, CA</option>
+                                <option value="chicago">Chicago, IL</option>
+                                <option value="houston">Houston, TX</option>
+                                <option value="phoenix">Phoenix, AZ</option>
+                                <option value="philadelphia">Philadelphia, PA</option>
+                                <option value="san-antonio">San Antonio, TX</option>
+                                <option value="san-diego">San Diego, CA</option>
+                                <option value="dallas">Dallas, TX</option>
+                                <option value="san-jose">San Jose, CA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="toCity">To City</label>
+                            <select id="toCity" required>
+                                <option value="">Select destination city</option>
+                                <option value="new-york">New York, NY</option>
+                                <option value="los-angeles">Los Angeles, CA</option>
+                                <option value="chicago">Chicago, IL</option>
+                                <option value="houston">Houston, TX</option>
+                                <option value="phoenix">Phoenix, AZ</option>
+                                <option value="philadelphia">Philadelphia, PA</option>
+                                <option value="san-antonio">San Antonio, TX</option>
+                                <option value="san-diego">San Diego, CA</option>
+                                <option value="dallas">Dallas, TX</option>
+                                <option value="san-jose">San Jose, CA</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="homeSize">Home Size</label>
+                            <select id="homeSize" required>
+                                <option value="">Select home size</option>
+                                <option value="studio">Studio Apartment</option>
+                                <option value="1-bedroom">1 Bedroom</option>
+                                <option value="2-bedroom">2 Bedroom</option>
+                                <option value="3-bedroom">3 Bedroom</option>
+                                <option value="4-bedroom">4+ Bedroom</option>
+                                <option value="house">Entire House</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="moveDate">Moving Date</label>
+                            <input type="date" id="moveDate" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label>Additional Services</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="packing" value="packing">
+                                    <span class="checkmark"></span>
+                                    Packing Services
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="storage" value="storage">
+                                    <span class="checkmark"></span>
+                                    Storage Services
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="insurance" value="insurance">
+                                    <span class="checkmark"></span>
+                                    Moving Insurance
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Information Section -->
+                    <div class="contact-info-section">
+                        <h4 class="section-heading">Contact Information</h4>
+                        <p class="section-description">We need your contact details to provide accurate quotes and connect you with movers.</p>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" placeholder="your.email@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Mobile Number *</label>
+                                <input type="tel" id="phone" placeholder="(555) 123-4567" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="address">Current Address *</label>
+                                <input type="text" id="address" placeholder="123 Main Street, City, State, ZIP" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-large">Get My Quotes</button>
+                    </form>
+                    <div class="calculator-hero-image">
+                        <img src="quote-hero-image.png" alt="Professional movers providing instant quotes for your move" class="quote-image">
+                    </div>
+                </div>
+                
+                <div id="quotesResults" class="quotes-results" style="display: none;">
+                    <h3>Your Moving Quotes</h3>
+                    <div id="quotesList" class="quotes-list"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <h2 class="section-title">How Lugvia Works Across America</h2>
+            <p class="section-subtitle">Your dedicated American moving coordinator handles every step of your USA relocation with local expertise</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>1. Share Your American Moving Plans</h3>
+                    <p>Tell us your USA relocation details - which states you're moving between, timeline, and services needed. Get instant estimates from our American moving calculator.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>2. Connect with Licensed USA Movers</h3>
+                    <p>We match you with DOT-licensed, federally registered American moving companies and provide transparent, competitive interstate pricing.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>3. Your American Move Coordinator</h3>
+                    <p>Get assigned a US-based moving coordinator with local market expertise who handles all American moving logistics and communication.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>4. American Moving Standards</h3>
+                    <p>We monitor your interstate move progress and ensure all services meet federal DOT standards and American moving regulations.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>5. Best USA Rate Guarantee</h3>
+                    <p>Find a better interstate moving quote? We'll match it or find you an even better deal through our American moving network.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>6. Successful American Relocation</h3>
+                    <p>We follow up after your USA move to ensure everything met American service standards and address any final concerns.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Quality Section -->
+    <section id="companies" class="companies-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose America's Premier Moving Network</h2>
+            <p class="section-subtitle">We connect you with the most trusted, licensed moving companies across all 50 states. From New York to California, Texas to Florida - experience the highest standards of American moving excellence.</p>
+            <div class="companies-grid">
+                <div class="company-card">
+                    <div class="company-logo">
+                        <div class="service-icon">🇺🇸</div>
+                        <h3>USA Licensed Movers</h3>
+                    </div>
+                    <div class="company-info">
+                        <h4>DOT-Licensed American Movers</h4>
+                        <p>Connect with federally registered, DOT-licensed moving companies across all 50 states for your peace of mind.</p>
+                        <div class="company-features">
+                            <span class="feature">✓ Federal DOT Registration</span>
+                            <span class="feature">✓ Interstate Moving Authority</span>
+                            <span class="feature">✓ American Moving Standards</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="company-card">
+                    <div class="company-logo">
+                        <div class="service-icon">💰</div>
+                        <h3>Best USA Rates</h3>
+                    </div>
+                    <div class="company-info">
+                        <h4>Competitive American Moving Rates</h4>
+                        <p>We negotiate coast-to-coast rates to ensure you get the most competitive pricing for your American relocation.</p>
+                        <div class="company-features">
+                            <span class="feature">✓ Interstate Rate Guarantee</span>
+                            <span class="feature">✓ USA Market Competitive</span>
+                            <span class="feature">✓ No Hidden American Fees</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="company-card">
+                    <div class="company-logo">
+                        <div class="service-icon">📞</div>
+                        <h3>American Customer Care</h3>
+                    </div>
+                    <div class="company-info">
+                        <h4>US-Based Move Coordinators</h4>
+                        <p>Your American move coordinator handles everything from quotes to delivery, with local market expertise.</p>
+                        <div class="company-features">
+                            <span class="feature">✓ English-Speaking Support</span>
+                            <span class="feature">✓ US Business Hours</span>
+                            <span class="feature">✓ Local Market Expertise</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="company-card">
+                     <div class="company-logo">
+                         <div class="service-icon">🚚</div>
+                         <h3>Full American Service</h3>
+                     </div>
+                     <div class="company-info">
+                         <h4>Complete USA Moving Solutions</h4>
+                         <p>From coast-to-coast packing to delivery, we coordinate every aspect of your American relocation.</p>
+                         <div class="company-features">
+                             <span class="feature">✓ Professional USA Packing</span>
+                             <span class="feature">✓ Interstate Transport</span>
+                             <span class="feature">✓ American Delivery Standards</span>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="company-card">
+                     <div class="company-logo">
+                         <div class="service-icon">⚡</div>
+                         <h3>Fast USA Response</h3>
+                     </div>
+                     <div class="company-info">
+                         <h4>Instant American Moving Quotes</h4>
+                         <p>Get instant quotes from American movers and fast scheduling across all US time zones.</p>
+                         <div class="company-features">
+                             <span class="feature">✓ Instant USA Quotes</span>
+                             <span class="feature">✓ Same-Day American Response</span>
+                             <span class="feature">✓ US Time Zone Coverage</span>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="company-card">
+                     <div class="company-logo">
+                         <div class="service-icon">🗺️</div>
+                         <h3>All 50 States Coverage</h3>
+                     </div>
+                     <div class="company-info">
+                         <h4>Complete USA Network</h4>
+                         <p>From Alaska to Florida, Hawaii to Maine - trusted American movers in every state and major city.</p>
+                         <div class="company-features">
+                             <span class="feature">✓ All 50 US States</span>
+                             <span class="feature">✓ Major American Cities</span>
+                             <span class="feature">✓ Interstate Moving Experts</span>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </section>
+
+    <!-- Customer Reviews Section -->
+    <section id="reviews" class="reviews-section">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <p class="section-subtitle">Over 50,000 successful moves across America. Here's what our customers have to say about their Lugvia experience.</p>
+            
+            <div class="reviews-stats">
+                <div class="stat-item">
+                    <div class="stat-number">4.9</div>
+                    <div class="stat-label">Average Rating</div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Recommend Us</div>
+                </div>
+            </div>
+            
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%234F46E5'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-family='Arial'%3ES%3C/text%3E%3C/svg%3E" alt="Sarah M.">
+                            </div>
+                            <div class="reviewer-details">
+                                <h4>Sarah Martinez</h4>
+                                <p>New York to Los Angeles</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="review-date">2 weeks ago</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>"Lugvia made my cross-country move incredibly smooth! The coordinator was amazing, keeping me updated every step of the way. The movers were professional, careful with my belongings, and arrived exactly on time. Highly recommend for anyone moving across states!"</p>
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2310B981'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-family='Arial'%3EM%3C/text%3E%3C/svg%3E" alt="Michael R.">
+                            </div>
+                            <div class="reviewer-details">
+                                <h4>Michael Rodriguez</h4>
+                                <p>Chicago to Miami</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="review-date">1 month ago</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>"Best moving experience I've ever had! The quote was accurate, no hidden fees, and the team handled my furniture like it was their own. The customer service was outstanding - they answered all my questions promptly. Worth every penny!"</p>
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23F59E0B'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-family='Arial'%3EJ%3C/text%3E%3C/svg%3E" alt="Jennifer L.">
+                            </div>
+                            <div class="reviewer-details">
+                                <h4>Jennifer Liu</h4>
+                                <p>Seattle to Austin</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="review-date">3 weeks ago</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>"Moving with a newborn seemed impossible until I found Lugvia. They coordinated everything perfectly, packed our baby items with extra care, and even helped us settle in quickly. The stress-free experience was exactly what we needed!"</p>
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23EF4444'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-family='Arial'%3ED%3C/text%3E%3C/svg%3E" alt="David K.">
+                            </div>
+                            <div class="reviewer-details">
+                                <h4>David Kim</h4>
+                                <p>Boston to Denver</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="review-date">1 week ago</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>"Exceptional service from start to finish! The moving team was punctual, efficient, and incredibly careful with my antique furniture. Lugvia's coordination made what could have been a nightmare into a seamless experience. 10/10 would use again!"</p>
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%238B5CF6'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-family='Arial'%3EA%3C/text%3E%3C/svg%3E" alt="Amanda T.">
+                            </div>
+                            <div class="reviewer-details">
+                                <h4>Amanda Thompson</h4>
+                                <p>Phoenix to Atlanta</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="review-date">2 months ago</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>"As a single mom moving across the country, I was worried about the logistics. Lugvia's team went above and beyond to make sure everything was perfect. They even helped coordinate the timing with my kids' school schedule. Amazing service!"</p>
+                    </div>
+                </div>
+                
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2306B6D4'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40' font-family='Arial'%3ER%3C/text%3E%3C/svg%3E" alt="Robert J.">
+                            </div>
+                            <div class="reviewer-details">
+                                <h4>Robert Johnson</h4>
+                                <p>Dallas to Portland</p>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="review-date">5 days ago</span>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>"I've moved 6 times in my career, and this was by far the best experience. Professional, reliable, and transparent pricing. The movers treated my home office equipment with extreme care. Lugvia has earned a customer for life!"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="reviews-cta">
+                <h3>Ready to Join Thousands of Happy Customers?</h3>
+                <p>Get your free moving quote today and experience the Lugvia difference</p>
+                <a href="#calculator" class="btn btn-primary btn-large">Get My Free Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Need Help?</h3>
+                    <p>Our moving experts are here to help you every step of the way.</p>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>1-800-LUGVIA-1</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>support@lugvia.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <span>24/7 Customer Support</span>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lugvia</h3>
+                    <p>Your trusted partner for stress-free moving across America.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="local-moving.html">Local Moving</a></li>
+                        <li><a href="long-distance.html">Long Distance</a></li>
+                        <li><a href="packing-services.html">Packing Services</a></li>
+                        <li><a href="storage.html">Storage</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section newsletter-section">
+                    <h4>Stay Updated</h4>
+                    <p>Get moving tips, special offers, and updates delivered to your inbox.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <div class="newsletter-input-group">
+                            <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                            <button type="submit" class="btn btn-primary newsletter-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="newsletter-message" id="newsletterMessage"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Lugvia.com. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="whatsapp-widget.js"></script>
+    <script src="analytics.js"></script>
+</body>
+</html>

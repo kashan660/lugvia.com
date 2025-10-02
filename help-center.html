@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - Lugvia</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <img src="logo.svg" alt="Lugvia - Moving Made Simple" class="logo-svg">
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#calculator" class="nav-link">Get Quote</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#services" class="nav-link">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="blog.html" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#companies" class="nav-link">Partners</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="ai-chat.html" class="nav-link">AI Assistant</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#contact" class="nav-link active">Contact</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section service-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Help Center</h1>
+                    <p>Find answers to frequently asked questions and get the help you need for your moving experience.</p>
+                    <div class="search-box">
+                        <input type="text" placeholder="Search for help topics..." id="helpSearch">
+                        <button type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="help-categories">
+            <div class="container">
+                <h2>Popular Help Topics</h2>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <i class="fas fa-calculator"></i>
+                        <h3>Getting Quotes</h3>
+                        <p>Learn how to get accurate moving quotes and understand pricing.</p>
+                        <a href="#quotes" class="category-link">View Articles</a>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-calendar-check"></i>
+                        <h3>Booking & Scheduling</h3>
+                        <p>Information about booking your move and scheduling services.</p>
+                        <a href="#booking" class="category-link">View Articles</a>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-box"></i>
+                        <h3>Packing Tips</h3>
+                        <p>Expert advice on packing your belongings safely and efficiently.</p>
+                        <a href="#packing" class="category-link">View Articles</a>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-truck"></i>
+                        <h3>Moving Day</h3>
+                        <p>What to expect on moving day and how to prepare.</p>
+                        <a href="#moving-day" class="category-link">View Articles</a>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Insurance & Claims</h3>
+                        <p>Understanding moving insurance and filing claims if needed.</p>
+                        <a href="#insurance" class="category-link">View Articles</a>
+                    </div>
+                    <div class="category-card">
+                        <i class="fas fa-credit-card"></i>
+                        <h3>Payment & Billing</h3>
+                        <p>Payment options, billing questions, and refund policies.</p>
+                        <a href="#payment" class="category-link">View Articles</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section" id="quotes">
+            <div class="container">
+                <h2>Getting Quotes</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How do I get a moving quote?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>You can get a free quote by filling out our online form on the homepage, calling us directly, or scheduling a virtual consultation. We'll need information about your current and new locations, moving date, and inventory of items.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Are quotes binding or non-binding?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We offer both binding and non-binding estimates. Binding estimates guarantee the price won't change, while non-binding estimates may vary based on actual weight and services. We'll explain the difference during your consultation.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What factors affect moving costs?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Moving costs depend on distance, weight/volume of items, time of year, additional services (packing, storage), accessibility of locations, and special handling requirements for fragile or valuable items.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section" id="booking">
+            <div class="container">
+                <h2>Booking & Scheduling</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How far in advance should I book?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We recommend booking at least 2-4 weeks in advance, especially during peak moving season (May-September). For last-minute moves, we'll do our best to accommodate your schedule based on availability.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I change my moving date?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, you can change your moving date subject to availability. We recommend notifying us as soon as possible. Changes made within 48 hours of the scheduled move may incur additional fees.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What if I need to cancel my move?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Cancellations made more than 48 hours before the scheduled move are typically free. Cancellations within 48 hours may be subject to a cancellation fee. Please refer to your contract for specific terms.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section" id="packing">
+            <div class="container">
+                <h2>Packing Tips</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Should I pack myself or hire professionals?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>It depends on your budget, time, and comfort level. Professional packing saves time and ensures proper protection, especially for fragile items. Self-packing is more economical but requires more time and effort.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What items should I not pack?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Don't pack hazardous materials (paint, propane, chemicals), perishable food, plants, important documents, jewelry, or items of sentimental value. Keep these with you during the move.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How should I pack fragile items?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Use plenty of bubble wrap or packing paper, pack items individually, fill empty spaces in boxes, mark boxes as "FRAGILE," and consider professional packing for valuable items.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-support">
+            <div class="container">
+                <div class="support-card">
+                    <h2>Still Need Help?</h2>
+                    <p>Can't find what you're looking for? Our customer support team is here to help.</p>
+                    <div class="support-options">
+                        <a href="support.html" class="btn btn-primary">Contact Support</a>
+                        <a href="ai-chat.html" class="btn btn-secondary">Chat with AI Assistant</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lugvia</h3>
+                    <p>Your trusted partner for stress-free moving across America.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="local-moving.html">Local Moving</a></li>
+                        <li><a href="long-distance.html">Long Distance</a></li>
+                        <li><a href="packing-services.html">Packing Services</a></li>
+                        <li><a href="storage.html">Storage</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="help-center.html">Help Center</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section newsletter-section">
+                    <h4>Stay Updated</h4>
+                    <p>Get moving tips, special offers, and updates delivered to your inbox.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <div class="newsletter-input-group">
+                            <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+                            <button type="submit" class="btn btn-primary newsletter-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="newsletter-message" id="newsletterMessage"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Lugvia.com. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // FAQ accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const answer = faqItem.querySelector('.faq-answer');
+                const icon = question.querySelector('i');
+                
+                faqItem.classList.toggle('active');
+                
+                if (faqItem.classList.contains('active')) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    answer.style.maxHeight = '0';
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
