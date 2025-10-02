@@ -1,318 +1,208 @@
-// Admin Panel JavaScript
 class AdminPanel {
     constructor() {
-        this.currentSection = 'dashboard';
         this.data = {
-            blogs: [],
-            services: [],
-            quotes: [],
-            customers: [],
-            pricing: [],
-            newsletters: [],
-            notifications: [],
-            subscribers: []
+            blogs: [
+                {
+                    id: 1,
+                    title: "10 Tips for a Stress-Free Move",
+                    author: "Sarah Johnson",
+                    excerpt: "Moving doesn't have to be overwhelming. Here are our top tips...",
+                    content: "Moving to a new home can be one of life's most stressful experiences...",
+                    image: "https://via.placeholder.com/400x200",
+                    status: "published",
+                    date: new Date().toISOString()
+                },
+                {
+                    id: 2,
+                    title: "How to Pack Fragile Items",
+                    author: "Mike Chen",
+                    excerpt: "Protect your valuable items during the move with these packing techniques...",
+                    content: "When it comes to moving fragile items, proper packing is essential...",
+                    image: "https://via.placeholder.com/400x200",
+                    status: "draft",
+                    date: new Date().toISOString()
+                }
+            ],
+            services: [
+                {
+                    id: 1,
+                    name: "Local Moving",
+                    description: "Professional local moving services within the city",
+                    basePrice: 299.99,
+                    features: ["Professional movers", "Basic insurance", "Loading/unloading"],
+                    status: "active",
+                    date: new Date().toISOString()
+                },
+                {
+                    id: 2,
+                    name: "Long Distance Moving",
+                    description: "Interstate and long-distance moving services",
+                    basePrice: 899.99,
+                    features: ["Professional movers", "Full insurance", "Tracking", "Storage options"],
+                    status: "active",
+                    date: new Date().toISOString()
+                }
+            ],
+            quotes: [
+                {
+                    id: 1,
+                    customerName: "John Doe",
+                    email: "john@example.com",
+                    phone: "(555) 123-4567",
+                    fromCity: "New York",
+                    toCity: "Los Angeles",
+                    homeSize: "3-bedroom",
+                    moveDate: new Date().toISOString(),
+                    services: ["packing", "insurance"],
+                    status: "pending",
+                    date: new Date().toISOString()
+                },
+                {
+                    id: 2,
+                    customerName: "Jane Smith",
+                    email: "jane@example.com",
+                    phone: "(555) 987-6543",
+                    fromCity: "Chicago",
+                    toCity: "Miami",
+                    homeSize: "2-bedroom",
+                    moveDate: new Date().toISOString(),
+                    services: ["storage"],
+                    status: "responded",
+                    date: new Date().toISOString()
+                }
+            ],
+            customers: [
+                {
+                    id: 1,
+                    name: "John Doe",
+                    email: "john@example.com",
+                    phone: "(555) 123-4567",
+                    address: "123 Main St, New York, NY",
+                    joinDate: new Date().toISOString()
+                },
+                {
+                    id: 2,
+                    name: "Jane Smith",
+                    email: "jane@example.com",
+                    phone: "(555) 987-6543",
+                    address: "456 Oak Ave, Chicago, IL",
+                    joinDate: new Date().toISOString()
+                }
+            ],
+            pricing: [
+                {
+                    id: 1,
+                    serviceType: "Local Moving",
+                    baseRate: 299.99,
+                    perMile: 2.50,
+                    status: "active"
+                },
+                {
+                    id: 2,
+                    serviceType: "Long Distance",
+                    baseRate: 899.99,
+                    perMile: 3.75,
+                    status: "active"
+                }
+            ],
+            tickets: [
+                {
+                    id: 1,
+                    customerName: "John Doe",
+                    email: "john@example.com",
+                    phone: "(555) 123-4567",
+                    subject: "Issue with moving quote",
+                    category: "quote",
+                    priority: "high",
+                    status: "open",
+                    description: "I received a quote but the pricing seems incorrect. Can you please review?",
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    responses: []
+                },
+                {
+                    id: 2,
+                    customerName: "Jane Smith",
+                    email: "jane@example.com",
+                    phone: "(555) 987-6543",
+                    subject: "Scheduling conflict",
+                    category: "booking",
+                    priority: "medium",
+                    status: "in-progress",
+                    description: "Need to reschedule my move due to unexpected circumstances.",
+                    createdAt: new Date(Date.now() - 86400000).toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    responses: [
+                        {
+                            id: 1,
+                            message: "We can help you reschedule. What dates work better for you?",
+                            author: "Support Team",
+                            timestamp: new Date().toISOString()
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    customerName: "Mike Johnson",
+                    email: "mike@example.com",
+                    phone: "(555) 456-7890",
+                    subject: "Damaged items during move",
+                    category: "complaint",
+                    priority: "critical",
+                    status: "resolved",
+                    description: "Some of my furniture was damaged during the move. I need to file a claim.",
+                    createdAt: new Date(Date.now() - 172800000).toISOString(),
+                    updatedAt: new Date(Date.now() - 86400000).toISOString(),
+                    responses: [
+                        {
+                            id: 1,
+                            message: "We apologize for the damage. Please send photos and we'll process your claim immediately.",
+                            author: "Support Team",
+                            timestamp: new Date(Date.now() - 86400000).toISOString()
+                        },
+                        {
+                            id: 2,
+                            message: "Claim has been processed and compensation will be sent within 3-5 business days.",
+                            author: "Claims Department",
+                            timestamp: new Date(Date.now() - 43200000).toISOString()
+                        }
+                    ]
+                }
+            ]
         };
-        this.init();
-    }
-
-    init() {
-        // Check authentication first
-        if (!this.checkAuthentication()) {
-            this.redirectToLogin();
-            return;
-        }
+        this.saveData();
         
-        this.loadData();
-        this.setupEventListeners();
-        this.updateDashboard();
-        this.renderAllSections();
-        this.updateUserInfo();
+        // Initialize password change form event listeners
+        this.initPasswordChangeListeners();
     }
     
-    // Authentication Methods
-    checkAuthentication() {
-        const sessionData = this.getSessionData();
-        if (!sessionData) return false;
-        
-        // Check if session is still valid (24 hours)
-        const loginTime = new Date(sessionData.loginTime);
-        const now = new Date();
-        const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
-        
-        if (hoursDiff >= 24) {
-            this.clearSession();
-            return false;
-        }
-        
-        return true;
-    }
-    
-    getSessionData() {
-        let sessionData = localStorage.getItem('lugvia_admin_session');
-        if (!sessionData) {
-            sessionData = sessionStorage.getItem('lugvia_admin_session');
-        }
-        
-        try {
-            return sessionData ? JSON.parse(sessionData) : null;
-        } catch (e) {
-            return null;
-        }
-    }
-    
-    clearSession() {
-        localStorage.removeItem('lugvia_admin_session');
-        sessionStorage.removeItem('lugvia_admin_session');
-    }
-    
-    redirectToLogin() {
-        window.location.href = 'admin-login.html';
-    }
-    
-    updateUserInfo() {
-        const sessionData = this.getSessionData();
-        if (sessionData && sessionData.username) {
-            const welcomeElement = document.querySelector('.admin-welcome');
-            if (welcomeElement) {
-                welcomeElement.textContent = `Welcome, ${sessionData.username}`;
-            }
-        }
-    }
-
-    // Event Listeners
-    setupEventListeners() {
-        // Navigation
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
+    initPasswordChangeListeners() {
+        // Add event listener for password change form
+        const changePasswordForm = document.getElementById('changePasswordForm');
+        if (changePasswordForm) {
+            changePasswordForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const section = e.target.closest('.nav-link').dataset.section;
-                this.showSection(section);
+                this.changePassword();
             });
-        });
-
-        // Logout button
-        document.getElementById('logout-btn')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.logout();
-        });
-
-        // Forms
-        document.getElementById('addBlogForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.addBlog();
-        });
-        
-        // WhatsApp Form
-        document.getElementById('whatsappForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveWhatsAppSettings();
-        });
-        
-        // Analytics Form
-        document.getElementById('analyticsForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveAnalyticsSettings();
-        });
-        
-        // Meta Tags Form
-        document.getElementById('metaTagsForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveMetaTags();
-        });
-        
-        // Search Console Form
-        document.getElementById('searchConsoleForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveSearchConsoleSettings();
-        });
-        
-        // CAPTCHA Form
-        document.getElementById('captchaForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveCaptchaSettings();
-        });
-        
-        // Login Security Form
-        document.getElementById('loginSecurityForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveLoginSecuritySettings();
-        });
-        
-        // Cloudflare Form
-        document.getElementById('cloudflareForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveCloudflareSettings();
-        });
-        
-        // BIN Search Form
-        document.getElementById('binSearchForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.searchBIN();
-        });
-        
-        // BIN API Form
-        document.getElementById('binApiForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveBinApiSettings();
-        });
-        
-        // SMTP Form
-        document.getElementById('smtpForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveSmtpSettings();
-        });
-
-        document.getElementById('addServiceForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.addService();
-        });
-
-        document.getElementById('generalSettingsForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveGeneralSettings();
-        });
-
-        document.getElementById('apiSettingsForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.saveApiSettings();
-        });
-
-        // Quote status filter
-        document.getElementById('quoteStatusFilter').addEventListener('change', (e) => {
-            this.filterQuotes(e.target.value);
-        });
-
-        // Ticket filters
-        document.getElementById('ticketStatusFilter')?.addEventListener('change', () => {
-            this.renderTickets();
-        });
-        
-        document.getElementById('ticketPriorityFilter')?.addEventListener('change', () => {
-            this.renderTickets();
-        });
-        
-        document.getElementById('ticketCategoryFilter')?.addEventListener('change', () => {
-            this.renderTickets();
-        });
-
-        // Modal close on outside click
-        window.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal')) {
-                this.closeModal(e.target.id);
-            }
-        });
-    }
-    
-    // Logout functionality
-    logout() {
-        this.clearSession();
-        this.showNotification('Logged out successfully', 'success');
-        setTimeout(() => {
-            this.redirectToLogin();
-        }, 1000);
-    }
-
-    // Navigation
-    showSection(sectionName) {
-        // Update navigation
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-        });
-        document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
-
-        // Update content
-        document.querySelectorAll('.admin-section').forEach(section => {
-            section.classList.remove('active');
-        });
-        document.getElementById(sectionName).classList.add('active');
-
-        this.currentSection = sectionName;
-        this.renderSection(sectionName);
-    }
-
-    renderSection(sectionName) {
-        switch(sectionName) {
-            case 'dashboard':
-                this.updateDashboard();
-                break;
-            case 'blogs':
-                this.renderBlogs();
-                break;
-            case 'services':
-                this.renderServices();
-                break;
-            case 'quotes':
-                this.renderQuotes();
-                break;
-            case 'customers':
-                this.renderCustomers();
-                break;
-            case 'tickets':
-                this.renderTickets();
-                break;
-            case 'pricing':
-                this.renderPricing();
-                break;
-            case 'newsletter':
-                this.renderNewsletter();
-                break;
-            case 'notifications':
-                this.renderNotifications();
-                break;
-        }
-    }
-
-    renderAllSections() {
-        this.renderBlogs();
-        this.renderServices();
-        this.renderQuotes();
-        this.renderCustomers();
-        this.renderPricing();
-    }
-
-    // Dashboard
-    updateDashboard() {
-        document.getElementById('totalBlogs').textContent = this.data.blogs.length;
-        document.getElementById('totalQuotes').textContent = this.data.quotes.length;
-        document.getElementById('totalCustomers').textContent = this.data.customers.length;
-        document.getElementById('totalServices').textContent = this.data.services.length;
-
-        // Update newsletter and notification stats if elements exist
-        const newsletterElement = document.getElementById('newsletterSubscribers');
-        const notificationElement = document.getElementById('notificationsSent');
-        
-        if (newsletterElement) {
-            const subscribers = this.getSubscribers();
-            newsletterElement.textContent = subscribers.length;
         }
         
-        if (notificationElement) {
-            notificationElement.textContent = this.data.notifications.length;
+        // Add event listeners for password strength checking
+        const newPasswordInput = document.getElementById('newPassword');
+        if (newPasswordInput) {
+            newPasswordInput.addEventListener('input', (e) => {
+                this.updatePasswordStrength(e.target.value);
+            });
+            
+            newPasswordInput.addEventListener('focus', () => {
+                document.querySelector('.password-strength').style.display = 'block';
+            });
+            
+            newPasswordInput.addEventListener('blur', () => {
+                setTimeout(() => {
+                    this.hidePasswordStrength();
+                }, 200);
+            });
         }
-
-        this.renderRecentActivity();
-    }
-
-    renderRecentActivity() {
-        const activityContainer = document.getElementById('recentActivity');
-        const activities = [
-            { icon: 'fas fa-blog', title: 'New blog post added', time: '2 hours ago', type: 'blog' },
-            { icon: 'fas fa-calculator', title: 'Quote request received', time: '4 hours ago', type: 'quote' },
-            { icon: 'fas fa-user-plus', title: 'New customer registered', time: '6 hours ago', type: 'customer' },
-            { icon: 'fas fa-truck', title: 'Service updated', time: '1 day ago', type: 'service' }
-        ];
-
-        activityContainer.innerHTML = activities.map(activity => `
-            <div class="activity-item">
-                <div class="activity-icon">
-                    <i class="${activity.icon}"></i>
-                </div>
-                <div class="activity-content">
-                    <h4>${activity.title}</h4>
-                    <p>${activity.time}</p>
-                </div>
-            </div>
-        `).join('');
     }
 
     // Blog Management
@@ -1754,12 +1644,162 @@ class AdminPanel {
             this.showNotification('Error saving SMTP settings: ' + error.message, 'error');
         }
     }
+
+    // Password Change Functionality
+    async changePassword() {
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        // Validate passwords
+        const validation = this.validatePasswordChange(currentPassword, newPassword, confirmPassword);
+        if (!validation.isValid) {
+            this.showNotification(validation.message, 'error');
+            return;
+        }
+
+        try {
+            // Get admin token from cookie
+            const token = document.cookie.split('; ').find(row => row.startsWith('admin_token='))?.split('=')[1];
+            
+            const response = await fetch('/api/admin/change-password', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    currentPassword,
+                    newPassword
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                this.showNotification(result.message || 'Password changed successfully!', 'success');
+                // Clear the form
+                document.getElementById('changePasswordForm').reset();
+                this.hidePasswordStrength();
+            } else {
+                this.showNotification(result.error || 'Failed to change password', 'error');
+            }
+        } catch (error) {
+            this.showNotification('Error changing password: ' + error.message, 'error');
+        }
+    }
+
+    validatePasswordChange(currentPassword, newPassword, confirmPassword) {
+        // Check if all fields are filled
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            return { isValid: false, message: 'Please fill in all password fields' };
+        }
+
+        // Check if new passwords match
+        if (newPassword !== confirmPassword) {
+            return { isValid: false, message: 'New passwords do not match' };
+        }
+
+        // Check password strength
+        const strength = this.checkPasswordStrength(newPassword);
+        if (strength.score < 2) {
+            return { isValid: false, message: 'Password is too weak. Please choose a stronger password.' };
+        }
+
+        return { isValid: true, message: 'Password validation successful' };
+    }
+
+    checkPasswordStrength(password) {
+        let score = 0;
+        let feedback = [];
+
+        // Length check
+        if (password.length >= 8) score++;
+        else feedback.push('At least 8 characters');
+
+        // Uppercase check
+        if (/[A-Z]/.test(password)) score++;
+        else feedback.push('One uppercase letter');
+
+        // Lowercase check
+        if (/[a-z]/.test(password)) score++;
+        else feedback.push('One lowercase letter');
+
+        // Number check
+        if (/\d/.test(password)) score++;
+        else feedback.push('One number');
+
+        // Special character check
+        if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score++;
+        else feedback.push('One special character');
+
+        const strength = {
+            score,
+            level: score <= 1 ? 'weak' : score <= 2 ? 'fair' : score <= 3 ? 'good' : 'strong',
+            feedback
+        };
+
+        return strength;
+    }
+
+    updatePasswordStrength(password) {
+        const strengthIndicator = document.getElementById('passwordStrength');
+        const strengthFill = document.getElementById('strengthFill');
+        const strengthText = document.getElementById('strengthText');
+
+        if (!password) {
+            this.hidePasswordStrength();
+            return;
+        }
+
+        const strength = this.checkPasswordStrength(password);
+        
+        // Show strength indicator
+        strengthIndicator.style.display = 'block';
+
+        // Update strength bar
+        strengthFill.className = `strength-fill ${strength.level}`;
+        
+        // Update strength text
+        strengthText.className = `strength-text ${strength.level}`;
+        strengthText.textContent = `Password strength: ${strength.level.charAt(0).toUpperCase() + strength.level.slice(1)}`;
+        
+        if (strength.feedback.length > 0) {
+            strengthText.textContent += ` (Missing: ${strength.feedback.join(', ')})`;
+        }
+    }
+
+    hidePasswordStrength() {
+        const strengthIndicator = document.getElementById('passwordStrength');
+        if (strengthIndicator) {
+            strengthIndicator.style.display = 'none';
+        }
+    }
 }
 
 // Global functions
-function logout() {
+async function logout() {
     if (confirm('Are you sure you want to logout?')) {
-        window.location.href = 'index.html';
+        try {
+            // Call server-side logout to clear the admin_token cookie
+            await fetch('/api/admin/logout', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+        
+        // Clear client-side session data
+        localStorage.removeItem('lugvia_admin_session');
+        sessionStorage.removeItem('lugvia_admin_session');
+        
+        // Redirect to login page
+        window.location.href = 'admin-login.html';
     }
 }
 
@@ -1872,125 +1912,82 @@ function generateSitemap() {
 
 function submitToGoogle() {
     adminPanel.showNotification('Submitting sitemap to Google...', 'info');
-    fetch('/api/admin/submit-sitemap', { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                adminPanel.showNotification('Sitemap submitted to Google successfully!', 'success');
-            } else {
-                throw new Error(data.message);
-            }
-        })
-        .catch(error => {
-            adminPanel.showNotification('Error submitting to Google: ' + error.message, 'error');
-        });
+    // Implementation would go here
 }
 
-function checkIndexStatus() {
-    adminPanel.showNotification('Checking index status...', 'info');
-    fetch('/api/admin/index-status')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById('sitemapStatus').innerHTML = `
-                    <h4>Index Status</h4>
-                    <p>Indexed Pages: ${data.indexed || 0}</p>
-                    <p>Total Pages: ${data.total || 0}</p>
-                    <p>Last Updated: ${new Date(data.lastUpdated).toLocaleString()}</p>
-                `;
-                adminPanel.showNotification('Index status retrieved successfully!', 'success');
-            } else {
-                throw new Error(data.message);
-            }
-        })
-        .catch(error => {
-            adminPanel.showNotification('Error checking index status: ' + error.message, 'error');
-        });
-}
-
-// Cloudflare Functions
-function purgeCache() {
-    if (!confirm('Are you sure you want to purge the entire cache?')) return;
+// Password functionality
+function togglePasswordVisibility(fieldId) {
+    const passwordInput = document.getElementById(fieldId);
+    const toggleButton = passwordInput.nextElementSibling.querySelector('i');
     
-    adminPanel.showNotification('Purging Cloudflare cache...', 'info');
-    fetch('/api/admin/cloudflare/purge-cache', { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                adminPanel.showNotification('Cache purged successfully!', 'success');
-            } else {
-                throw new Error(data.message);
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleButton.className = 'fas fa-eye-slash';
+    } else {
+        passwordInput.type = 'password';
+        toggleButton.className = 'fas fa-eye';
+    }
+}
+
+// Firebase Auth-aware fetch wrapper for admin panel
+(function() {
+    // Store the original fetch function
+    const originalFetch = window.fetch;
+    
+    // Override the global fetch function
+    window.fetch = async function(url, options = {}) {
+        // Only intercept /api requests
+        if (typeof url === 'string' && url.startsWith('/api')) {
+            try {
+                // Check if Firebase is available and user is signed in
+                if (window.FIREBASE_CONFIG && typeof window.firebase !== 'undefined') {
+                    // Dynamically load Firebase SDKs if not already loaded
+                    if (!window.firebase.apps.length) {
+                        // Load Firebase Auth SDK
+                        if (!document.querySelector('script[src*="firebase-auth"]')) {
+                            await new Promise((resolve, reject) => {
+                                const script = document.createElement('script');
+                                script.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+                                script.type = 'module';
+                                script.onload = resolve;
+                                script.onerror = reject;
+                                document.head.appendChild(script);
+                            });
+                        }
+                        
+                        // Initialize Firebase
+                        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js');
+                        const { getAuth, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js');
+                        
+                        const app = initializeApp(window.FIREBASE_CONFIG);
+                        const auth = getAuth(app);
+                        
+                        // Wait for auth state and get ID token if user is signed in
+                        const user = await new Promise((resolve) => {
+                            const unsubscribe = onAuthStateChanged(auth, (user) => {
+                                unsubscribe();
+                                resolve(user);
+                            });
+                        });
+                        
+                        if (user) {
+                            const idToken = await user.getIdToken();
+                            
+                            // Add Firebase ID token to Authorization header
+                            options.headers = {
+                                ...options.headers,
+                                'Authorization': `Bearer ${idToken}`
+                            };
+                        }
+                    }
+                }
+            } catch (error) {
+                console.warn('Firebase Auth not available, falling back to cookie auth:', error);
+                // Continue with original request if Firebase fails
             }
-        })
-        .catch(error => {
-            adminPanel.showNotification('Error purging cache: ' + error.message, 'error');
-        });
-}
-
-function checkSSLStatus() {
-    adminPanel.showNotification('Checking SSL status...', 'info');
-    fetch('/api/admin/cloudflare/ssl-status')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                adminPanel.showNotification(`SSL Status: ${data.status}`, 'success');
-            } else {
-                throw new Error(data.message);
-            }
-        })
-        .catch(error => {
-            adminPanel.showNotification('Error checking SSL status: ' + error.message, 'error');
-        });
-}
-
-function toggleDevelopmentMode() {
-    adminPanel.showNotification('Toggling development mode...', 'info');
-    fetch('/api/admin/cloudflare/dev-mode', { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                adminPanel.showNotification(`Development mode: ${data.enabled ? 'Enabled' : 'Disabled'}`, 'success');
-            } else {
-                throw new Error(data.message);
-            }
-        })
-        .catch(error => {
-            adminPanel.showNotification('Error toggling development mode: ' + error.message, 'error');
-        });
-}
-
-// SMTP Functions
-function testSmtpConnection() {
-    adminPanel.showNotification('Testing SMTP connection...', 'info');
-    fetch('/api/admin/smtp/test', { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            const resultDiv = document.getElementById('smtpTestResult');
-            resultDiv.style.display = 'block';
-            
-            if (data.success) {
-                resultDiv.innerHTML = `<div class="alert alert-success">SMTP connection successful!</div>`;
-                adminPanel.showNotification('SMTP connection test passed!', 'success');
-            } else {
-                resultDiv.innerHTML = `<div class="alert alert-error">SMTP connection failed: ${data.message}</div>`;
-                adminPanel.showNotification('SMTP connection test failed!', 'error');
-            }
-        })
-        .catch(error => {
-            document.getElementById('smtpTestResult').innerHTML = `<div class="alert alert-error">Error: ${error.message}</div>`;
-            adminPanel.showNotification('Error testing SMTP: ' + error.message, 'error');
-        });
-}
-
-function editTemplate(templateType) {
-    adminPanel.showNotification(`Opening ${templateType} template editor...`, 'info');
-    // This would open a modal or redirect to template editor
-    // For now, just show a placeholder
-    alert(`Template editor for ${templateType} would open here`);
-}
-
-// Initialize admin panel when DOM is loaded
-let adminPanel;
-document.addEventListener('DOMContentLoaded', () => {
-    adminPanel = new AdminPanel();
-});
+        }
+        
+        // Call the original fetch function
+        return originalFetch.call(this, url, options);
+    };
+})()

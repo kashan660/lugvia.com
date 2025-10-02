@@ -299,6 +299,77 @@ document.addEventListener('DOMContentLoaded', () => {
     const today = new Date();
     const thirtyDaysAgo = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000));
     
-    document.getElementById('exportDateTo').value = today.toISOString().split('T')[0];
-    document.getElementById('exportDateFrom').value = thirtyDaysAgo.toISOString().split('T')[0];
+    // Set date inputs if they exist
+    const startDateInput = document.getElementById('exportStartDate');
+    const endDateInput = document.getElementById('exportEndDate');
+    
+    if (startDateInput) {
+        startDateInput.value = thirtyDaysAgo.toISOString().split('T')[0];
+    }
+    if (endDateInput) {
+        endDateInput.value = today.toISOString().split('T')[0];
+    }
 });
+
+// Firebase Auth-aware fetch wrapper for admin panel
+(function() {
+    // Store the original fetch function
+    const originalFetch = window.fetch;
+    
+    // Override the global fetch function
+    window.fetch = async function(url, options = {}) {
+        // Only intercept /api requests
+        if (typeof url === 'string' && url.startsWith('/api')) {
+            try {
+                // Check if Firebase is available and user is signed in
+                if (window.FIREBASE_CONFIG && typeof window.firebase !== 'undefined') {
+                    // Dynamically load Firebase SDKs if not already loaded
+                    if (!window.firebase.apps.length) {
+                        // Load Firebase Auth SDK
+                        if (!document.querySelector('script[src*="firebase-auth"]')) {
+                            await new Promise((resolve, reject) => {
+                                const script = document.createElement('script');
+                                script.src = 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+                                script.type = 'module';
+                                script.onload = resolve;
+                                script.onerror = reject;
+                                document.head.appendChild(script);
+                            });
+                        }
+                        
+                        // Initialize Firebase
+                        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js');
+                        const { getAuth, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js');
+                        
+                        const app = initializeApp(window.FIREBASE_CONFIG);
+                        const auth = getAuth(app);
+                        
+                        // Wait for auth state and get ID token if user is signed in
+                        const user = await new Promise((resolve) => {
+                            const unsubscribe = onAuthStateChanged(auth, (user) => {
+                                unsubscribe();
+                                resolve(user);
+                            });
+                        });
+                        
+                        if (user) {
+                            const idToken = await user.getIdToken();
+                            
+                            // Add Firebase ID token to Authorization header
+                            options.headers = {
+                                ...options.headers,
+                                'Authorization': `Bearer ${idToken}`
+                            };
+                        }
+                    }
+                }
+            } catch (error) {
+                console.warn('Firebase Auth not available, falling back to cookie auth:', error);
+                // Continue with original request if Firebase fails
+            }
+        }
+        
+        // Call the original fetch function
+        return originalFetch.call(this, url, options);
+    };
+})();

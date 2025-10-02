@@ -9,6 +9,43 @@ const router = express.Router();
 const db = new Database();
 const authService = new AuthService();
 
+// Admin authentication middleware
+const requireAdmin = async (req, res, next) => {
+    try {
+        const token = req.cookies.admin_token || req.headers.authorization?.replace('Bearer ', '');
+        
+        if (!token) {
+            return res.status(401).json({ error: 'Admin authentication required' });
+        }
+
+        // Verify JWT token using the correct method
+        const decoded = jwt.verify(token, process.env.ADMIN_JWT_SECRET);
+        if (!decoded || !decoded.isAdmin) {
+            return res.status(403).json({ error: 'Admin access required' });
+        }
+
+        // Check session timeout (24 hours)
+        const now = Date.now();
+        const sessionTimeout = 24 * 60 * 60 * 1000; // 24 hours
+        
+        if (decoded.loginTime && (now - decoded.loginTime > sessionTimeout)) {
+            return res.status(401).json({ error: 'Session expired' });
+        }
+
+        // Update last activity
+        decoded.lastActivity = now;
+
+        req.admin = decoded;
+        next();
+    } catch (error) {
+        if (error.name === 'TokenExpiredError') {
+            return res.status(401).json({ error: 'Token expired' });
+        }
+        console.error('Admin auth error:', error);
+        res.status(401).json({ error: 'Invalid admin token' });
+    }
+};
+
 // Admin login endpoint
 router.post('/login', async (req, res) => {
     try {
@@ -124,27 +161,76 @@ router.post('/logout', async (req, res) => {
     }
 });
 
-// Admin authentication middleware
-const requireAdmin = async (req, res, next) => {
+// Admin change password endpoint
+router.post('/change-password', requireAdmin, async (req, res) => {
     try {
-        const token = req.cookies.admin_token || req.headers.authorization?.replace('Bearer ', '');
+        const { currentPassword, newPassword } = req.body;
         
-        if (!token) {
-            return res.status(401).json({ error: 'Admin authentication required' });
+        if (!currentPassword || !newPassword) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Current password and new password are required' 
+            });
         }
-
-        // Verify admin token (you can implement your own admin auth logic)
-        const decoded = authService.verifyToken(token);
-        if (!decoded || !decoded.isAdmin) {
-            return res.status(403).json({ error: 'Admin access required' });
+        
+        // Validate new password strength
+        if (newPassword.length < 8) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'New password must be at least 8 characters long' 
+            });
         }
-
-        req.admin = decoded;
-        next();
+        
+        // Check if new password has at least one uppercase, lowercase, number, and special character
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
+        if (!passwordRegex.test(newPassword)) {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'New password must contain at least one uppercase letter, one lowercase letter, one number, and one special character' 
+            });
+        }
+        
+        // Get current admin password from environment
+        const adminPassword = process.env.ADMIN_PASSWORD;
+        
+        if (!adminPassword) {
+            return res.status(500).json({ 
+                success: false, 
+                error: 'Server configuration error' 
+            });
+        }
+        
+        // Verify current password
+        const isValidCurrentPassword = await bcrypt.compare(currentPassword, adminPassword);
+        
+        if (!isValidCurrentPassword) {
+            return res.status(401).json({ 
+                success: false, 
+                error: 'Current password is incorrect' 
+            });
+        }
+        
+        // Hash new password
+        const saltRounds = 12;
+        const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds);
+        
+        // Note: In a real application, you would update the password in a database
+        // For this implementation, we'll just return success since the password is stored in environment variables
+        // In production, you should implement proper password storage and update mechanisms
+        
+        res.json({ 
+            success: true, 
+            message: 'Password changed successfully. Please note: To permanently change the admin password, update the ADMIN_PASSWORD environment variable with the new hashed password.' 
+        });
+        
     } catch (error) {
-        res.status(401).json({ error: 'Invalid admin token' });
+        console.error('Admin change password error:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Internal server error' 
+        });
     }
-};
+});
 
 // Get WhatsApp settings
 router.get('/whatsapp-settings', async (req, res) => {

@@ -144,56 +144,52 @@
                 }
             }
             
-            async validateCredentials(username, password) {
-                // SECURITY: Server-side authentication required
-                // Never store credentials in client-side code
+            async login(rememberMe) {
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                
                 try {
                     const response = await fetch('/api/admin/login', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
+                        credentials: 'include', // Important: include cookies
                         body: JSON.stringify({ username, password })
                     });
                     
                     const result = await response.json();
-                    return response.ok && result.success;
+                    
+                    if (!response.ok || !result.success) {
+                        this.showError(result.error || 'Invalid username or password');
+                        return;
+                    }
+                    
+                    // Server has set the admin_token cookie automatically
+                    // We can optionally store some client-side session info for UI purposes
+                    const sessionData = {
+                        authenticated: true,
+                        loginTime: new Date().toISOString(),
+                        username: username
+                    };
+                    
+                    // Store session info (optional, mainly for UI state)
+                    if (rememberMe) {
+                        localStorage.setItem('lugvia_admin_session', JSON.stringify(sessionData));
+                    } else {
+                        sessionStorage.setItem('lugvia_admin_session', JSON.stringify(sessionData));
+                    }
+                    
+                    // Show success and redirect
+                    this.showSuccess();
+                    setTimeout(() => {
+                        window.location.href = 'admin.html';
+                    }, 1000);
+                    
                 } catch (error) {
                     console.error('Authentication error:', error);
-                    return false;
+                    this.showError('Authentication failed. Please try again.');
                 }
-            }
-            
-            async login(rememberMe) {
-                const username = document.getElementById('username').value.trim();
-                const password = document.getElementById('password').value;
-                
-                // Validate credentials with server
-                const isValid = await this.validateCredentials(username, password);
-                
-                if (!isValid) {
-                    this.showError('Invalid username or password');
-                    return;
-                }
-                
-                const sessionData = {
-                    authenticated: true,
-                    loginTime: new Date().toISOString(),
-                    username: username
-                };
-                
-                // Store session
-                if (rememberMe) {
-                    localStorage.setItem('lugvia_admin_session', JSON.stringify(sessionData));
-                } else {
-                    sessionStorage.setItem('lugvia_admin_session', JSON.stringify(sessionData));
-                }
-                
-                // Show success and redirect
-                this.showSuccess();
-                setTimeout(() => {
-                    window.location.href = 'admin.html';
-                }, 1000);
             }
             
             isAuthenticated() {

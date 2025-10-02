@@ -80,7 +80,7 @@ const cityCoordinates = {
 const homeSizeMultipliers = {
     'studio': 0.5,
     '1-bedroom': 0.7,
-    '2-bedroom': 1.0,
+    '2-bedroom': 0.7,
     '3-bedroom': 1.4,
     '4-bedroom': 1.8,
     'house': 2.2
@@ -1041,3 +1041,86 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Firebase Web App Config (public)
+// Note: This config is public and enables Firebase initialization for ID token usage.
+window.FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAryw0NphsWNa2tHzhvGk8XRbcqmpQ0xuM",
+  authDomain: "lugvia-61bf1.firebaseapp.com",
+  databaseURL: "https://lugvia-61bf1-default-rtdb.firebaseio.com",
+  projectId: "lugvia-61bf1",
+  storageBucket: "lugvia-61bf1.firebasestorage.app",
+  messagingSenderId: "222766334803",
+  appId: "1:222766334803:web:9f45cc48dc67de0c2857a6",
+  measurementId: "G-2SCD27K2XH"
+};
+
+// Firebase Auth-aware fetch wrapper
+(function() {
+  const API_PREFIXES = ['/api', 'http://localhost:4001/api'];
+  const originalFetch = window.fetch.bind(window);
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function ensureFirebaseInitialized() {
+    try {
+      if (window.firebaseAuth) return true;
+      if (!window.FIREBASE_CONFIG) return false; // No config provided yet
+      if (!window.firebase || !window.firebase.initializeApp) {
+        // Load Firebase SDK (compat builds for non-module usage)
+        await loadScript('https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js');
+        await loadScript('https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js');
+      }
+      if (!window.firebaseApp) {
+        window.firebaseApp = window.firebase.initializeApp(window.FIREBASE_CONFIG);
+        window.firebaseAuth = window.firebase.auth();
+      }
+      return true;
+    } catch (e) {
+      console.warn('Firebase initialization error:', e);
+      return false;
+    }
+  }
+
+  async function getIdToken() {
+    try {
+      const ok = await ensureFirebaseInitialized();
+      if (!ok) return null;
+      const user = window.firebaseAuth?.currentUser;
+      if (!user) return null;
+      return await user.getIdToken();
+    } catch (e) {
+      console.warn('Failed to get Firebase ID token:', e);
+      return null;
+    }
+  }
+
+  window.fetch = async function(input, init = {}) {
+    const url = typeof input === 'string' ? input : input.url;
+    const isApi = typeof url === 'string' && API_PREFIXES.some(prefix => url.startsWith(prefix));
+    if (!isApi) {
+      return originalFetch(input, init);
+    }
+
+    const headers = new Headers(init && init.headers ? init.headers : {});
+    const token = await getIdToken();
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    const newInit = { ...init, headers };
+    if (newInit.credentials == null) newInit.credentials = 'include';
+
+    return originalFetch(input, newInit);
+  };
+})();
+}

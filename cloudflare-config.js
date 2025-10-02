@@ -177,7 +177,7 @@ const cloudflareConfig = {
                 newResponse.headers.set('X-XSS-Protection', '1; mode=block')
                 newResponse.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
                 newResponse.headers.set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()')
-                newResponse.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'")
+                newResponse.headers.set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://www.gstatic.com/firebasejs; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com")
                 
                 return newResponse
             }

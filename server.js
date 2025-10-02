@@ -105,11 +105,19 @@ app.use((req, res, next) => {
 const rateLimitStore = new Map();
 const suspiciousIPs = new Map();
 
+// Whitelist for localhost and development IPs
+const whitelistedIPs = new Set(['127.0.0.1', '::1', 'localhost']);
+
 app.use('/api/', (req, res, next) => {
     const clientIP = req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     const now = Date.now();
     const windowMs = 15 * 60 * 1000; // 15 minutes
     let maxRequests = 100; // requests per window
+    
+    // Skip rate limiting for whitelisted IPs (localhost)
+    if (whitelistedIPs.has(clientIP)) {
+        return next();
+    }
     
     // Stricter limits for admin endpoints
     if (req.path.startsWith('/admin')) {
@@ -436,6 +444,56 @@ app.post('/api/admin/cloudflare/settings', requireAdmin, async (req, res) => {
   } catch (error) {
     console.error('Error saving Cloudflare settings:', error);
     res.status(500).json({ success: false, message: 'Failed to save Cloudflare settings' });
+  }
+});
+
+// Admin endpoint to manage IP blocking
+app.post('/api/admin/security/clear-blocked-ips', requireAdmin, async (req, res) => {
+  try {
+    const { ip } = req.body;
+    
+    if (ip) {
+      // Clear specific IP
+      suspiciousIPs.delete(ip);
+      rateLimitStore.delete(ip);
+      res.json({ success: true, message: `IP ${ip} has been unblocked` });
+    } else {
+      // Clear all blocked IPs
+      suspiciousIPs.clear();
+      rateLimitStore.clear();
+      res.json({ success: true, message: 'All blocked IPs have been cleared' });
+    }
+  } catch (error) {
+    console.error('Error clearing blocked IPs:', error);
+    res.status(500).json({ success: false, message: 'Failed to clear blocked IPs' });
+  }
+});
+
+// Admin endpoint to view current security status
+app.get('/api/admin/security/status', requireAdmin, async (req, res) => {
+  try {
+    const blockedIPs = Array.from(suspiciousIPs.entries()).map(([ip, data]) => ({
+      ip,
+      blockedUntil: new Date(data.blockedUntil).toISOString(),
+      remainingTime: Math.max(0, data.blockedUntil - Date.now())
+    }));
+    
+    const rateLimitedIPs = Array.from(rateLimitStore.entries()).map(([ip, data]) => ({
+      ip,
+      count: data.count,
+      violations: data.violations || 0,
+      resetTime: new Date(data.resetTime).toISOString()
+    }));
+    
+    res.json({
+      success: true,
+      blockedIPs,
+      rateLimitedIPs,
+      whitelistedIPs: Array.from(whitelistedIPs)
+    });
+  } catch (error) {
+    console.error('Error getting security status:', error);
+    res.status(500).json({ success: false, message: 'Failed to get security status' });
   }
 });
 
