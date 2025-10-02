@@ -1,7 +1,6 @@
 // WhatsApp Floating Widget
 class WhatsAppWidget {
     constructor() {
-        console.log('WhatsApp Widget: Constructor called');
         this.whatsappNumber = '';
         this.isEnabled = false;
         this.defaultMessage = 'Hello! I\'m interested in your moving services.';
@@ -9,57 +8,43 @@ class WhatsAppWidget {
     }
 
     async init() {
-        console.log('WhatsApp Widget: Initializing...');
         await this.loadSettings();
-        console.log('WhatsApp Widget: Settings loaded. Enabled:', this.isEnabled, 'Number:', this.whatsappNumber);
         if (this.isEnabled && this.whatsappNumber) {
-            console.log('WhatsApp Widget: Creating widget...');
             this.createWidget();
             this.addEventListeners();
-        } else {
-            console.log('WhatsApp Widget: Widget not created - not enabled or no number');
         }
     }
 
     async loadSettings() {
-        console.log('WhatsApp Widget: Loading settings...');
-        
-        // Use fallback configuration directly for now (API requires authentication)
-        console.log('WhatsApp Widget: Using fallback configuration');
+        // Use fallback configuration as primary (API requires authentication)
         // TODO: Replace with your actual WhatsApp Business number (include country code)
         // Example: '+1234567890' for US number or '+447123456789' for UK number
         this.whatsappNumber = '+15551234567'; // CHANGE THIS TO YOUR WHATSAPP NUMBER
         this.isEnabled = true;
         this.defaultMessage = 'Hello! I\'m interested in your moving services. Can you help me?';
-        console.log('WhatsApp Widget: Fallback applied - Number:', this.whatsappNumber, 'Enabled:', this.isEnabled);
         
         // Optionally try to load from API (but don't depend on it)
         try {
             const response = await fetch('/api/admin/whatsapp-settings');
             if (response.ok) {
                 const data = await response.json();
-                console.log('WhatsApp Widget: API response:', data);
                 
                 // Only override if API has valid settings
                 if (data.whatsapp_number && data.is_enabled) {
                     this.whatsappNumber = data.whatsapp_number;
                     this.isEnabled = data.is_enabled;
                     this.defaultMessage = data.default_message || this.defaultMessage;
-                    console.log('WhatsApp Widget: Settings updated from API - Number:', this.whatsappNumber, 'Enabled:', this.isEnabled);
                 }
             }
         } catch (error) {
-            console.log('WhatsApp Widget: API not available, using fallback:', error.message);
+            // Silently fall back to default configuration
         }
     }
 
     createWidget() {
-        console.log('WhatsApp Widget: Creating widget DOM element...');
-        
         // Remove existing widget if it exists
         const existingWidget = document.getElementById('whatsapp-widget');
         if (existingWidget) {
-            console.log('WhatsApp Widget: Removing existing widget');
             existingWidget.remove();
         }
         
@@ -85,8 +70,6 @@ class WhatsAppWidget {
         
         // Append to body
         document.body.appendChild(widget);
-        console.log('WhatsApp Widget: Widget added to DOM. Element:', widget);
-        console.log('WhatsApp Widget: Widget position in DOM:', document.getElementById('whatsapp-widget'));
     }
 
     addStyles() {
@@ -120,10 +103,6 @@ class WhatsAppWidget {
                 font-weight: 500;
                 max-width: 200px;
                 animation: pulse 2s infinite;
-                /* Temporary visibility test */
-                border: 3px solid red !important;
-                min-width: 150px;
-                min-height: 50px;
             }
 
             .whatsapp-button:hover {
@@ -181,14 +160,14 @@ class WhatsAppWidget {
                     box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
                 }
                 50% {
-                    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.8);
+                    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.6), 0 0 0 10px rgba(37, 211, 102, 0.1);
                 }
                 100% {
                     box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
                 }
             }
 
-            /* Mobile responsive */
+            /* Mobile responsiveness */
             @media (max-width: 768px) {
                 .whatsapp-widget {
                     bottom: 15px;
@@ -206,17 +185,25 @@ class WhatsAppWidget {
                 
                 .whatsapp-button {
                     border-radius: 50%;
-                    width: 50px;
-                    height: 50px;
-                    padding: 0;
-                    justify-content: center;
+                    padding: 12px;
                 }
             }
 
-            /* Hide on very small screens */
-            @media (max-width: 480px) {
+            /* Accessibility */
+            .whatsapp-button:focus {
+                outline: 2px solid #fff;
+                outline-offset: 2px;
+            }
+
+            /* Reduced motion for users who prefer it */
+            @media (prefers-reduced-motion: reduce) {
+                .whatsapp-button {
+                    animation: none;
+                }
+                
+                .whatsapp-button,
                 .whatsapp-tooltip {
-                    display: none;
+                    transition: none;
                 }
             }
         `;
@@ -228,70 +215,66 @@ class WhatsAppWidget {
         const button = document.getElementById('whatsapp-button');
         if (button) {
             button.addEventListener('click', () => this.openWhatsApp());
+            
+            // Add keyboard support for accessibility
+            button.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.openWhatsApp();
+                }
+            });
+            
+            // Make button focusable
+            button.setAttribute('tabindex', '0');
+            button.setAttribute('role', 'button');
+            button.setAttribute('aria-label', 'Open WhatsApp chat');
         }
     }
 
     openWhatsApp() {
-        if (!this.whatsappNumber) {
-            console.error('WhatsApp number not configured');
-            return;
-        }
-
-        // Clean the phone number (remove spaces, dashes, etc.)
-        const cleanNumber = this.whatsappNumber.replace(/[^\d+]/g, '');
-        
-        // Create WhatsApp URL
-        const message = encodeURIComponent(this.defaultMessage);
-        const whatsappUrl = `https://wa.me/${cleanNumber}?text=${message}`;
-        
-        // Open WhatsApp
-        window.open(whatsappUrl, '_blank');
-        
-        // Track analytics if available
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'whatsapp_click', {
-                event_category: 'engagement',
-                event_label: 'whatsapp_widget'
-            });
-        }
+        const encodedMessage = encodeURIComponent(this.defaultMessage);
+        const whatsappUrl = `https://wa.me/${this.whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     }
 
-    // Method to update settings dynamically
-    updateSettings(settings) {
-        this.whatsappNumber = settings.whatsapp_number || this.whatsappNumber;
-        this.isEnabled = settings.is_enabled !== undefined ? settings.is_enabled : this.isEnabled;
-        this.defaultMessage = settings.default_message || this.defaultMessage;
-        
-        // Recreate widget if needed
-        const existingWidget = document.getElementById('whatsapp-widget');
-        if (existingWidget) {
-            existingWidget.remove();
-        }
-        
-        if (this.isEnabled && this.whatsappNumber) {
-            this.createWidget();
-            this.addEventListeners();
-        }
-    }
-
-    // Method to hide/show widget
-    toggle(show) {
+    // Public methods for dynamic control
+    show() {
         const widget = document.getElementById('whatsapp-widget');
         if (widget) {
-            widget.style.display = show ? 'block' : 'none';
+            widget.style.display = 'block';
         }
+    }
+
+    hide() {
+        const widget = document.getElementById('whatsapp-widget');
+        if (widget) {
+            widget.style.display = 'none';
+        }
+    }
+
+    updateNumber(newNumber) {
+        this.whatsappNumber = newNumber;
+    }
+
+    updateMessage(newMessage) {
+        this.defaultMessage = newMessage;
+    }
+
+    destroy() {
+        const widget = document.getElementById('whatsapp-widget');
+        const styles = document.getElementById('whatsapp-widget-styles');
+        
+        if (widget) widget.remove();
+        if (styles) styles.remove();
     }
 }
 
-// Initialize WhatsApp widget when DOM is loaded
-console.log('WhatsApp Widget: Script loaded, document ready state:', document.readyState);
+// Initialize the widget when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        console.log('WhatsApp Widget: DOM loaded, initializing widget');
         window.whatsappWidget = new WhatsAppWidget();
     });
 } else {
-    console.log('WhatsApp Widget: DOM already loaded, initializing widget immediately');
     window.whatsappWidget = new WhatsAppWidget();
 }
 
