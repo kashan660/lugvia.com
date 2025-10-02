@@ -1,6 +1,7 @@
 // WhatsApp Floating Widget
 class WhatsAppWidget {
     constructor() {
+        console.log('WhatsApp Widget: Constructor called');
         this.whatsappNumber = '';
         this.isEnabled = false;
         this.defaultMessage = 'Hello! I\'m interested in your moving services.';
@@ -8,33 +9,43 @@ class WhatsAppWidget {
     }
 
     async init() {
+        console.log('WhatsApp Widget: Initializing...');
         await this.loadSettings();
+        console.log('WhatsApp Widget: Settings loaded. Enabled:', this.isEnabled, 'Number:', this.whatsappNumber);
         if (this.isEnabled && this.whatsappNumber) {
+            console.log('WhatsApp Widget: Creating widget...');
             this.createWidget();
             this.addEventListeners();
+        } else {
+            console.log('WhatsApp Widget: Widget not created - not enabled or no number');
         }
     }
 
     async loadSettings() {
+        console.log('WhatsApp Widget: Loading settings from API...');
         try {
             const response = await fetch('/api/admin/whatsapp-settings');
             if (response.ok) {
                 const data = await response.json();
+                console.log('WhatsApp Widget: API response:', data);
                 this.whatsappNumber = data.whatsapp_number || '';
                 this.isEnabled = data.is_enabled || false;
                 this.defaultMessage = data.default_message || this.defaultMessage;
+                console.log('WhatsApp Widget: Settings from API - Number:', this.whatsappNumber, 'Enabled:', this.isEnabled);
             }
         } catch (error) {
-            console.log('WhatsApp settings not configured yet');
+            console.log('WhatsApp Widget: API error, using fallback:', error);
         }
         
         // Fallback configuration if not set via admin panel
         if (!this.whatsappNumber || !this.isEnabled) {
+            console.log('WhatsApp Widget: Using fallback configuration');
             // TODO: Replace with your actual WhatsApp Business number (include country code)
             // Example: '+1234567890' for US number or '+447123456789' for UK number
             this.whatsappNumber = '+15551234567'; // CHANGE THIS TO YOUR WHATSAPP NUMBER
             this.isEnabled = true;
             this.defaultMessage = 'Hello! I\'m interested in your moving services. Can you help me?';
+            console.log('WhatsApp Widget: Fallback applied - Number:', this.whatsappNumber, 'Enabled:', this.isEnabled);
         }
     }
 
@@ -254,11 +265,14 @@ class WhatsAppWidget {
 }
 
 // Initialize WhatsApp widget when DOM is loaded
+console.log('WhatsApp Widget: Script loaded, document ready state:', document.readyState);
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
+        console.log('WhatsApp Widget: DOM loaded, initializing widget');
         window.whatsappWidget = new WhatsAppWidget();
     });
 } else {
+    console.log('WhatsApp Widget: DOM already loaded, initializing widget immediately');
     window.whatsappWidget = new WhatsAppWidget();
 }
 
