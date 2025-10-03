@@ -1929,6 +1929,214 @@ function togglePasswordVisibility(fieldId) {
     }
 }
 
+// Navigation functionality
+function initNavigation() {
+    // Get all navigation links
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.admin-section');
+    
+    // Add click event listeners to navigation links
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get the target section from data-section attribute
+            const targetSection = this.getAttribute('data-section');
+            
+            // Remove active class from all links and sections
+            navLinks.forEach(navLink => navLink.classList.remove('active'));
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Add active class to clicked link
+            this.classList.add('active');
+            
+            // Show target section
+            const targetElement = document.getElementById(targetSection);
+            if (targetElement) {
+                targetElement.classList.add('active');
+                
+                // Render content for specific sections
+                if (window.adminPanel) {
+                    switch(targetSection) {
+                        case 'blogs':
+                            adminPanel.renderBlogs();
+                            break;
+                        case 'services':
+                            adminPanel.renderServices();
+                            break;
+                        case 'quotes':
+                            adminPanel.renderQuotes();
+                            break;
+                        case 'customers':
+                            adminPanel.renderCustomers();
+                            break;
+                        case 'tickets':
+                            adminPanel.renderTickets();
+                            break;
+                        case 'pricing':
+                            adminPanel.renderPricing();
+                            break;
+                        case 'newsletter':
+                            adminPanel.renderNewsletter();
+                            adminPanel.updateNewsletterStats();
+                            break;
+                        case 'notifications':
+                            adminPanel.renderNotifications();
+                            adminPanel.updateNotificationStats();
+                            break;
+                    }
+                }
+            }
+        });
+    });
+}
+
+// Initialize admin panel and navigation when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the admin panel
+    window.adminPanel = new AdminPanel();
+    
+    // Initialize navigation
+    initNavigation();
+    
+    // Initialize button event listeners
+    initButtonListeners();
+    
+    // Load initial data for dashboard
+    adminPanel.renderBlogs();
+    adminPanel.renderServices();
+    adminPanel.renderQuotes();
+    adminPanel.renderCustomers();
+    adminPanel.renderTickets();
+    adminPanel.renderPricing();
+});
+
+// Initialize button event listeners
+function initButtonListeners() {
+    // Logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+    }
+    
+    // Add blog button
+    const addBlogBtn = document.querySelector('[onclick="showAddBlogModal()"]');
+    if (addBlogBtn) {
+        addBlogBtn.removeAttribute('onclick');
+        addBlogBtn.addEventListener('click', showAddBlogModal);
+    }
+    
+    // Add service button
+    const addServiceBtn = document.querySelector('[onclick="showAddServiceModal()"]');
+    if (addServiceBtn) {
+        addServiceBtn.removeAttribute('onclick');
+        addServiceBtn.addEventListener('click', showAddServiceModal);
+    }
+    
+    // Add customer button
+    const addCustomerBtn = document.querySelector('[onclick="showAddCustomerModal()"]');
+    if (addCustomerBtn) {
+        addCustomerBtn.removeAttribute('onclick');
+        addCustomerBtn.addEventListener('click', showAddCustomerModal);
+    }
+    
+    // Add pricing button
+    const addPricingBtn = document.querySelector('[onclick="showAddPricingModal()"]');
+    if (addPricingBtn) {
+        addPricingBtn.removeAttribute('onclick');
+        addPricingBtn.addEventListener('click', showAddPricingModal);
+    }
+    
+    // Send newsletter button
+    const sendNewsletterBtn = document.querySelector('[onclick="showSendNewsletterModal()"]');
+    if (sendNewsletterBtn) {
+        sendNewsletterBtn.removeAttribute('onclick');
+        sendNewsletterBtn.addEventListener('click', showSendNewsletterModal);
+    }
+    
+    // Send notification button
+    const sendNotificationBtn = document.querySelector('[onclick="showSendNotificationModal()"]');
+    if (sendNotificationBtn) {
+        sendNotificationBtn.removeAttribute('onclick');
+        sendNotificationBtn.addEventListener('click', showSendNotificationModal);
+    }
+    
+    // Generate sitemap button
+    const generateSitemapBtn = document.querySelector('[onclick="generateSitemap()"]');
+    if (generateSitemapBtn) {
+        generateSitemapBtn.removeAttribute('onclick');
+        generateSitemapBtn.addEventListener('click', generateSitemap);
+    }
+    
+    // Submit to Google button
+    const submitGoogleBtn = document.querySelector('[onclick="submitToGoogle()"]');
+    if (submitGoogleBtn) {
+        submitGoogleBtn.removeAttribute('onclick');
+        submitGoogleBtn.addEventListener('click', submitToGoogle);
+    }
+    
+    // Modal close buttons
+    document.querySelectorAll('.close-modal').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            if (modal) {
+                closeModal(modal.id);
+            }
+        });
+    });
+    
+    // Form submit handlers
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Handle form submissions based on form ID or class
+            const formId = this.id;
+            if (formId) {
+                handleFormSubmit(formId, this);
+            }
+        });
+    });
+}
+
+// Handle form submissions
+function handleFormSubmit(formId, form) {
+    switch(formId) {
+        case 'whatsapp-settings-form':
+            adminPanel.saveWhatsAppSettings();
+            break;
+        case 'analytics-settings-form':
+            adminPanel.saveAnalyticsSettings();
+            break;
+        case 'meta-tags-form':
+            adminPanel.saveMetaTags();
+            break;
+        case 'search-console-form':
+            adminPanel.saveSearchConsoleSettings();
+            break;
+        case 'captcha-settings-form':
+            adminPanel.saveCaptchaSettings();
+            break;
+        case 'login-security-form':
+            adminPanel.saveLoginSecuritySettings();
+            break;
+        case 'cloudflare-settings-form':
+            adminPanel.saveCloudflareSettings();
+            break;
+        case 'bin-api-settings-form':
+            adminPanel.saveBinApiSettings();
+            break;
+        case 'smtp-settings-form':
+            adminPanel.saveSmtpSettings();
+            break;
+        case 'change-password-form':
+            adminPanel.changePassword();
+            break;
+        default:
+            console.log('Unhandled form submission:', formId);
+    }
+}
+
 // Firebase Auth-aware fetch wrapper for admin panel
 (function() {
     // Store the original fetch function

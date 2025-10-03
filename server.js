@@ -7,6 +7,9 @@ const EmailService = require('./email-service');
 const authRoutes = require('./auth-routes');
 const adminRoutes = require('./admin-routes');
 const AuthService = require('./auth-service');
+const SearchEngineIndexing = require('./search-engine-indexing');
+const StructuredDataService = require('./structured-data-service');
+const MetaTagsService = require('./meta-tags-service');
 require('dotenv').config();
 
 // Enhanced admin authentication middleware with session management
@@ -61,10 +64,50 @@ const requireAdmin = async (req, res, next) => {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Initialize services
+// Initialize services with error handling
 const db = new Database();
 const emailService = new EmailService();
 const authService = new AuthService();
+
+// Initialize search engine services with error handling
+let searchEngineIndexing, structuredDataService, metaTagsService;
+try {
+    searchEngineIndexing = new SearchEngineIndexing();
+    structuredDataService = new StructuredDataService();
+    metaTagsService = new MetaTagsService();
+    console.log('Search engine indexing services initialized successfully');
+} catch (error) {
+    console.warn('Search engine indexing services failed to initialize:', error.message);
+    // Create fallback services that return empty responses
+    searchEngineIndexing = {
+        generateSitemap: () => Promise.resolve({ success: false, error: 'Service unavailable' }),
+        generateSitemapIndex: () => Promise.resolve({ success: false, error: 'Service unavailable' }),
+        submitToAllSearchEngines: () => Promise.resolve({ success: false, error: 'Service unavailable' }),
+        submitUrlToAllSearchEngines: () => Promise.resolve({ success: false, error: 'Service unavailable' }),
+        getGoogleIndexingStatus: () => Promise.resolve({ success: false, error: 'Service unavailable' }),
+        generateRobotsTxt: () => 'User-agent: *\nDisallow: /admin/\nSitemap: https://lugvia.com/sitemap.xml',
+        pingSearchEngines: () => Promise.resolve({ success: false, error: 'Service unavailable' }),
+        submitSitemapToGoogle: () => Promise.resolve({ success: false, error: 'Service unavailable' }),
+        submitSitemapToBing: () => Promise.resolve({ success: false, error: 'Service unavailable' }),
+        submitSitemapToYandex: () => Promise.resolve({ success: false, error: 'Service unavailable' }),
+        submitUrlToGoogle: () => Promise.resolve({ success: false, error: 'Service unavailable' }),
+        submitUrlToBing: () => Promise.resolve({ success: false, error: 'Service unavailable' })
+    };
+    structuredDataService = {
+        generateOrganizationSchema: () => ({}),
+        generateWebsiteSchema: () => ({}),
+        generateServiceSchema: () => ({}),
+        generateBreadcrumbSchema: () => ({}),
+        generateLocalBusinessSchema: () => ({}),
+        toJsonLd: () => ''
+    };
+    metaTagsService = {
+        generateBasicSEO: () => '',
+        generateOpenGraph: () => '',
+        generateTwitterCard: () => '',
+        generateAllMetaTags: () => ''
+    };
+}
 
 // Create authentication middleware
 const authenticateToken = authService.requireAuth();
@@ -246,8 +289,23 @@ app.use('/api/admin', adminRoutes);
 // SEO API Routes
 app.post('/api/admin/generate-sitemap', requireAdmin, async (req, res) => {
   try {
-    const sitemap = await generateSitemap();
-    res.json({ success: true, sitemap });
+    const sitemapResult = await searchEngineIndexing.generateSitemap();
+    const sitemapIndexResult = await searchEngineIndexing.generateSitemapIndex();
+    
+    if (sitemapResult.success === false) {
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Search engine indexing service unavailable',
+        error: sitemapResult.error 
+      });
+    }
+    
+    res.json({ 
+      success: true, 
+      message: 'Sitemap generated successfully',
+      sitemap: sitemapResult,
+      sitemapIndex: sitemapIndexResult
+    });
   } catch (error) {
     console.error('Error generating sitemap:', error);
     res.status(500).json({ success: false, message: 'Failed to generate sitemap' });
@@ -256,9 +314,41 @@ app.post('/api/admin/generate-sitemap', requireAdmin, async (req, res) => {
 
 app.post('/api/admin/submit-sitemap', requireAdmin, async (req, res) => {
   try {
-    // This would integrate with Google Search Console API
-    // For now, return success
-    res.json({ success: true, message: 'Sitemap submitted to Google Search Console' });
+    const { searchEngines } = req.body;
+    const results = {};
+    
+    // Submit to specified search engines
+    if (!searchEngines || searchEngines.includes('google')) {
+      try {
+        await searchEngineIndexing.submitSitemapToGoogle();
+        results.google = { success: true, message: 'Submitted to Google Search Console' };
+      } catch (error) {
+        results.google = { success: false, message: error.message };
+      }
+    }
+    
+    if (!searchEngines || searchEngines.includes('bing')) {
+      try {
+        await searchEngineIndexing.submitSitemapToBing();
+        results.bing = { success: true, message: 'Submitted to Bing Webmaster Tools' };
+      } catch (error) {
+        results.bing = { success: false, message: error.message };
+      }
+    }
+    
+    if (!searchEngines || searchEngines.includes('yandex')) {
+      try {
+        await searchEngineIndexing.submitSitemapToYandex();
+        results.yandex = { success: true, message: 'Submitted to Yandex Webmaster' };
+      } catch (error) {
+        results.yandex = { success: false, message: error.message };
+      }
+    }
+    
+    // Ping search engines about sitemap update
+    await searchEngineIndexing.pingSearchEngines();
+    
+    res.json({ success: true, results, message: 'Sitemap submission completed' });
   } catch (error) {
     console.error('Error submitting sitemap:', error);
     res.status(500).json({ success: false, message: 'Failed to submit sitemap' });
@@ -267,16 +357,119 @@ app.post('/api/admin/submit-sitemap', requireAdmin, async (req, res) => {
 
 app.get('/api/admin/index-status', requireAdmin, async (req, res) => {
   try {
-    // This would check Google Search Console for indexing status
-    const mockData = {
-      indexed: 25,
-      total: 30,
+    const status = await searchEngineIndexing.getGoogleIndexingStatus();
+    res.json({
+      success: true,
+      status,
       lastUpdated: new Date().toISOString()
-    };
-    res.json({ success: true, ...mockData });
+    });
   } catch (error) {
-    console.error('Error checking index status:', error);
-    res.status(500).json({ success: false, message: 'Failed to check index status' });
+    console.error('Error getting index status:', error);
+    res.status(500).json({ success: false, message: 'Failed to get index status' });
+  }
+});
+
+// Submit individual URL for indexing
+app.post('/api/admin/submit-url', requireAdmin, async (req, res) => {
+  try {
+    const { url, searchEngines } = req.body;
+    
+    if (!url) {
+      return res.status(400).json({ success: false, message: 'URL is required' });
+    }
+    
+    const results = {};
+    
+    if (!searchEngines || searchEngines.includes('google')) {
+      try {
+        await searchEngineIndexing.submitURLToGoogle(url);
+        results.google = { success: true, message: 'URL submitted to Google for indexing' };
+      } catch (error) {
+        results.google = { success: false, message: error.message };
+      }
+    }
+    
+    if (!searchEngines || searchEngines.includes('bing')) {
+      try {
+        await searchEngineIndexing.submitURLToBing(url);
+        results.bing = { success: true, message: 'URL submitted to Bing for indexing' };
+      } catch (error) {
+        results.bing = { success: false, message: error.message };
+      }
+    }
+    
+    res.json({ success: true, results, message: 'URL submission completed' });
+  } catch (error) {
+    console.error('Error submitting URL:', error);
+    res.status(500).json({ success: false, message: 'Failed to submit URL' });
+  }
+});
+
+// Generate robots.txt
+app.post('/api/admin/generate-robots', requireAdmin, async (req, res) => {
+  try {
+    const robotsTxt = await searchEngineIndexing.generateRobotsTxt();
+    res.json({ success: true, robotsTxt, message: 'Robots.txt generated successfully' });
+  } catch (error) {
+    console.error('Error generating robots.txt:', error);
+    res.status(500).json({ success: false, message: 'Failed to generate robots.txt' });
+  }
+});
+
+// Generate structured data for a page
+app.post('/api/admin/generate-structured-data', requireAdmin, async (req, res) => {
+  try {
+    const { pageType, data } = req.body;
+    
+    if (!pageType) {
+      return res.status(400).json({ success: false, message: 'Page type is required' });
+    }
+    
+    const schema = structuredDataService.generateSchemaForPage(pageType, data);
+    const jsonLd = structuredDataService.toJsonLdScript(schema);
+    
+    res.json({ 
+      success: true, 
+      schema, 
+      jsonLd,
+      message: 'Structured data generated successfully' 
+    });
+  } catch (error) {
+    console.error('Error generating structured data:', error);
+    res.status(500).json({ success: false, message: 'Failed to generate structured data' });
+  }
+});
+
+// Generate meta tags for a page
+app.post('/api/admin/generate-meta-tags', requireAdmin, async (req, res) => {
+  try {
+    const { pageType, customData } = req.body;
+    
+    if (!pageType) {
+      return res.status(400).json({ success: false, message: 'Page type is required' });
+    }
+    
+    const metaTags = metaTagsService.generateMetaTagsForPage(pageType, customData);
+    
+    res.json({ 
+      success: true, 
+      metaTags,
+      message: 'Meta tags generated successfully' 
+    });
+  } catch (error) {
+    console.error('Error generating meta tags:', error);
+    res.status(500).json({ success: false, message: 'Failed to generate meta tags' });
+  }
+});
+
+// Ping search engines about updates
+app.post('/api/admin/ping-search-engines', requireAdmin, async (req, res) => {
+  try {
+    await searchEngineIndexing.pingSearchEngines();
+    res.json({ success: true, message: 'Search engines pinged successfully' });
+  } catch (error) {
+    console.error('Error pinging search engines:', error);
+    res.status(500).json({ success: false, message: 'Failed to ping search engines' });
   }
 });
 
@@ -499,38 +692,20 @@ app.get('/api/admin/security/status', requireAdmin, async (req, res) => {
   }
 });
 
-// Sitemap generation function
+// Enhanced sitemap generation function
 async function generateSitemap() {
-  const fs = require('fs');
-  const pages = [
-    { url: '/', priority: '1.0', changefreq: 'daily' },
-    { url: '/services', priority: '0.9', changefreq: 'weekly' },
-    { url: '/about', priority: '0.8', changefreq: 'monthly' },
-    { url: '/contact', priority: '0.8', changefreq: 'monthly' },
-    { url: '/quote', priority: '0.9', changefreq: 'weekly' }
-  ];
-  
-  const domain = 'https://lugvia.com';
-  const currentDate = new Date().toISOString().split('T')[0];
-  
-  let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n`;
-  sitemap += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
-  
-  pages.forEach(page => {
-    sitemap += `  <url>\n`;
-    sitemap += `    <loc>${domain}${page.url}</loc>\n`;
-    sitemap += `    <lastmod>${currentDate}</lastmod>\n`;
-    sitemap += `    <changefreq>${page.changefreq}</changefreq>\n`;
-    sitemap += `    <priority>${page.priority}</priority>\n`;
-    sitemap += `  </url>\n`;
-  });
-  
-  sitemap += `</urlset>`;
-  
-  // Write sitemap to file
-  fs.writeFileSync('./sitemap.xml', sitemap);
-  
-  return sitemap;
+  try {
+    // Generate comprehensive sitemap using the SearchEngineIndexing service
+    const sitemap = await searchEngineIndexing.generateXMLSitemap();
+    
+    // Also generate sitemap index
+    await searchEngineIndexing.generateSitemapIndex();
+    
+    return sitemap;
+  } catch (error) {
+    console.error('Error generating sitemap:', error);
+    throw error;
+  }
 }
 
 // API Routes
@@ -701,8 +876,25 @@ app.put('/api/tickets/:id/status', authenticateToken, async (req, res) => {
 });
 
 // Serve static files
+// Serve robots.txt
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(__dirname, 'robots.txt'));
+});
+
+// Serve sitemap files
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml');
+  res.sendFile(path.join(__dirname, 'sitemap.xml'));
+});
+
+app.get('/sitemap-index.xml', (req, res) => {
+  res.type('application/xml');
+  res.sendFile(path.join(__dirname, 'sitemap-index.xml'));
+});
+
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Admin route - redirect to admin login

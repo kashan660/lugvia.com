@@ -1074,36 +1074,54 @@
                 });
 
                 if (!response.ok) {
-                    console.log('Authentication failed, redirecting to login...');
-                    // Not authenticated, redirect to login
-                    window.location.href = '/admin-login.html';
+                    console.log('Authentication failed, showing login prompt...');
+                    // Show login prompt but don't redirect immediately
+                    showLoginPrompt();
                     return false;
                 }
 
                 console.log('Authentication successful');
+                hideLoginPrompt();
                 return true;
             } catch (error) {
                 console.error('Authentication check failed:', error);
-                // On error, redirect to login for security
-                window.location.href = '/admin-login.html';
+                // Show login prompt but allow page to function
+                showLoginPrompt();
                 return false;
+            }
+        }
+
+        function showLoginPrompt() {
+            // Create a login prompt overlay
+            let loginPrompt = document.getElementById('login-prompt');
+            if (!loginPrompt) {
+                loginPrompt = document.createElement('div');
+                loginPrompt.id = 'login-prompt';
+                loginPrompt.innerHTML = `
+                    <div style="position: fixed; top: 0; left: 0; right: 0; background: #f59e0b; color: white; padding: 10px; text-align: center; z-index: 9999;">
+                        <span>⚠️ You are not authenticated. <a href="/admin-login.html" style="color: white; text-decoration: underline;">Click here to login</a></span>
+                        <button onclick="this.parentElement.parentElement.remove()" style="float: right; background: none; border: none; color: white; cursor: pointer;">×</button>
+                    </div>
+                `;
+                document.body.appendChild(loginPrompt);
+            }
+        }
+
+        function hideLoginPrompt() {
+            const loginPrompt = document.getElementById('login-prompt');
+            if (loginPrompt) {
+                loginPrompt.remove();
             }
         }
 
         // Check authentication immediately when page loads
         document.addEventListener('DOMContentLoaded', async function() {
-            // Show loading state
-            document.body.style.opacity = '0.5';
-            document.body.style.pointerEvents = 'none';
+            // Always restore page functionality
+            document.body.style.opacity = '1';
+            document.body.style.pointerEvents = 'auto';
             
-            const isAuthenticated = await checkAdminAuth();
-            
-            if (isAuthenticated) {
-                // Restore page if authenticated
-                document.body.style.opacity = '1';
-                document.body.style.pointerEvents = 'auto';
-            }
-            // If not authenticated, user will be redirected
+            // Check authentication but don't block the page
+            await checkAdminAuth();
         });
 
         // Also check auth on page visibility change (when user returns to tab)
