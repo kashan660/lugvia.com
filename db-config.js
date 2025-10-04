@@ -16,16 +16,22 @@ const dbConfig = {
 
 // Validate required environment variables
 if (!process.env.DB_USER || !process.env.DB_PASSWORD || !process.env.DB_NAME) {
-    console.error('❌ Database credentials not found in environment variables');
-    console.error('❌ Please configure your .env file with DB_USER, DB_PASSWORD, and DB_NAME');
-    process.exit(1);
+    console.warn('⚠️  Database credentials not found in environment variables');
+    console.warn('⚠️  Running in fallback mode without database connection');
+    console.log('📝 To enable database features, configure DB_USER, DB_PASSWORD, and DB_NAME');
 }
 
 // Create connection pool
 let pool;
 
 try {
-    pool = mysql.createPool(dbConfig);
+    // Only create pool if we have the required credentials
+    if (process.env.DB_USER && process.env.DB_PASSWORD && process.env.DB_NAME) {
+        pool = mysql.createPool(dbConfig);
+    } else {
+        console.log('⚠️  Database credentials missing - running in fallback mode');
+        pool = null;
+    }
 } catch (error) {
     console.warn('⚠️  MySQL connection not available, using fallback mode');
     pool = null;
