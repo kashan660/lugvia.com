@@ -84,9 +84,79 @@
                         <a href="index.html#companies" class="nav-link">Partners</a>
                     </li>
                     <li class="nav-item">
+                        <a href="ai-chat.html" class="nav-link">AI Assistant</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="contact.html" class="nav-link">Contact</a>
                     </li>
                 </ul>
+                <!-- Authentication Menu -->
+                <div class="auth-menu" id="authMenu">
+                    <!-- Guest Menu -->
+                    <div class="guest-menu" id="guestMenu">
+                        <a href="login.html" class="auth-btn login-btn">Sign In</a>
+                        <a href="login.html?register=true" class="auth-btn register-btn">Join & Earn</a>   
+                    </div>
+
+                    <!-- User Menu -->
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <div class="user-dropdown">
+                            <button class="user-btn" id="userBtn">
+                                <span class="user-name" id="userName">User</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-content" id="dropdownContent">
+                                <a href="user-dashboard.html" class="dropdown-item">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    Dashboard
+                                </a>
+                                <a href="#" class="dropdown-item" onclick="copyReferralLink()">
+                                    <i class="fas fa-share-alt"></i>
+                                    Share & Earn
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item" onclick="logout()">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Sign Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Authentication Menu -->
+                <div class="auth-menu" id="authMenu">
+                    <!-- Guest Menu -->
+                    <div class="guest-menu" id="guestMenu">
+                        <a href="login.html" class="auth-btn login-btn">Sign In</a>
+                        <a href="login.html?register=true" class="auth-btn register-btn">Join & Earn</a>
+                    </div>
+
+                    <!-- User Menu -->
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <div class="user-dropdown">
+                            <button class="user-btn" id="userBtn">
+                                <span class="user-name" id="userName">User</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-content" id="dropdownContent">
+                                <a href="user-dashboard.html" class="dropdown-item">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    Dashboard
+                                </a>
+                                <a href="#" class="dropdown-item" onclick="copyReferralLink()">
+                                    <i class="fas fa-share-alt"></i>
+                                    Share & Earn
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item" onclick="logout()">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Sign Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="hamburger">
                     <span></span>
                     <span></span>
