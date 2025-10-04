@@ -131,8 +131,177 @@ async function initializeTables() {
                 unsubscribed_at TIMESTAMP NULL
             )
         `);
+
+        // Create admin_users table
+        await connection.execute(`
+            CREATE TABLE IF NOT EXISTS admin_users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                username VARCHAR(100) UNIQUE NOT NULL,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                password_hash VARCHAR(255) NOT NULL,
+                role ENUM('super_admin', 'admin', 'moderator') DEFAULT 'admin',
+                is_active BOOLEAN DEFAULT TRUE,
+                last_login TIMESTAMP NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                INDEX idx_username (username),
+                INDEX idx_email (email)
+            )
+        `);
+
+        // Create users table for customer accounts
+        await connection.execute(`
+            CREATE TABLE IF NOT EXISTS users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                password_hash VARCHAR(255),
+                first_name VARCHAR(100),
+                last_name VARCHAR(100),
+                phone VARCHAR(50),
+                address TEXT,
+                city VARCHAR(100),
+                state VARCHAR(100),
+                zip_code VARCHAR(20),
+                referral_code VARCHAR(50) UNIQUE,
+                referred_by INT,
+                email_verified BOOLEAN DEFAULT FALSE,
+                email_verification_token VARCHAR(255),
+                password_reset_token VARCHAR(255),
+                password_reset_expires TIMESTAMP NULL,
+                is_active BOOLEAN DEFAULT TRUE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                FOREIGN KEY (referred_by) REFERENCES users(id) ON DELETE SET NULL,
+                INDEX idx_email (email),
+                INDEX idx_referral_code (referral_code),
+                INDEX idx_referred_by (referred_by)
+            )
+        `);
+
+        // Create referrals table
+        await connection.execute(`
+            CREATE TABLE IF NOT EXISTS referrals (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                referrer_id INT NOT NULL,
+                referred_id INT NOT NULL,
+                referral_code VARCHAR(50) NOT NULL,
+                status ENUM('pending', 'completed', 'paid') DEFAULT 'pending',
+                commission_amount DECIMAL(10,2) DEFAULT 0.00,
+                commission_rate DECIMAL(5,2) DEFAULT 5.00,
+                quote_id INT,
+                completed_at TIMESTAMP NULL,
+                paid_at TIMESTAMP NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (referrer_id) REFERENCES users(id) ON DELETE CASCADE,
+                FOREIGN KEY (referred_id) REFERENCES users(id) ON DELETE CASCADE,
+                FOREIGN KEY (quote_id) REFERENCES quotes(id) ON DELETE SET NULL,
+                INDEX idx_referrer (referrer_id),
+                INDEX idx_referred (referred_id),
+                INDEX idx_status (status)
+            )
+        `);
+
+        // Create earnings table
+        await connection.execute(`
+            CREATE TABLE IF NOT EXISTS earnings (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                referral_id INT,
+                amount DECIMAL(10,2) NOT NULL,
+                type ENUM('referral_commission', 'bonus', 'adjustment') DEFAULT 'referral_commission',
+                status ENUM('pending', 'approved', 'paid') DEFAULT 'pending',
+                description TEXT,
+                payment_method VARCHAR(100),
+                payment_reference VARCHAR(255),
+                paid_at TIMESTAMP NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                FOREIGN KEY (referral_id) REFERENCES referrals(id) ON DELETE SET NULL,
+                INDEX idx_user_id (user_id),
+                INDEX idx_status (status),
+                INDEX idx_type (type)
+            )
+        `);
+
+        // Create user_sessions table
+        await connection.execute(`
+            CREATE TABLE IF NOT EXISTS user_sessions (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                session_token VARCHAR(255) UNIQUE NOT NULL,
+                user_agent TEXT,
+                ip_address VARCHAR(45),
+                expires_at TIMESTAMP NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                INDEX idx_session_token (session_token),
+                INDEX idx_user_id (user_id),
+                INDEX idx_expires_at (expires_at)
+            )
+        `);
+
+        // Create audit_log table
+        await connection.execute(`
+            CREATE TABLE IF NOT EXISTS audit_log (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT,
+                admin_id INT,
+                action VARCHAR(100) NOT NULL,
+                table_name VARCHAR(100),
+                record_id INT,
+                old_values JSON,
+                new_values JSON,
+                ip_address VARCHAR(45),
+                user_agent TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+                FOREIGN KEY (admin_id) REFERENCES admin_users(id) ON DELETE SET NULL,
+                INDEX idx_user_id (user_id),
+                INDEX idx_admin_id (admin_id),
+                INDEX idx_action (action),
+                INDEX idx_table_name (table_name),
+                INDEX idx_created_at (created_at)
+            )
+        `);
+
+        // Add referral tracking columns to quotes table if they don't exist
+        try {
+            await connection.execute(`
+                ALTER TABLE quotes 
+                ADD COLUMN IF NOT EXISTS referred_by INT,
+                ADD COLUMN IF NOT EXISTS referral_code VARCHAR(50),
+                ADD FOREIGN KEY (referred_by) REFERENCES users(id) ON DELETE SET NULL
+            `);
+        } catch (error) {
+            // Columns might already exist, ignore error
+            console.log('Note: Referral columns may already exist in quotes table');
+        }
+
+        // Insert default admin user if not exists
+        try {
+            const [adminExists] = await connection.execute(
+                'SELECT id FROM admin_users WHERE username = ? LIMIT 1',
+                ['admin']
+            );
+            
+            if (adminExists.length === 0) {
+                // Default password: admin123 (should be changed immediately)
+                const bcrypt = require('bcrypt');
+                const defaultPassword = await bcrypt.hash('admin123', 12);
+                
+                await connection.execute(`
+                    INSERT INTO admin_users (username, email, password_hash, role) 
+                    VALUES (?, ?, ?, ?)
+                `, ['admin', 'admin@lugvia.com', defaultPassword, 'super_admin']);
+                
+                console.log('✅ Default admin user created (username: admin, password: admin123)');
+                console.log('⚠️  IMPORTANT: Change the default admin password immediately!');
+            }
+        } catch (error) {
+            console.log('Note: Default admin user creation skipped:', error.message);
+        }
         
-        console.log('✅ Database tables initialized successfully!');
+        console.log('✅ All database tables initialized successfully!');
         connection.release();
         return true;
     } catch (error) {
