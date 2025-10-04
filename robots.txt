@@ -4,6 +4,8 @@ Allow: /
 # Sitemaps
 Sitemap: https://lugvia.com/sitemap.xml
 Sitemap: https://lugvia.com/sitemap-index.xml
+Sitemap: https://lugvia.com/sitemap-services.xml
+Sitemap: https://lugvia.com/sitemap-pages.xml
 
 # Disallow admin areas
 Disallow: /admin/

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">
+  
+  <!-- Support and information pages -->
+  <url>
+    <loc>https://lugvia.com/contact.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <url>
+    <loc>https://lugvia.com/support.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <url>
+    <loc>https://lugvia.com/help-center.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <url>
+    <loc>https://lugvia.com/blog.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <url>
+    <loc>https://lugvia.com/user-dashboard.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <url>
+    <loc>https://lugvia.com/ai-chat.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <!-- Legal pages -->
+  <url>
+    <loc>https://lugvia.com/privacy.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <mobile:mobile/>
+  </url>
+  
+  <url>
+    <loc>https://lugvia.com/terms.html</loc>
+    <lastmod>2024-12-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <mobile:mobile/>
+  </url>
+
+</urlset>
