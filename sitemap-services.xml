@@ -4,7 +4,7 @@
   
   <!-- High-priority service pages -->
   <url>
-    <loc>https://lugvia.com/</loc>
+    <loc>https://www.lugvia.com/</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -12,7 +12,7 @@
   </url>
   
   <url>
-    <loc>https://lugvia.com/local-moving.html</loc>
+    <loc>https://www.lugvia.com/local-moving.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://lugvia.com/long-distance.html</loc>
+    <loc>https://www.lugvia.com/long-distance.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -28,7 +28,7 @@
   </url>
   
   <url>
-    <loc>https://lugvia.com/packing-services.html</loc>
+    <loc>https://www.lugvia.com/packing-services.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -36,7 +36,7 @@
   </url>
   
   <url>
-    <loc>https://lugvia.com/storage.html</loc>
+    <loc>https://www.lugvia.com/storage.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

@@ -5,16 +5,16 @@
   
   <!-- Homepage -->
   <url>
-    <loc>https://lugvia.com/</loc>
+    <loc>https://www.lugvia.com/</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <mobile:mobile/>
   </url>
   
-  <!-- Main Service Pages -->
+  <!-- Service Pages -->
   <url>
-    <loc>https://lugvia.com/local-moving.html</loc>
+    <loc>https://www.lugvia.com/local-moving.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -22,7 +22,7 @@
   </url>
   
   <url>
-    <loc>https://lugvia.com/long-distance.html</loc>
+    <loc>https://www.lugvia.com/long-distance.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -30,7 +30,7 @@
   </url>
   
   <url>
-    <loc>https://lugvia.com/packing-services.html</loc>
+    <loc>https://www.lugvia.com/packing-services.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://lugvia.com/storage.html</loc>
+    <loc>https://www.lugvia.com/storage.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -47,7 +47,7 @@
   
   <!-- Support and Information Pages -->
   <url>
-    <loc>https://lugvia.com/contact.html</loc>
+    <loc>https://www.lugvia.com/contact.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -55,7 +55,7 @@
   </url>
   
   <url>
-    <loc>https://lugvia.com/support.html</loc>
+    <loc>https://www.lugvia.com/support.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -63,7 +63,7 @@
   </url>
   
   <url>
-    <loc>https://lugvia.com/help-center.html</loc>
+    <loc>https://www.lugvia.com/help-center.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -71,7 +71,7 @@
   </url>
   
   <url>
-    <loc>https://lugvia.com/blog.html</loc>
+    <loc>https://www.lugvia.com/blog.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -80,7 +80,7 @@
   
   <!-- Legal Pages -->
   <url>
-    <loc>https://lugvia.com/privacy.html</loc>
+    <loc>https://www.lugvia.com/privacy.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
@@ -88,7 +88,7 @@
   </url>
   
   <url>
-    <loc>https://lugvia.com/terms.html</loc>
+    <loc>https://www.lugvia.com/terms.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
@@ -97,7 +97,7 @@
   
   <!-- User Dashboard -->
   <url>
-    <loc>https://lugvia.com/user-dashboard.html</loc>
+    <loc>https://www.lugvia.com/user-dashboard.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
@@ -106,7 +106,7 @@
   
   <!-- AI Chat Feature -->
   <url>
-    <loc>https://lugvia.com/ai-chat.html</loc>
+    <loc>https://www.lugvia.com/ai-chat.html</loc>
     <lastmod>2024-12-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>

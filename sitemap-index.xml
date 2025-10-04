@@ -3,19 +3,19 @@
   
   <!-- Main sitemap with all pages -->
   <sitemap>
-    <loc>https://lugvia.com/sitemap.xml</loc>
+    <loc>https://www.lugvia.com/sitemap.xml</loc>
     <lastmod>2024-12-30</lastmod>
   </sitemap>
   
   <!-- Service-specific sitemap -->
   <sitemap>
-    <loc>https://lugvia.com/sitemap-services.xml</loc>
+    <loc>https://www.lugvia.com/sitemap-services.xml</loc>
     <lastmod>2024-12-30</lastmod>
   </sitemap>
   
   <!-- Pages sitemap -->
   <sitemap>
-    <loc>https://lugvia.com/sitemap-pages.xml</loc>
+    <loc>https://www.lugvia.com/sitemap-pages.xml</loc>
     <lastmod>2024-12-30</lastmod>
   </sitemap>
 
