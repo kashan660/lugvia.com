@@ -719,47 +719,77 @@ function initializeNewsletter() {
     }
 }
 
-function handleNewsletterSubmit(e) {
+async function handleNewsletterSubmit(e) {
     e.preventDefault();
     const email = document.getElementById('newsletterEmail').value;
-    const messageDiv = document.getElementById('newsletterMessage');
+    const nameField = document.getElementById('newsletterName');
+    const name = nameField ? nameField.value : '';
     
     if (!email || !isValidEmail(email)) {
         showNewsletterMessage('Please enter a valid email address.', 'error');
         return;
     }
     
-    // Simulate API call
-    showNewsletterMessage('Subscribing...', '');
+    // Show loading message
+    showNewsletterMessage('Subscribing...', 'loading');
     
-    setTimeout(() => {
-        // Store subscription locally for demo
-        const subscribers = JSON.parse(localStorage.getItem('newsletterSubscribers') || '[]');
-        if (!subscribers.includes(email)) {
-            subscribers.push({
-                email: email,
-                subscribedAt: new Date().toISOString(),
-                status: 'active'
-            });
-            localStorage.setItem('newsletterSubscribers', JSON.stringify(subscribers));
+    try {
+        const response = await fetch('/api/newsletter/subscribe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email.trim(),
+                name: name.trim()
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.success) {
             showNewsletterMessage('Successfully subscribed! Thank you.', 'success');
             document.getElementById('newsletterEmail').value = '';
+            if (nameField) nameField.value = '';
+            
+            // Track subscription event for analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'newsletter_subscribe', {
+                    'event_category': 'engagement',
+                    'event_label': 'newsletter'
+                });
+            }
         } else {
-            showNewsletterMessage('You are already subscribed!', 'error');
+            if (response.status === 409) {
+                showNewsletterMessage('You are already subscribed!', 'error');
+            } else {
+                showNewsletterMessage(data.error || 'Subscription failed. Please try again.', 'error');
+            }
         }
-    }, 1000);
+    } catch (error) {
+        console.error('Newsletter subscription error:', error);
+        showNewsletterMessage('Network error. Please check your connection and try again.', 'error');
+    }
 }
 
 function showNewsletterMessage(message, type) {
     const messageDiv = document.getElementById('newsletterMessage');
+    if (!messageDiv) return;
+    
     messageDiv.textContent = message;
     messageDiv.className = 'newsletter-message ' + type;
     
+    // Auto-hide success and error messages after 5 seconds
     if (type === 'success' || type === 'error') {
         setTimeout(() => {
             messageDiv.textContent = '';
             messageDiv.className = 'newsletter-message';
-        }, 3000);
+        }, 5000);
+    }
+    
+    // For loading state, add a spinner if available
+    if (type === 'loading') {
+        messageDiv.innerHTML = '<span class="spinner"></span> ' + message;
     }
 }
 

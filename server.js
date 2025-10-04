@@ -818,6 +818,91 @@ app.post('/api/contacts', async (req, res) => {
   }
 });
 
+// Newsletter subscription endpoint
+app.post('/api/newsletter/subscribe', async (req, res) => {
+  try {
+    const { email, name } = req.body;
+    
+    // Validate email
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ error: 'Valid email is required' });
+    }
+    
+    // Get client info
+    const ip_address = req.ip || req.connection.remoteAddress;
+    const user_agent = req.get('User-Agent');
+    
+    // Generate unsubscribe token
+    const unsubscribe_token = require('crypto').randomBytes(32).toString('hex');
+    
+    const subscriberData = {
+      email: email.toLowerCase().trim(),
+      name: name ? name.trim() : null,
+      subscription_source: 'website',
+      ip_address,
+      user_agent,
+      unsubscribe_token
+    };
+    
+    const subscriber = await db.createNewsletterSubscriber(subscriberData);
+    
+    // Send welcome email (optional)
+    try {
+      await emailService.sendNewsletterWelcome(subscriberData);
+    } catch (emailError) {
+      console.error('Welcome email sending failed:', emailError);
+    }
+    
+    res.json({ 
+      success: true, 
+      message: 'Successfully subscribed to newsletter!',
+      subscriber: { id: subscriber.id, email: subscriber.email }
+    });
+  } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(409).json({ error: 'Email already subscribed' });
+    }
+    console.error('Error creating newsletter subscription:', error);
+    res.status(500).json({ error: 'Failed to subscribe to newsletter' });
+  }
+});
+
+// Get newsletter subscribers (admin only)
+app.get('/api/newsletter/subscribers', requireAdmin, async (req, res) => {
+  try {
+    const subscribers = await db.getNewsletterSubscribers();
+    res.json({ success: true, subscribers });
+  } catch (error) {
+    console.error('Error fetching newsletter subscribers:', error);
+    res.status(500).json({ error: 'Failed to fetch subscribers' });
+  }
+});
+
+// Unsubscribe from newsletter
+app.post('/api/newsletter/unsubscribe', async (req, res) => {
+  try {
+    const { token, email } = req.body;
+    
+    if (!token && !email) {
+      return res.status(400).json({ error: 'Token or email is required' });
+    }
+    
+    const result = await db.unsubscribeNewsletter(token, email);
+    
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Subscription not found' });
+    }
+    
+    res.json({ 
+      success: true, 
+      message: 'Successfully unsubscribed from newsletter'
+    });
+  } catch (error) {
+    console.error('Error unsubscribing from newsletter:', error);
+    res.status(500).json({ error: 'Failed to unsubscribe' });
+  }
+});
+
 app.get('/api/analytics', async (req, res) => {
   try {
     const analytics = await db.getAnalytics();

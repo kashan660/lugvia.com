@@ -153,7 +153,21 @@
                         body: JSON.stringify({ username, password })
                     });
                     
-                    const result = await response.json();
+                    // Get the raw response text first to debug JSON parsing issues
+                    const responseText = await response.text();
+                    console.log('Raw response:', responseText);
+                    console.log('Response status:', response.status);
+                    
+                    // Try to parse as JSON
+                    let result;
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch (parseError) {
+                        console.error('JSON parse error:', parseError);
+                        console.error('Response text that failed to parse:', responseText);
+                        this.showError(`Server response error: ${parseError.message}. Raw response: ${responseText.substring(0, 100)}`);
+                        return;
+                    }
                     
                     if (!response.ok || !result.success) {
                         this.showError(result.error || 'Invalid username or password');

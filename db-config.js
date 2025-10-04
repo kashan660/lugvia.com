@@ -2,7 +2,6 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 
 // Secure database configuration using environment variables
-// NEVER hardcode credentials in source code
 const dbConfig = {
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER,
@@ -17,8 +16,9 @@ const dbConfig = {
 
 // Validate required environment variables
 if (!process.env.DB_USER || !process.env.DB_PASSWORD || !process.env.DB_NAME) {
-    console.warn('⚠️  Database credentials not found in environment variables');
-    console.warn('⚠️  Please check your .env file configuration');
+    console.error('❌ Database credentials not found in environment variables');
+    console.error('❌ Please configure your .env file with DB_USER, DB_PASSWORD, and DB_NAME');
+    process.exit(1);
 }
 
 // Create connection pool
@@ -107,6 +107,22 @@ async function initializeTables() {
                 message TEXT,
                 status ENUM('new', 'read', 'replied') DEFAULT 'new',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+        
+        // Create newsletter_subscribers table
+        await connection.execute(`
+            CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                name VARCHAR(255),
+                status ENUM('active', 'unsubscribed') DEFAULT 'active',
+                subscription_source VARCHAR(100) DEFAULT 'website',
+                ip_address VARCHAR(45),
+                user_agent TEXT,
+                unsubscribe_token VARCHAR(255) UNIQUE,
+                subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                unsubscribed_at TIMESTAMP NULL
             )
         `);
         

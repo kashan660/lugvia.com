@@ -57,6 +57,24 @@ CREATE TABLE IF NOT EXISTS contacts (
     INDEX idx_created_at (created_at)
 );
 
+-- Create newsletter_subscribers table
+CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255),
+    status ENUM('active', 'unsubscribed') DEFAULT 'active',
+    subscription_source VARCHAR(100) DEFAULT 'website',
+    ip_address VARCHAR(45),
+    user_agent TEXT,
+    unsubscribe_token VARCHAR(255) UNIQUE,
+    subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    unsubscribed_at TIMESTAMP NULL,
+    INDEX idx_email (email),
+    INDEX idx_status (status),
+    INDEX idx_subscribed_at (subscribed_at),
+    INDEX idx_unsubscribe_token (unsubscribe_token)
+);
+
 -- Create admin users table (for future use)
 CREATE TABLE IF NOT EXISTS admin_users (
     id INT AUTO_INCREMENT PRIMARY KEY,

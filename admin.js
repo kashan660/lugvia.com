@@ -629,13 +629,41 @@ class AdminPanel {
     }
 
     // Newsletter Management
-    renderNewsletter() {
-        this.updateNewsletterStats();
-        this.renderSubscribers();
+    async renderNewsletter() {
+        await this.updateNewsletterStats();
+        await this.renderSubscribers();
     }
 
-    updateNewsletterStats() {
-        const subscribers = this.getSubscribers();
+    async updateNewsletterStats() {
+        try {
+            const response = await fetch('/api/newsletter/subscribers', {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                const subscribers = data.subscribers || [];
+                const activeSubscribers = subscribers.filter(sub => sub.status === 'active');
+                
+                document.getElementById('subscriberCount').textContent = subscribers.length;
+                document.getElementById('activeSubscriberCount').textContent = activeSubscribers.length;
+                document.getElementById('newslettersSent').textContent = this.data.newsletters.length;
+            } else {
+                console.error('Failed to fetch newsletter stats');
+                // Fallback to localStorage for backward compatibility
+                this.updateNewsletterStatsFromLocalStorage();
+            }
+        } catch (error) {
+            console.error('Error fetching newsletter stats:', error);
+            // Fallback to localStorage for backward compatibility
+            this.updateNewsletterStatsFromLocalStorage();
+        }
+    }
+
+    updateNewsletterStatsFromLocalStorage() {
+        const subscribers = this.getSubscribersFromLocalStorage();
         const activeSubscribers = subscribers.filter(sub => sub.status === 'active');
         
         document.getElementById('subscriberCount').textContent = subscribers.length;
@@ -643,15 +671,57 @@ class AdminPanel {
         document.getElementById('newslettersSent').textContent = this.data.newsletters.length;
     }
 
-    renderSubscribers() {
+    async renderSubscribers() {
         const tbody = document.getElementById('subscribersTableBody');
-        const subscribers = this.getSubscribers();
+        
+        try {
+            const response = await fetch('/api/newsletter/subscribers', {
+                headers: {
+                    'Authorization': `Bearer ${this.token}`
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                const subscribers = data.subscribers || [];
+                
+                tbody.innerHTML = subscribers.map(subscriber => `
+                    <tr>
+                        <td>${subscriber.email}</td>
+                        <td>${subscriber.name || 'N/A'}</td>
+                        <td>${new Date(subscriber.subscribed_at).toLocaleDateString()}</td>
+                        <td><span class="status ${subscriber.status}">${subscriber.status}</span></td>
+                        <td>${subscriber.subscription_source || 'website'}</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" onclick="adminPanel.removeSubscriber('${subscriber.email}')">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } else {
+                console.error('Failed to fetch subscribers');
+                // Fallback to localStorage
+                this.renderSubscribersFromLocalStorage();
+            }
+        } catch (error) {
+            console.error('Error fetching subscribers:', error);
+            // Fallback to localStorage
+            this.renderSubscribersFromLocalStorage();
+        }
+    }
+
+    renderSubscribersFromLocalStorage() {
+        const tbody = document.getElementById('subscribersTableBody');
+        const subscribers = this.getSubscribersFromLocalStorage();
         
         tbody.innerHTML = subscribers.map(subscriber => `
             <tr>
                 <td>${subscriber.email}</td>
+                <td>N/A</td>
                 <td>${new Date(subscriber.subscribedDate).toLocaleDateString()}</td>
                 <td><span class="status ${subscriber.status}">${subscriber.status}</span></td>
+                <td>localStorage</td>
                 <td>
                     <button class="btn btn-sm btn-danger" onclick="adminPanel.removeSubscriber('${subscriber.email}')">
                         <i class="fas fa-trash"></i> Remove
@@ -661,18 +731,34 @@ class AdminPanel {
         `).join('');
     }
 
-    getSubscribers() {
+    getSubscribersFromLocalStorage() {
         const stored = localStorage.getItem('lugvia_newsletter_subscribers');
         return stored ? JSON.parse(stored) : [];
     }
 
-    removeSubscriber(email) {
-        const subscribers = this.getSubscribers();
-        const updated = subscribers.filter(sub => sub.email !== email);
-        localStorage.setItem('lugvia_newsletter_subscribers', JSON.stringify(updated));
-        this.renderSubscribers();
-        this.updateNewsletterStats();
-        this.showNotification('Subscriber removed successfully', 'success');
+    async removeSubscriber(email) {
+        try {
+            const response = await fetch('/api/newsletter/unsubscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`
+                },
+                body: JSON.stringify({ email })
+            });
+            
+            if (response.ok) {
+                await this.renderSubscribers();
+                await this.updateNewsletterStats();
+                this.showNotification('Subscriber removed successfully', 'success');
+            } else {
+                const data = await response.json();
+                this.showNotification(data.error || 'Failed to remove subscriber', 'error');
+            }
+        } catch (error) {
+            console.error('Error removing subscriber:', error);
+            this.showNotification('Error removing subscriber', 'error');
+        }
     }
 
     // Notifications Management

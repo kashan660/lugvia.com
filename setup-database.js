@@ -121,6 +121,22 @@ async function initializeTables() {
             )
         \`);
         
+        // Create newsletter_subscribers table
+        await connection.execute(\`
+            CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                name VARCHAR(255),
+                status ENUM('active', 'unsubscribed') DEFAULT 'active',
+                subscription_source VARCHAR(100) DEFAULT 'website',
+                ip_address VARCHAR(45),
+                user_agent TEXT,
+                unsubscribe_token VARCHAR(255) UNIQUE,
+                subscribed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                unsubscribed_at TIMESTAMP NULL
+            )
+        \`);
+        
         console.log('✅ Database tables initialized successfully!');
         connection.release();
         return true;

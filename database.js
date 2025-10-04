@@ -945,6 +945,108 @@ class Database {
             return [];
         }
     }
+
+    // Newsletter subscriber methods
+    async createNewsletterSubscriber(subscriberData) {
+        const sql = `
+            INSERT INTO newsletter_subscribers (email, name, subscription_source, ip_address, user_agent, unsubscribe_token)
+            VALUES (?, ?, ?, ?, ?, ?)
+        `;
+        const params = [
+            subscriberData.email,
+            subscriberData.name,
+            subscriberData.subscription_source || 'website',
+            subscriberData.ip_address,
+            subscriberData.user_agent,
+            subscriberData.unsubscribe_token
+        ];
+        
+        const result = await this.query(sql, params);
+        return { id: result.insertId, ...subscriberData };
+    }
+
+    async getNewsletterSubscribers() {
+        const sql = `
+            SELECT id, email, name, status, subscription_source, subscribed_at, unsubscribed_at
+            FROM newsletter_subscribers 
+            WHERE status = 'active'
+            ORDER BY subscribed_at DESC
+        `;
+        return await this.query(sql);
+    }
+
+    async getAllNewsletterSubscribers() {
+        const sql = `
+            SELECT id, email, name, status, subscription_source, subscribed_at, unsubscribed_at
+            FROM newsletter_subscribers 
+            ORDER BY subscribed_at DESC
+        `;
+        return await this.query(sql);
+    }
+
+    async getNewsletterSubscriberByEmail(email) {
+        const sql = 'SELECT * FROM newsletter_subscribers WHERE email = ?';
+        const subscribers = await this.query(sql, [email]);
+        return subscribers[0] || null;
+    }
+
+    async unsubscribeNewsletter(token, email) {
+        let sql, params;
+        
+        if (token) {
+            sql = `
+                UPDATE newsletter_subscribers 
+                SET status = 'unsubscribed', unsubscribed_at = CURRENT_TIMESTAMP 
+                WHERE unsubscribe_token = ? AND status = 'active'
+            `;
+            params = [token];
+        } else if (email) {
+            sql = `
+                UPDATE newsletter_subscribers 
+                SET status = 'unsubscribed', unsubscribed_at = CURRENT_TIMESTAMP 
+                WHERE email = ? AND status = 'active'
+            `;
+            params = [email];
+        } else {
+            throw new Error('Token or email is required');
+        }
+        
+        const result = await this.query(sql, params);
+        return result;
+    }
+
+    async getNewsletterStats() {
+        const sql = `
+            SELECT 
+                COUNT(*) as total_subscribers,
+                COUNT(CASE WHEN status = 'active' THEN 1 END) as active_subscribers,
+                COUNT(CASE WHEN status = 'unsubscribed' THEN 1 END) as unsubscribed_count,
+                COUNT(CASE WHEN DATE(subscribed_at) = CURDATE() THEN 1 END) as today_subscriptions,
+                COUNT(CASE WHEN DATE(subscribed_at) >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) THEN 1 END) as week_subscriptions,
+                COUNT(CASE WHEN DATE(subscribed_at) >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) THEN 1 END) as month_subscriptions
+            FROM newsletter_subscribers
+        `;
+        const stats = await this.query(sql);
+        return stats[0] || {};
+    }
+
+    async exportNewsletterSubscribers(dateFrom, dateTo) {
+        try {
+            let sql = 'SELECT * FROM newsletter_subscribers';
+            const params = [];
+            
+            if (dateFrom && dateTo) {
+                sql += ' WHERE subscribed_at BETWEEN ? AND ?';
+                params.push(dateFrom, dateTo);
+            }
+            
+            sql += ' ORDER BY subscribed_at DESC';
+            return await this.query(sql, params);
+        } catch (error) {
+            console.error('Export newsletter subscribers error:', error);
+            return [];
+        }
+    }
 }
 
 module.exports = Database;
