@@ -310,12 +310,50 @@ body {
 /* Hero Section */
 .hero {
     background: linear-gradient(135deg, var(--background-light) 0%, #f0f9ff 50%, var(--background-light) 100%);
-    padding: 140px 0 100px;
-    min-height: 100vh;
+    padding: 80px 0 60px;
+    min-height: 70vh;
     display: flex;
     align-items: center;
     position: relative;
     overflow: hidden;
+}
+
+/* Hero Background Slideshow */
+.hero-slideshow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.hero-slide.active {
+    opacity: 0.4;
+}
+
+.hero-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(240, 249, 255, 0.3) 50%, rgba(59, 130, 246, 0.2) 100%);
+    z-index: 1;
 }
 
 .hero::before {
@@ -327,23 +365,24 @@ body {
     bottom: 0;
     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23e5e7eb" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
     opacity: 0.3;
-    z-index: 1;
-}
-
-.hero .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
-    position: relative;
     z-index: 2;
 }
 
+.hero .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+    max-width: 800px;
+    text-align: center;
+}
+
 .hero-title {
-    font-size: 4rem;
+    font-size: 3.2rem;
     font-weight: 800;
     line-height: 1.1;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     color: var(--text-dark);
     background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
     -webkit-background-clip: text;
@@ -352,10 +391,10 @@ body {
 }
 
 .hero-subtitle {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: var(--text-medium);
-    margin-bottom: 2.5rem;
-    line-height: 1.7;
+    margin-bottom: 2rem;
+    line-height: 1.6;
     font-weight: 400;
 }
 
@@ -428,13 +467,13 @@ body {
 
 .hero-main-image {
     width: 100%;
-    max-width: 550px;
-    height: auto;
-    border-radius: 20px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    max-width: 450px;
+    height: 350px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
     transition: all 0.4s ease;
     object-fit: cover;
-    border: 4px solid white;
+    border: 3px solid white;
     position: relative;
 }
 
@@ -464,23 +503,29 @@ body {
 /* Hero Features */
 .hero-features {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     margin: 2.5rem 0;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .feature {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem 1.2rem;
     border-radius: 12px;
     box-shadow: var(--shadow-medium);
     border: 2px solid var(--border-color);
     transition: all 0.3s ease;
     font-weight: 600;
     color: var(--text-dark);
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    justify-content: center;
 }
 
 .feature:hover {
@@ -1584,6 +1629,38 @@ body {
     color: #9ca3af;
 }
 
+/* Footer Logo Section */
+.footer-logo-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.footer-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+/* Mobile responsiveness for footer logo */
+@media (max-width: 768px) {
+    .footer-logo-section {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .footer-logo {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .footer-section h3 {
+        font-size: 1.3rem;
+    }
+}
+
 /* Newsletter Section */
 .newsletter-section p {
     color: #d1d5db;
@@ -2411,13 +2488,40 @@ body {
         display: none;
     }
     
+    .hero {
+        padding: 60px 0 40px;
+        min-height: 60vh;
+    }
+    
     .hero .container {
-        grid-template-columns: 1fr;
-        text-align: center;
+        max-width: 90%;
+        padding: 0 20px;
     }
     
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-features {
+        gap: 1rem;
+        margin: 2rem 0;
+    }
+    
+    .feature {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .feature-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.3rem;
     }
     
     .form-row {
@@ -2481,8 +2585,44 @@ body {
         padding: 0 15px;
     }
     
+    .hero {
+        padding: 50px 0 30px;
+        min-height: 50vh;
+    }
+    
+    .hero .container {
+        max-width: 95%;
+        padding: 0 15px;
+    }
+    
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .hero-features {
+        gap: 0.8rem;
+        margin: 1.5rem 0;
+        flex-direction: column;
+    }
+    
+    .feature {
+        padding: 0.8rem;
+        font-size: 0.85rem;
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+    
+    .feature-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
     }
     
     .calculator-container {

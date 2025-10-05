@@ -1,3 +1,24 @@
+// Hero Background Slideshow
+document.addEventListener('DOMContentLoaded', function() {
+    const slides = document.querySelectorAll('.hero-slide');
+    let currentSlide = 0;
+
+    if (slides.length > 0) {
+        // Initialize first slide as active
+        slides[currentSlide].classList.add('active');
+
+        // Function to switch slides
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        // Auto-rotate every 3 seconds
+        setInterval(nextSlide, 3000);
+    }
+});
+
 // Mobile menu toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
