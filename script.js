@@ -27,7 +27,70 @@ if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
+        
+        // Add or remove auth buttons in mobile menu
+        if (navMenu.classList.contains('active')) {
+            addAuthButtonsToMobileMenu();
+        } else {
+            removeAuthButtonsFromMobileMenu();
+        }
     });
+}
+
+// Function to add auth buttons to mobile menu
+function addAuthButtonsToMobileMenu() {
+    const navMenu = document.querySelector('.nav-menu');
+    const authMenu = document.querySelector('.auth-menu');
+    
+    if (navMenu && authMenu && !navMenu.querySelector('.mobile-auth-buttons')) {
+        const mobileAuthContainer = document.createElement('div');
+        mobileAuthContainer.className = 'mobile-auth-buttons';
+        
+        // Check if user is logged in
+        const guestMenu = authMenu.querySelector('.guest-menu');
+        const userMenu = authMenu.querySelector('.user-menu');
+        
+        if (guestMenu && guestMenu.style.display !== 'none') {
+            // User is not logged in, show login/signup buttons
+            const loginBtn = document.createElement('a');
+            loginBtn.href = '/login';
+            loginBtn.className = 'mobile-auth-btn mobile-login-btn';
+            loginBtn.textContent = 'Sign In';
+            
+            const registerBtn = document.createElement('a');
+            registerBtn.href = '/login?register=true';
+            registerBtn.className = 'mobile-auth-btn mobile-register-btn';
+            registerBtn.textContent = 'Join & Earn';
+            
+            mobileAuthContainer.appendChild(loginBtn);
+            mobileAuthContainer.appendChild(registerBtn);
+        } else if (userMenu && userMenu.style.display !== 'none') {
+            // User is logged in, show user menu options
+            const dashboardBtn = document.createElement('a');
+            dashboardBtn.href = '/user-dashboard';
+            dashboardBtn.className = 'mobile-auth-btn mobile-login-btn';
+            dashboardBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i> Dashboard';
+            
+            const logoutBtn = document.createElement('a');
+            logoutBtn.href = '#';
+            logoutBtn.className = 'mobile-auth-btn mobile-register-btn';
+            logoutBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Sign Out';
+            logoutBtn.onclick = () => logout();
+            
+            mobileAuthContainer.appendChild(dashboardBtn);
+            mobileAuthContainer.appendChild(logoutBtn);
+        }
+        
+        navMenu.appendChild(mobileAuthContainer);
+    }
+}
+
+// Function to remove auth buttons from mobile menu
+function removeAuthButtonsFromMobileMenu() {
+    const mobileAuthButtons = document.querySelector('.mobile-auth-buttons');
+    if (mobileAuthButtons) {
+        mobileAuthButtons.remove();
+    }
 }
 
 // Smooth scrolling for navigation links
@@ -645,6 +708,10 @@ document.addEventListener('DOMContentLoaded', function() {
 const style = document.createElement('style');
 style.textContent = `
     @media (max-width: 768px) {
+        .auth-menu {
+            display: none;
+        }
+        
         .nav-menu.active {
             display: flex;
             position: absolute;
@@ -656,6 +723,56 @@ style.textContent = `
             padding: 1rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             z-index: 1000;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .nav-menu.active .nav-item {
+            margin: 0;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .nav-menu.active .nav-item:last-child {
+            border-bottom: none;
+        }
+        
+        .nav-menu.active .nav-link {
+            display: block;
+            padding: 0.75rem 0;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .nav-menu.active .mobile-auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .nav-menu.active .mobile-auth-btn {
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid;
+        }
+        
+        .nav-menu.active .mobile-login-btn {
+            color: var(--primary-blue);
+            background: transparent;
+            border-color: var(--primary-blue);
+        }
+        
+        .nav-menu.active .mobile-register-btn {
+            color: white;
+            background: linear-gradient(135deg, var(--accent-orange), #ea580c);
+            border-color: transparent;
         }
         
         .hamburger.active span:nth-child(1) {
