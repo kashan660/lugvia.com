@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions - Packers and Movers | Lugvia</title>
+    <meta name="description" content="Get answers to common questions about packers and movers services. Learn about moving costs, packing tips, insurance, and what to expect from professional moving companies.">
+    <meta name="keywords" content="packers and movers FAQ, moving questions, moving company questions, packing services FAQ, moving costs, moving tips, professional movers, moving insurance, relocation questions">
+    <meta name="author" content="Lugvia">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://lugvia.com/faq.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Frequently Asked Questions - Packers and Movers | Lugvia">
+    <meta property="og:description" content="Get answers to common questions about packers and movers services. Learn about moving costs, packing tips, and what to expect.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lugvia.com/faq.html">
+    <meta property="og:image" content="https://lugvia.com/faq-og.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Frequently Asked Questions - Packers and Movers | Lugvia">
+    <meta property="twitter:description" content="Get answers to common questions about packers and movers services.">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- FAQ Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How much do packers and movers cost?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The cost of packers and movers varies based on distance, size of move, and services needed. Local moves typically cost $80-120 per hour for 2-3 movers, while long-distance moves range from $2,500-$5,000. Get free quotes through Lugvia to compare prices from licensed movers."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How far in advance should I book packers and movers?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Book packers and movers at least 4-6 weeks in advance, especially during peak moving season (May-September). For last-minute moves, Lugvia can help you find available movers within 24-48 hours."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What's included in full-service packing?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Full-service packing includes professional packers bringing all supplies, carefully packing all items, labeling boxes, and often unpacking at your new home. This service typically costs $500-$1,500 depending on home size."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are my belongings insured during the move?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, licensed movers provide basic liability coverage (60 cents per pound). For full replacement value protection, purchase additional moving insurance. Lugvia partners with insured, licensed movers for your peace of mind."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What items cannot be moved by packers and movers?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Movers cannot transport hazardous materials like paint, propane, ammunition, chemicals, or perishable food. Plants, pets, and valuable documents should be moved personally. Check with your mover for a complete prohibited items list."
+                }
+            }
+        ]
+    }
+    </script>
+    
+    <style>
+        .faq-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .faq-header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .faq-header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .faq-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .faq-category {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .faq-category h2 {
+            color: #e74c3c;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            background: #fff;
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #2c3e50;
+            transition: background-color 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+        
+        .faq-answer {
+            padding: 1rem;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+            display: none;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #e74c3c;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <img src="logo.svg" alt="Lugvia - Moving Made Simple" class="logo-svg">
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="index.html#calculator" class="nav-link">Get Quote</a></li>
+                    <li class="nav-item"><a href="index.html#services" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="faq.html" class="nav-link active">FAQ</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="faq-container">
+        <div class="faq-header">
+            <h1>Frequently Asked Questions</h1>
+            <p>Get answers to the most common questions about packers and movers services. Can't find what you're looking for? Contact our experts!</p>
+        </div>
+
+        <div class="faq-categories">
+            <div class="faq-category">
+                <h2><i class="fas fa-dollar-sign"></i> Pricing & Costs</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How much do packers and movers cost?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        The cost varies based on several factors:
+                        <ul>
+                            <li><strong>Local moves:</strong> $80-120 per hour for 2-3 movers</li>
+                            <li><strong>Long-distance moves:</strong> $2,500-$5,000 depending on distance and size</li>
+                            <li><strong>Packing services:</strong> $500-$1,500 for full-service packing</li>
+                            <li><strong>Storage:</strong> $50-$300 per month depending on size</li>
+                        </ul>
+                        Get free quotes through Lugvia to compare prices from licensed movers in your area.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What factors affect moving costs?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Several factors influence your moving costs:
+                        <ul>
+                            <li>Distance of the move</li>
+                            <li>Size and weight of belongings</li>
+                            <li>Time of year (peak season costs more)</li>
+                            <li>Additional services (packing, storage, assembly)</li>
+                            <li>Accessibility of pickup and delivery locations</li>
+                            <li>Insurance coverage level</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Are there hidden fees I should know about?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Reputable movers provide transparent pricing. Watch out for:
+                        <ul>
+                            <li>Large deposits required upfront</li>
+                            <li>Estimates significantly lower than others</li>
+                            <li>Charges for stairs, elevators, or long carries</li>
+                            <li>Fuel surcharges or travel time</li>
+                        </ul>
+                        Lugvia partners only with licensed, transparent movers who provide detailed estimates.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-category">
+                <h2><i class="fas fa-calendar-alt"></i> Booking & Scheduling</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How far in advance should I book packers and movers?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Recommended booking timeline:</strong>
+                        <ul>
+                            <li><strong>Peak season (May-September):</strong> 6-8 weeks in advance</li>
+                            <li><strong>Off-peak season:</strong> 4-6 weeks in advance</li>
+                            <li><strong>Last-minute moves:</strong> Lugvia can find movers within 24-48 hours</li>
+                            <li><strong>Holiday periods:</strong> Book 8-10 weeks ahead</li>
+                        </ul>
+                        Early booking ensures better availability and often better rates.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I get same-day moving services?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes! While advance booking is recommended, Lugvia specializes in finding last-minute movers. Same-day services may be available for:
+                        <ul>
+                            <li>Local moves within the same city</li>
+                            <li>Small apartment or studio moves</li>
+                            <li>Emergency relocations</li>
+                        </ul>
+                        Contact us immediately for urgent moving needs - we'll do our best to accommodate you.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What's the best time of year to move?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Best times for lower costs and better availability:</strong>
+                        <ul>
+                            <li><strong>Fall/Winter months:</strong> October through April</li>
+                            <li><strong>Mid-month dates:</strong> Avoid month-end rush</li>
+                            <li><strong>Weekdays:</strong> Tuesday through Thursday</li>
+                        </ul>
+                        <strong>Avoid if possible:</strong> Summer months, weekends, and end/beginning of months when demand is highest.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-category">
+                <h2><i class="fas fa-box"></i> Packing Services</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What's included in full-service packing?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Full-service packing includes:
+                        <ul>
+                            <li>Professional packers bring all supplies</li>
+                            <li>Careful packing of all household items</li>
+                            <li>Special handling for fragile items</li>
+                            <li>Labeling and inventory of all boxes</li>
+                            <li>Unpacking services at destination (optional)</li>
+                            <li>Disposal of packing materials</li>
+                        </ul>
+                        This service saves you time and ensures professional protection of your belongings.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I pack some items myself?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Absolutely! Many customers choose partial packing services:
+                        <ul>
+                            <li><strong>You pack:</strong> Clothes, books, non-fragile items</li>
+                            <li><strong>Professionals pack:</strong> Fragile items, artwork, electronics</li>
+                            <li><strong>Hybrid approach:</strong> Pack bedrooms yourself, let pros handle kitchen and living areas</li>
+                        </ul>
+                        This can save money while ensuring delicate items are professionally protected.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What packing materials do I need?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Essential packing supplies include:
+                        <ul>
+                            <li>Various sized moving boxes</li>
+                            <li>Bubble wrap and packing paper</li>
+                            <li>Packing tape and markers</li>
+                            <li>Wardrobe boxes for clothes</li>
+                            <li>Dish packs for kitchenware</li>
+                            <li>Mattress covers and furniture pads</li>
+                        </ul>
+                        Many movers provide supplies, or you can purchase through Lugvia's recommended suppliers.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-category">
+                <h2><i class="fas fa-shield-alt"></i> Insurance & Protection</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Are my belongings insured during the move?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, licensed movers provide coverage options:
+                        <ul>
+                            <li><strong>Basic liability:</strong> 60 cents per pound (included)</li>
+                            <li><strong>Full replacement value:</strong> Covers actual replacement cost (additional fee)</li>
+                            <li><strong>Third-party insurance:</strong> Additional coverage through insurance companies</li>
+                        </ul>
+                        Lugvia partners only with licensed, insured movers for your peace of mind.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What if my items are damaged during the move?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        If damage occurs:
+                        <ol>
+                            <li>Document damage immediately with photos</li>
+                            <li>Note damage on the delivery receipt</li>
+                            <li>File a claim with the moving company within 9 months</li>
+                            <li>Keep all receipts and documentation</li>
+                        </ol>
+                        Lugvia assists with the claims process and ensures you work with reputable movers who honor their commitments.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How do I verify a moving company is legitimate?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Verify legitimacy by checking:
+                        <ul>
+                            <li>DOT number for interstate moves</li>
+                            <li>State licensing for local moves</li>
+                            <li>Better Business Bureau rating</li>
+                            <li>Online reviews and references</li>
+                            <li>Physical business address</li>
+                            <li>Proper insurance documentation</li>
+                        </ul>
+                        Lugvia pre-screens all partner movers for licensing, insurance, and reputation.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-category">
+                <h2><i class="fas fa-truck"></i> Moving Day</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What items cannot be moved by packers and movers?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Movers cannot transport:
+                        <ul>
+                            <li><strong>Hazardous materials:</strong> Paint, propane, chemicals, ammunition</li>
+                            <li><strong>Perishables:</strong> Food, plants, medications</li>
+                            <li><strong>Valuables:</strong> Jewelry, cash, important documents</li>
+                            <li><strong>Personal items:</strong> Pets, family heirlooms</li>
+                        </ul>
+                        Plan to transport these items personally or make special arrangements.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How long does a typical move take?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Moving timeframes vary by size:
+                        <ul>
+                            <li><strong>Studio/1-bedroom:</strong> 2-4 hours</li>
+                            <li><strong>2-bedroom:</strong> 4-6 hours</li>
+                            <li><strong>3-bedroom:</strong> 6-8 hours</li>
+                            <li><strong>4+ bedroom:</strong> 8-12 hours or multiple days</li>
+                        </ul>
+                        Long-distance moves typically take 1-14 days depending on distance and logistics.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Should I tip my movers?
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Tipping is customary for good service:
+                        <ul>
+                            <li><strong>Local moves:</strong> $20-40 per mover</li>
+                            <li><strong>Long-distance:</strong> $40-80 per mover</li>
+                            <li><strong>Exceptional service:</strong> 10-15% of total cost</li>
+                        </ul>
+                        Tips are typically given in cash at the end of the move and are greatly appreciated by hardworking crews.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Still Have Questions?</h2>
+            <p>Our moving experts are here to help! Get personalized answers and free quotes from trusted packers and movers in your area.</p>
+            <a href="contact.html" class="cta-button">Contact Our Experts</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Lugvia</h3>
+                    <p>America's premier moving concierge service, connecting you with licensed, professional packers and movers nationwide.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="local-moving.html">Local Moving</a></li>
+                        <li><a href="long-distance.html">Long Distance</a></li>
+                        <li><a href="packing-services.html">Packing Services</a></li>
+                        <li><a href="storage.html">Storage</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="support.html">Support</a></li>
+                        <li><a href="help-center.html">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const answer = faqItem.querySelector('.faq-answer');
+                
+                // Close other open FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('active');
+                        item.querySelector('.faq-answer').classList.remove('active');
+                    }
+                });
+                
+                // Toggle current FAQ
+                faqItem.classList.toggle('active');
+                answer.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

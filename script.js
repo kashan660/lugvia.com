@@ -35,6 +35,30 @@ if (hamburger && navMenu) {
             removeAuthButtonsFromMobileMenu();
         }
     });
+    
+    // Hide mobile menu when clicking navigation links
+    const navLinks = navMenu.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            // Only hide menu on mobile (when hamburger is visible)
+            if (window.getComputedStyle(hamburger).display !== 'none') {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                removeAuthButtonsFromMobileMenu();
+            }
+        });
+    });
+    
+    // Also hide menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+            if (navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                removeAuthButtonsFromMobileMenu();
+            }
+        }
+    });
 }
 
 // Function to add auth buttons to mobile menu
@@ -708,8 +732,9 @@ document.addEventListener('DOMContentLoaded', function() {
 const style = document.createElement('style');
 style.textContent = `
     @media (max-width: 768px) {
-        .auth-menu {
-            display: none;
+        /* Mobile navigation dropdown positioning fix */
+        .navbar {
+            position: relative;
         }
         
         .nav-menu.active {
@@ -724,6 +749,7 @@ style.textContent = `
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             border-top: 1px solid #e5e7eb;
+            margin-top: 0;
         }
         
         .nav-menu.active .nav-item {
@@ -1291,3 +1317,75 @@ window.FIREBASE_CONFIG = {
     return originalFetch(input, newInit);
   };
 })();
+
+// FAQ Accordion Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    initializeFAQ();
+});
+
+function initializeFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        if (question) {
+            question.addEventListener('click', function() {
+                // Close other open FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                item.classList.toggle('active');
+                
+                // Add smooth scroll to FAQ item if it's being opened
+                if (item.classList.contains('active')) {
+                    setTimeout(() => {
+                        const rect = item.getBoundingClientRect();
+                        const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+                        
+                        if (!isVisible) {
+                            item.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center'
+                            });
+                        }
+                    }, 100);
+                }
+            });
+        }
+    });
+    
+    // Add keyboard navigation
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        if (question) {
+            question.setAttribute('tabindex', '0');
+            question.setAttribute('role', 'button');
+            question.setAttribute('aria-expanded', 'false');
+            
+            question.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    question.click();
+                }
+            });
+            
+            // Update aria-expanded when item is toggled
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const isActive = item.classList.contains('active');
+                        question.setAttribute('aria-expanded', isActive.toString());
+                    }
+                });
+            });
+            
+            observer.observe(item, { attributes: true });
+        }
+    });
+}
