@@ -236,9 +236,9 @@ class MetaTagsService {
                 prefetchPages: ['/quote', '/contact']
             },
             about: {
-                title: 'About Lugvia - Your Trusted Moving Partner',
-                description: 'Learn about Lugvia\'s commitment to providing exceptional moving services. Our experienced team ensures safe and efficient relocations.',
-                keywords: 'about lugvia, moving company, professional movers, experienced team, reliable moving services',
+                title: 'About Lugvia - Leading Packers and Movers Service Provider Platform',
+                description: 'Learn about Lugvia\'s mission to connect families with licensed, DOT-registered packers and movers companies nationwide. Trusted platform for professional moving services.',
+                keywords: 'about lugvia, packers and movers platform, DOT registered movers, licensed moving companies, professional packers movers, moving service provider, trusted movers network, packers movers companies',
                 url: '/about',
                 type: 'website',
                 prefetchPages: ['/services', '/contact']

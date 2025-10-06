@@ -760,29 +760,35 @@ class NewsletterPopupManager {
     // Smart Timing Methods
     getSmartDelay() {
         let baseDelay = 15000; // 15 seconds default
-        
+    
+        // Safe fallback for return visitor delay if config not yet initialized
+        const returnVisitorFallback = 8000;
+        const returnVisitorDelay = (this && this.config && typeof this.config.returnVisitorDelay === 'number')
+            ? this.config.returnVisitorDelay
+            : returnVisitorFallback;
+    
         // Faster for return visitors
         if (this.pageViews > 1) {
-            baseDelay = this.config.returnVisitorDelay;
+            baseDelay = returnVisitorDelay;
         }
-        
+    
         // Adjust based on device type
         if (this.deviceType === 'mobile') {
             baseDelay *= 1.2; // 20% longer on mobile
         }
-        
+    
         // Adjust based on time of day
         if (this.isPeakHours()) {
             baseDelay *= 0.8; // 20% faster during peak hours
         }
-        
+    
         // Adjust based on user engagement
         if (this.userEngagement === 'high') {
             baseDelay *= 0.7; // 30% faster for engaged users
         } else if (this.userEngagement === 'low') {
             baseDelay *= 1.5; // 50% slower for less engaged users
         }
-        
+    
         return Math.max(baseDelay, 5000); // Minimum 5 seconds
     }
 

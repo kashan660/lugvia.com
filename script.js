@@ -797,7 +797,7 @@ style.textContent = `
         
         .nav-menu.active .mobile-register-btn {
             color: white;
-            background: linear-gradient(135deg, var(--accent-orange), #ea580c);
+            background: linear-gradient(135deg, #c2410c, #9a3412);
             border-color: transparent;
         }
         

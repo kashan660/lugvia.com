@@ -705,3 +705,24 @@
         padding: 6px 10px;
     }
 }
+@media (max-width: 600px) {
+  /* Keep exit-intent overlay full-screen; scale only the content card */
+  .exit-intent-popup {
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    transform: none !important;
+  }
+  .exit-intent-popup .exit-popup-content {
+    width: 95vw;
+    max-width: 540px;
+    margin: 16px auto;
+    border-radius: 16px;
+    max-height: 72vh;
+    overflow-y: auto;
+  }
+}
+}
