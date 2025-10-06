@@ -1759,8 +1759,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .footer-logo {
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     object-fit: contain;
     filter: brightness(0) invert(1);
 }
@@ -1773,8 +1773,8 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .footer-logo {
-        width: 16px;
-        height: 16px;
+        width: 12px;
+        height: 12px;
     }
     
     .footer-section h3 {
