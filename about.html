@@ -27,41 +27,48 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html">
-                    <img src="logo.svg" alt="Lugvia Packers and Movers" class="logo">
-                </a>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <img src="logo.svg" alt="Lugvia - Moving Made Simple" class="logo-svg">
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="local-moving.html" class="nav-link">Local Moving</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="long-distance.html" class="nav-link">Long Distance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="packing-services.html" class="nav-link">Packing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="storage.html" class="nav-link">Storage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+                
+                <!-- Authentication Menu -->
+                <div class="auth-menu" id="authMenu">
+                    <div class="guest-menu" id="guestMenu">
+                        <a href="/login" class="auth-btn login-btn">Sign In</a>
+                        <a href="/login?register=true" class="auth-btn register-btn">Join & Earn</a>
+                    </div>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#services" class="nav-link">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a href="about.html" class="nav-link active">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="contact.html" class="nav-link">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a href="blog.html" class="nav-link">Blog</a>
-                </li>
-            </ul>
-            <div class="nav-auth">
-                <a href="login.html" class="auth-link">Login</a>
-                <a href="#quote" class="cta-button">Get Quote</a>
-            </div>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <!-- Hero Section -->
     <section class="hero-section about-hero">

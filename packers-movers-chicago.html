@@ -55,21 +55,48 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html">Lugvia</a>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <img src="logo.svg" alt="Lugvia - Moving Made Simple" class="logo-svg">
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="local-moving.html" class="nav-link">Local Moving</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="long-distance.html" class="nav-link">Long Distance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="packing-services.html" class="nav-link">Packing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="storage.html" class="nav-link">Storage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+                
+                <!-- Authentication Menu -->
+                <div class="auth-menu" id="authMenu">
+                    <div class="guest-menu" id="guestMenu">
+                        <a href="/login" class="auth-btn login-btn">Sign In</a>
+                        <a href="/login?register=true" class="auth-btn register-btn">Join & Earn</a>
+                    </div>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
-            <div class="nav-menu">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="local-moving.html" class="nav-link">Local Moving</a>
-                <a href="long-distance.html" class="nav-link">Long Distance</a>
-                <a href="packing-services.html" class="nav-link">Packing</a>
-                <a href="storage.html" class="nav-link">Storage</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-            </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <!-- Hero Section -->
     <section class="hero-section" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 100px 0;">
