@@ -467,12 +467,12 @@ body {
 }
 
 .btn-warning {
-    background: #f59e0b;
+    background: #c2410c;
     color: white;
 }
 
 .btn-warning:hover {
-    background: #d97706;
+    background: #9a3412;
 }
 
 .btn-sm {
@@ -1191,7 +1191,7 @@ body {
 }
 
 .stat-icon.progress {
-    background: linear-gradient(135deg, #f59e0b, #d97706);
+    background: linear-gradient(135deg, #c2410c, #9a3412);
 }
 
 .stat-icon.resolved {
@@ -1297,13 +1297,13 @@ body {
 }
 
 .btn-edit {
-    background: #f59e0b;
+    background: #c2410c;
     color: white;
     border: none;
 }
 
 .btn-edit:hover {
-    background: #d97706;
+    background: #9a3412;
 }
 
 .btn-close {

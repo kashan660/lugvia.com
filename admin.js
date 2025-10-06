@@ -1436,7 +1436,7 @@ class AdminPanel {
                 }
                 .notification-success { background: #10b981; }
                 .notification-error { background: #ef4444; }
-                .notification-warning { background: #f59e0b; }
+                .notification-warning { background: #c2410c; }
                 .notification-info { background: #3b82f6; }
                 .notification-content {
                     display: flex;
