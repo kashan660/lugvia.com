@@ -10,21 +10,26 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "headers": [
     {
-      "src": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|html|xml|txt))$",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000"
-      }
-    },
+      "source": "/(.*\\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|html|xml|txt))$",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/server.js"
+      "source": "/(.*)",
+      "destination": "/server.js"
     }
   ],
   "redirects": [
     {
-      "source": "https://www.lugvia.com/(.*)",
+      "source": "/www.lugvia.com/(.*)",
       "destination": "https://lugvia.com/$1",
       "permanent": true
     }
