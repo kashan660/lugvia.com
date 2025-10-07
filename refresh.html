@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Test - Lugvia</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="mobile-improvements.css">
+    <style>
+        .test-info {
+            background: #f8f9fa;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+        }
+        .test-info h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .test-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .refresh-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .refresh-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <img src="logo.svg" alt="Lugvia Logo" class="logo">
+                <span class="brand-text">Lugvia</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Services</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="local-moving.html" class="dropdown-link">Local Moving</a></li>
+                        <li><a href="long-distance.html" class="dropdown-link">Long Distance</a></li>
+                        <li><a href="packing-services.html" class="dropdown-link">Packing Services</a></li>
+                        <li><a href="storage.html" class="dropdown-link">Storage</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">Locations</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="packers-movers-new-york.html" class="dropdown-link">New York</a></li>
+                        <li><a href="packers-movers-los-angeles.html" class="dropdown-link">Los Angeles</a></li>
+                        <li><a href="packers-movers-chicago.html" class="dropdown-link">Chicago</a></li>
+                        <li><a href="packers-movers-austin.html" class="dropdown-link">Austin</a></li>
+                        <li><a href="packers-movers-charlotte.html" class="dropdown-link">Charlotte</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+            </ul>
+            
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Mobile Navigation Test</h1>
+            <p>Testing mobile improvements with hard refresh</p>
+            
+            <div class="test-info">
+                <h2>🧪 Mobile Test Page</h2>
+                <p><strong>Purpose:</strong> Test mobile navigation improvements</p>
+                <p><strong>Features to Test:</strong></p>
+                <ul style="text-align: left; display: inline-block;">
+                    <li>Hamburger menu toggle</li>
+                    <li>Close button (X) functionality</li>
+                    <li>Dropdown menu clicks</li>
+                    <li>Hero section spacing</li>
+                    <li>Outside click to close</li>
+                </ul>
+                
+                <div style="margin-top: 20px;">
+                    <button class="refresh-btn" onclick="hardRefresh()">🔄 Hard Refresh</button>
+                    <button class="refresh-btn" onclick="clearCache()">🗑️ Clear Cache</button>
+                </div>
+                
+                <p style="margin-top: 15px; font-size: 14px;">
+                    <strong>Cache Buster:</strong> <span id="timestamp"></span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Test Instructions -->
+    <section style="padding: 40px 20px; background: #fff;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2>📱 Mobile Testing Instructions</h2>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h3>1. Test Hamburger Menu</h3>
+                <p>• Tap the hamburger icon (☰) to open mobile menu</p>
+                <p>• Verify the close button (×) appears</p>
+                <p>• Tap close button to close menu</p>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h3>2. Test Dropdown Menus</h3>
+                <p>• Open mobile menu</p>
+                <p>• Tap "Services" or "Locations"</p>
+                <p>• Verify dropdown opens properly</p>
+                <p>• Tap again to close dropdown</p>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h3>3. Test Hero Section</h3>
+                <p>• Verify proper spacing between header and hero content</p>
+                <p>• Header should not overlap the "Mobile Navigation Test" title</p>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h3>4. Test Outside Click</h3>
+                <p>• Open mobile menu</p>
+                <p>• Tap outside the menu area</p>
+                <p>• Menu should close automatically</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // Display current timestamp for cache busting
+        document.getElementById('timestamp').textContent = new Date().toISOString();
+        
+        // Hard refresh function
+        function hardRefresh() {
+            // Clear all caches and reload
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    for (let name of names) {
+                        caches.delete(name);
+                    }
+                });
+            }
+            
+            // Force reload with cache bypass
+            window.location.reload(true);
+        }
+        
+        // Clear cache function
+        function clearCache() {
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    for (let name of names) {
+                        caches.delete(name);
+                    }
+                    alert('Cache cleared! Page will reload.');
+                    window.location.reload(true);
+                });
+            } else {
+                alert('Cache API not supported. Using hard refresh.');
+                window.location.reload(true);
+            }
+        }
+        
+        // Add cache-busting parameters to CSS and JS files
+        document.addEventListener('DOMContentLoaded', function() {
+            const timestamp = Date.now();
+            
+            // Update CSS links
+            const cssLinks = document.querySelectorAll('link[rel="stylesheet"]');
+            cssLinks.forEach(link => {
+                if (!link.href.includes('?')) {
+                    link.href += '?v=' + timestamp;
+                }
+            });
+            
+            // Update script sources
+            const scripts = document.querySelectorAll('script[src]');
+            scripts.forEach(script => {
+                if (!script.src.includes('?')) {
+                    script.src += '?v=' + timestamp;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
