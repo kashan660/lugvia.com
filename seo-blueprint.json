@@ -1,0 +1,198 @@
+{
+    "site_name": "Lugvia.com",
+    "report_title": "Lugvia.com \u2013 USA SEO Domination Blueprint (2025)",
+    "region_focus": "United States",
+    "goal": "Achieve top 3 organic rankings for national and local moving-related searches across Google, Bing, and DuckDuckGo.",
+    "site_audit_summary": {
+        "domain_authority": "Medium (needs backlinks)",
+        "crawl_status": "Active, but interlinking incomplete",
+        "ssl_certificate": true,
+        "mobile_friendly": true,
+        "page_speed": "Moderate (requires optimization)",
+        "indexed_pages_estimate": 15,
+        "sitemap_detected": false,
+        "robots_txt_detected": false
+    },
+    "technical_fixes": [
+        {
+            "task": "Create sitemap.xml and submit to Google Search Console",
+            "priority": "High"
+        },
+        {
+            "task": "Add robots.txt file with crawl rules",
+            "priority": "High"
+        },
+        {
+            "task": "Implement structured schema (LocalBusiness, Service, Organization)",
+            "priority": "High"
+        },
+        {
+            "task": "Compress all hero images to WebP",
+            "priority": "Medium"
+        },
+        {
+            "task": "Enable browser caching and minify JS/CSS",
+            "priority": "Medium"
+        },
+        {
+            "task": "Implement canonical URLs to prevent duplicates",
+            "priority": "Medium"
+        },
+        {
+            "task": "Add GA4 tracking and Search Console verification",
+            "priority": "Low"
+        }
+    ],
+    "on_page_issues": [
+        {
+            "page": "/",
+            "issue": "Missing strong meta description",
+            "fix": "Add 150\u2013160 character summary including 'packers and movers USA'"
+        },
+        {
+            "page": "/services",
+            "issue": "No internal links to sub-services",
+            "fix": "Add links to /local-moving, /long-distance, /packing-services"
+        },
+        {
+            "page": "/blog",
+            "issue": "Not linked from homepage",
+            "fix": "Add blog section link in homepage footer and hero"
+        },
+        {
+            "page": "/partners",
+            "issue": "Hidden in nav only",
+            "fix": "Link from footer and Join Partner CTA"
+        },
+        {
+            "page": "/ai-assistant",
+            "issue": "Orphaned page",
+            "fix": "Add CTA 'Ask AI for Moving Help' on homepage"
+        },
+        {
+            "page": "/dashboard",
+            "issue": "Restricted access",
+            "fix": "Link only after login or from join page"
+        }
+    ],
+    "interlinking_map": {
+        "orphan_pages": [
+            "/ai-assistant",
+            "/dashboard",
+            "/signin",
+            "/join"
+        ],
+        "underlinked_pages": [
+            "/blog",
+            "/partners",
+            "/help-center"
+        ],
+        "recommendations": [
+            "Link blog and partners in homepage footer",
+            "Add contextual links to /local-moving, /packing-services within service descriptions",
+            "Cross-link between /get-quote, /services, and /contact"
+        ]
+    },
+    "content_gaps": {
+        "missing_pages": [
+            "/about-us",
+            "/reviews",
+            "/locations",
+            "/movers-near-me",
+            "/moving-checklist"
+        ],
+        "content_recommendations": [
+            "Create /locations page with top 20 US cities (New York, Los Angeles, Houston, Chicago, Miami, etc.)",
+            "Add /movers-near-me page targeting long-tail local search queries",
+            "Develop moving tips blog series to capture informational traffic",
+            "Add customer testimonials under /reviews for credibility and SEO-rich text"
+        ]
+    },
+    "local_seo_tasks": [
+        {
+            "task": "Create and verify Google Business Profile (Lugvia \u2013 Nationwide Movers)",
+            "priority": "High"
+        },
+        {
+            "task": "Add structured address and phone number in footer",
+            "priority": "High"
+        },
+        {
+            "task": "Create city landing pages (e.g., /movers/new-york, /movers/houston)",
+            "priority": "High"
+        },
+        {
+            "task": "Submit NAP citations to Yelp, BBB, Angi, Thumbtack, Nextdoor, MapQuest",
+            "priority": "Medium"
+        },
+        {
+            "task": "Collect Google Reviews with keywords like 'movers in Dallas'",
+            "priority": "High"
+        }
+    ],
+    "keyword_targets": {
+        "transactional": [
+            "packers and movers USA",
+            "moving companies near me",
+            "long distance movers",
+            "local moving services",
+            "packing and storage services"
+        ],
+        "local": [
+            "movers in New York",
+            "movers in Houston",
+            "movers in Chicago",
+            "movers in Dallas",
+            "movers in Los Angeles"
+        ],
+        "informational": [
+            "how to pack for a long distance move",
+            "moving checklist 2025",
+            "how to find affordable movers",
+            "best time to move houses USA"
+        ]
+    },
+    "ai_action_map": [
+        {
+            "action": "Generate optimized meta descriptions for all key pages",
+            "priority": "High"
+        },
+        {
+            "action": "Auto-link underlinked pages based on keyword proximity",
+            "priority": "High"
+        },
+        {
+            "action": "Rewrite hero content using target keywords and CTA",
+            "priority": "Medium"
+        },
+        {
+            "action": "Detect and add missing schema.org JSON-LD",
+            "priority": "High"
+        },
+        {
+            "action": "Create AI-generated blog drafts from keyword_targets.informational",
+            "priority": "Medium"
+        },
+        {
+            "action": "Analyze Core Web Vitals and compress heavy assets",
+            "priority": "High"
+        }
+    ],
+    "90_day_roadmap": {
+        "phase_1_week_1_4": [
+            "Fix sitemap, robots.txt, and technical SEO issues",
+            "Add LocalBusiness schema and GA4 tracking",
+            "Create About Us, Reviews, and Movers Near Me pages"
+        ],
+        "phase_2_week_5_8": [
+            "Publish 2 location-based landing pages weekly",
+            "Add interlinking between blog and services",
+            "Collect 10 Google reviews for each city profile"
+        ],
+        "phase_3_week_9_12": [
+            "Acquire 20 high-quality backlinks (local directories, guest blogs)",
+            "Improve page speed (target < 3 seconds)",
+            "Push keyword-optimized blogs weekly for traffic scaling"
+        ]
+    }
+}

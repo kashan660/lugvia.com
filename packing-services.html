@@ -6,7 +6,7 @@
     <title>Professional Packers and Movers | Packing Services | Lugvia</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Connect with professional packers and movers for expert packing services. Full-service packing, fragile item protection, and unpacking from licensed, DOT-registered packers movers companies.">
+    <meta name="description" content="Professional packing and storage services from expert packers and movers. Full-service packing, fragile item protection, and secure storage from licensed DOT-registered companies.">
     <meta name="keywords" content="professional packers and movers, expert packers movers, packing and unpacking services, fragile item packing, full service packing, moving packing services, professional packers movers, packing services near me, residential packing services, commercial packing services, furniture packing, china packing services, artwork packing, piano packing services, packing supplies, moving boxes, bubble wrap packing, custom crating services, unpacking services, DOT registered packers movers">
     <meta name="author" content="Lugvia">
     <meta name="robots" content="index, follow">
@@ -87,6 +87,86 @@
         }
     }
     </script>
+
+    <!-- LocalBusiness Schema for Packing Services -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": "https://lugvia.com/packing-services.html#localbusiness",
+        "name": "Lugvia Packing and Storage Services",
+        "alternateName": "Professional Packing Services and Storage Solutions",
+        "description": "Professional packing and storage services connecting you with expert packers and movers for secure packing, unpacking, and storage solutions across the United States.",
+        "url": "https://lugvia.com/packing-services.html",
+        "logo": "https://lugvia.com/logo.svg",
+        "telephone": "+1-800-LUGVIA-1",
+        "email": "support@lugvia.com",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "US",
+            "addressRegion": "Nationwide"
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "United States"
+        },
+        "serviceArea": {
+            "@type": "GeoCircle",
+            "geoMidpoint": {
+                "@type": "GeoCoordinates",
+                "latitude": "39.8283",
+                "longitude": "-98.5795"
+            },
+            "geoRadius": "2500000"
+        },
+        "priceRange": "$$$",
+        "currenciesAccepted": "USD",
+        "paymentAccepted": "Cash, Credit Card, Check",
+        "openingHours": "Mo-Su 00:00-23:59",
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Packing and Storage Services",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Professional Packing Services",
+                        "description": "Expert packing services with quality materials and supplies"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Storage Solutions",
+                        "description": "Secure storage units and warehouse storage for short and long-term needs"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Unpacking Services",
+                        "description": "Professional unpacking and setup services at your new location"
+                    }
+                }
+            ]
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.7",
+            "reviewCount": "892",
+            "bestRating": "5",
+            "worstRating": "1"
+        },
+        "sameAs": [
+            "https://www.facebook.com/lugvia",
+            "https://www.twitter.com/lugvia",
+            "https://www.linkedin.com/company/lugvia"
+        ]
+    }
+    </script>
     
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -106,23 +186,46 @@
                     <li class="nav-item">
                         <a href="index.html" class="nav-link">Home</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a href="index.html#services" class="nav-link dropdown-toggle active">
+                            Services
+                            <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="local-moving.html" class="dropdown-link">Local Moving</a>
+                            <a href="long-distance.html" class="dropdown-link">Long Distance</a>
+                            <a href="packing-services.html" class="dropdown-link active">Packing Services</a>
+                            <a href="storage.html" class="dropdown-link">Storage Solutions</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="index.html#services" class="dropdown-link">View All Services</a>
+                        </div>
+                    </li>
                     <li class="nav-item">
                         <a href="index.html#calculator" class="nav-link">Get Quote</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="index.html#services" class="nav-link active">Services</a>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">
+                            Resources
+                            <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="blog.html" class="dropdown-link">Moving Blog</a>
+                            <a href="ai-chat.html" class="dropdown-link">AI Assistant</a>
+                            <a href="help-center.html" class="dropdown-link">Help Center</a>
+                            <a href="moving-checklist.html" class="dropdown-link">Moving Checklist</a>
+                            <a href="reviews.html" class="dropdown-link">Customer Reviews</a>
+                            <a href="locations.html" class="dropdown-link">Service Areas</a>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a href="blog.html" class="nav-link">Blog</a>
+                        <a href="about.html" class="nav-link">About</a>
                     </li>
                     <li class="nav-item">
-                        <a href="index.html#companies" class="nav-link">Partners</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="ai-chat.html" class="nav-link">AI Assistant</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="index.html#contact" class="nav-link">Contact</a>
+                        <a href="contact.html" class="nav-link">Contact</a>
                     </li>
                 </ul>
                 <div class="hamburger">
@@ -133,6 +236,29 @@
             </div>
         </nav>
     </header>
+
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <polyline points="9,22 9,12 15,12 15,22" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                        Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="index.html#services">Services</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Packing Services
+                </li>
+            </ol>
+        </div>
+    </nav>
 
     <main>
         <section class="hero-section service-hero">
@@ -323,6 +449,15 @@
                         <li><a href="long-distance.html">Long Distance</a></li>
                         <li><a href="packing-services.html">Packing Services</a></li>
                         <li><a href="storage.html">Storage</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="reviews.html">Customer Reviews</a></li>
+                        <li><a href="locations.html">Service Locations</a></li>
+                        <li><a href="movers-near-me.html">Find Movers Near Me</a></li>
+                        <li><a href="moving-checklist.html">Moving Checklist</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

@@ -31,13 +31,68 @@ if (hamburger && navMenu) {
         // Add or remove auth buttons in mobile menu
         if (navMenu.classList.contains('active')) {
             addAuthButtonsToMobileMenu();
+            // Reset all dropdowns when opening mobile menu
+            navMenu.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.style.display = 'none';
+            });
+            navMenu.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+                toggle.classList.remove('expanded');
+            });
         } else {
             removeAuthButtonsFromMobileMenu();
         }
     });
     
-    // Hide mobile menu when clicking navigation links
-    const navLinks = navMenu.querySelectorAll('.nav-link');
+    // Handle dropdown toggles using event delegation
+    navMenu.addEventListener('click', (e) => {
+        // Check if clicked element is a dropdown toggle
+        if (e.target.closest('.dropdown-toggle')) {
+            e.preventDefault();
+            
+            const toggle = e.target.closest('.dropdown-toggle');
+            const dropdown = toggle.nextElementSibling;
+            
+            // Check if we're on mobile (hamburger is visible)
+            const isMobile = window.getComputedStyle(hamburger).display !== 'none';
+            
+            console.log('Dropdown clicked:', {
+                isMobile,
+                menuActive: navMenu.classList.contains('active'),
+                toggleText: toggle.textContent.trim(),
+                dropdownExists: !!dropdown,
+                dropdownClass: dropdown?.className
+            });
+            
+            if (isMobile && navMenu.classList.contains('active')) {
+                // Mobile behavior
+                const isCurrentlyOpen = dropdown && dropdown.style.display === 'block';
+                
+                console.log('Mobile dropdown toggle:', {
+                    isCurrentlyOpen,
+                    dropdownDisplay: dropdown?.style.display
+                });
+                
+                // Close all dropdowns first
+                navMenu.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.style.display = 'none';
+                });
+                navMenu.querySelectorAll('.dropdown-toggle').forEach(t => {
+                    t.classList.remove('expanded');
+                });
+                
+                // If this dropdown wasn't open and exists, open it
+                if (!isCurrentlyOpen && dropdown) {
+                    dropdown.style.display = 'block';
+                    toggle.classList.add('expanded');
+                    console.log('Dropdown opened:', dropdown.style.display);
+                }
+            }
+            // On desktop, let CSS hover handle it
+        }
+    });
+    
+    // Hide mobile menu when clicking navigation links (but not dropdown toggles)
+    const navLinks = navMenu.querySelectorAll('.nav-link:not(.dropdown-toggle)');
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             // Only hide menu on mobile (when hamburger is visible)
@@ -45,6 +100,13 @@ if (hamburger && navMenu) {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
                 removeAuthButtonsFromMobileMenu();
+                // Reset all dropdowns
+                navMenu.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.style.display = 'none';
+                });
+                navMenu.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+                    toggle.classList.remove('expanded');
+                });
             }
         });
     });
@@ -56,6 +118,13 @@ if (hamburger && navMenu) {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
                 removeAuthButtonsFromMobileMenu();
+                // Reset all dropdowns
+                navMenu.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.style.display = 'none';
+                });
+                navMenu.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+                    toggle.classList.remove('expanded');
+                });
             }
         }
     });
@@ -768,7 +837,49 @@ style.textContent = `
             color: #374151;
             font-weight: 500;
         }
+
+        .nav-menu.active .dropdown-menu {
+            position: static;
+            display: none;
+            background: #f9fafb;
+            box-shadow: none;
+            border-radius: 0;
+            margin: 0;
+            padding: 0.5rem 0;
+            border-left: 3px solid var(--primary-blue);
+            margin-left: 1rem;
+        }
         
+        .nav-menu.active .dropdown-menu[style*="display: block"] {
+            display: block !important;
+        }
+
+        .nav-menu.active .dropdown-menu .dropdown-link {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            color: #6b7280;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .nav-menu.active .dropdown-menu .dropdown-link:hover {
+            color: var(--primary-blue);
+            background: #e5f3ff;
+            text-align: center;
+        }
+
+        .nav-menu.active .dropdown-toggle::after {
+            content: '▼';
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-menu.active .dropdown-toggle.expanded::after {
+            transform: rotate(180deg);
+        }
+
         .nav-menu.active .mobile-auth-buttons {
             display: flex;
             flex-direction: column;
