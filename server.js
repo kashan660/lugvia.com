@@ -1000,6 +1000,11 @@ app.get('/user-dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, 'user-dashboard.html'));
 });
 
+// Mobile test refresh page
+app.get('/refresh', (req, res) => {
+  res.sendFile(path.join(__dirname, 'refresh.html'));
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Server error:', err);
