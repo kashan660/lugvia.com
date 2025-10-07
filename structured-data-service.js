@@ -204,7 +204,7 @@ class StructuredDataService {
             "@type": "Article",
             "headline": article.title,
             "description": article.description,
-            "image": article.image ? `${this.domain}${article.image}` : `${this.domain}/hero-image.png`,
+            "image": article.image ? `${this.domain}${article.image}` : `${this.domain}/hero-image.webp`,
             "author": {
                 "@type": "Person",
                 "name": article.author || "Lugvia Team"

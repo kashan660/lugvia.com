@@ -105,11 +105,11 @@ class SearchEngineIndexing {
     // Get all pages for sitemap
     async getAllPages() {
         const staticPages = [
-            { url: '/', priority: '1.0', changefreq: 'daily', mobile: true, images: [{ url: '/hero-image.png', title: 'Lugvia Moving Services' }] },
-            { url: '/local-moving.html', priority: '0.9', changefreq: 'weekly', mobile: true, images: [{ url: '/local moving.png', title: 'Local Moving Services' }] },
-            { url: '/long-distance.html', priority: '0.9', changefreq: 'weekly', mobile: true, images: [{ url: '/long distance.png', title: 'Long Distance Moving' }] },
-            { url: '/packing-services.html', priority: '0.9', changefreq: 'weekly', mobile: true, images: [{ url: '/packing.png', title: 'Packing Services' }] },
-            { url: '/storage.html', priority: '0.9', changefreq: 'weekly', mobile: true, images: [{ url: '/storage.png', title: 'Storage Solutions' }] },
+            { url: '/', priority: '1.0', changefreq: 'daily', mobile: true, images: [{ url: '/hero-image.webp', title: 'Lugvia Moving Services' }] },
+            { url: '/local-moving.html', priority: '0.9', changefreq: 'weekly', mobile: true, images: [{ url: '/local moving.webp', title: 'Local Moving Services' }] },
+            { url: '/long-distance.html', priority: '0.9', changefreq: 'weekly', mobile: true, images: [{ url: '/long distance.webp', title: 'Long Distance Moving' }] },
+            { url: '/packing-services.html', priority: '0.9', changefreq: 'weekly', mobile: true, images: [{ url: '/packing.webp', title: 'Packing Services' }] },
+            { url: '/storage.html', priority: '0.9', changefreq: 'weekly', mobile: true, images: [{ url: '/storage.webp', title: 'Storage Solutions' }] },
             { url: '/contact.html', priority: '0.8', changefreq: 'monthly', mobile: true },
             { url: '/blog.html', priority: '0.8', changefreq: 'daily', mobile: true },
             { url: '/help-center.html', priority: '0.7', changefreq: 'weekly', mobile: true },

@@ -12,7 +12,13 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "keywords": ["moving", "logistics", "services", "express", "nodejs"],
+  "keywords": [
+    "moving",
+    "logistics",
+    "services",
+    "express",
+    "nodejs"
+  ],
   "author": "Lugvia Moving Services",
   "license": "MIT",
   "dependencies": {
@@ -25,5 +31,10 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.5",
     "nodemailer": "^7.0.6"
+  },
+  "devDependencies": {
+    "imagemin": "^9.0.1",
+    "imagemin-cli": "^8.0.0",
+    "imagemin-webp": "^8.0.0"
   }
 }

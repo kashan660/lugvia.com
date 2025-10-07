@@ -1,7 +1,7 @@
 class MetaTagsService {
     constructor() {
         this.domain = process.env.DOMAIN || 'https://lugvia.com';
-        this.defaultImage = `${this.domain}/hero-image.png`;
+        this.defaultImage = `${this.domain}/hero-image.webp`;
         this.siteName = 'Lugvia';
         this.defaultDescription = 'Professional moving and relocation services. Get a free quote today for local and long-distance moves.';
         this.twitterHandle = '@lugvia';
