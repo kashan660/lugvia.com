@@ -1,0 +1,329 @@
+/**
+ * Mobile Refresh Utility CSS
+ * Styles for the mobile Ctrl+F5 equivalent functionality
+ */
+
+/* Refresh Button Styles */
+#mobile-refresh-btn {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 50px !important;
+    height: 50px !important;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+    color: white !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 10000 !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    opacity: 0.8 !important;
+    -webkit-tap-highlight-color: transparent !important;
+    user-select: none !important;
+    border: none !important;
+    outline: none !important;
+}
+
+#mobile-refresh-btn:hover {
+    transform: scale(1.1) !important;
+    opacity: 1 !important;
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
+}
+
+#mobile-refresh-btn:active {
+    transform: scale(0.95) !important;
+}
+
+#mobile-refresh-btn svg {
+    width: 24px !important;
+    height: 24px !important;
+    animation: rotate 2s linear infinite paused !important;
+}
+
+#mobile-refresh-btn:hover svg {
+    animation-play-state: running !important;
+}
+
+/* Rotation animation for the refresh icon */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Pulse animation for attention */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+}
+
+#mobile-refresh-btn.pulse {
+    animation: pulse 2s infinite !important;
+}
+
+/* Loading spinner styles */
+.mobile-refresh-loading {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(4px) !important;
+    z-index: 10002 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+}
+
+.mobile-refresh-spinner {
+    width: 40px !important;
+    height: 40px !important;
+    border: 4px solid #e5e7eb !important;
+    border-top: 4px solid #3b82f6 !important;
+    border-radius: 50% !important;
+    animation: spin 1s linear infinite !important;
+    margin-bottom: 16px !important;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.mobile-refresh-text {
+    color: #374151 !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    margin: 0 !important;
+}
+
+/* Confirmation dialog styles */
+.mobile-refresh-confirmation {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: white !important;
+    padding: 24px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    z-index: 10001 !important;
+    text-align: center !important;
+    max-width: 320px !important;
+    width: 90% !important;
+    animation: slideIn 0.3s ease-out !important;
+}
+
+.mobile-refresh-backdrop {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    z-index: 10000 !important;
+    animation: fadeIn 0.3s ease-out !important;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.mobile-refresh-confirmation h3 {
+    margin: 0 0 12px 0 !important;
+    color: #111827 !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+}
+
+.mobile-refresh-confirmation p {
+    margin: 0 0 20px 0 !important;
+    color: #6b7280 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+}
+
+.mobile-refresh-buttons {
+    display: flex !important;
+    gap: 12px !important;
+    justify-content: center !important;
+}
+
+.mobile-refresh-btn-confirm,
+.mobile-refresh-btn-cancel {
+    border: none !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+    min-width: 80px !important;
+}
+
+.mobile-refresh-btn-confirm {
+    background: #3b82f6 !important;
+    color: white !important;
+}
+
+.mobile-refresh-btn-confirm:hover {
+    background: #2563eb !important;
+    transform: translateY(-1px) !important;
+}
+
+.mobile-refresh-btn-cancel {
+    background: #f3f4f6 !important;
+    color: #374151 !important;
+}
+
+.mobile-refresh-btn-cancel:hover {
+    background: #e5e7eb !important;
+}
+
+/* Toast notification styles */
+.mobile-refresh-toast {
+    position: fixed !important;
+    top: 80px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: #111827 !important;
+    color: white !important;
+    padding: 12px 20px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    z-index: 10003 !important;
+    animation: toastSlideIn 0.3s ease-out !important;
+    max-width: 90% !important;
+    text-align: center !important;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+    #mobile-refresh-btn {
+        top: 15px !important;
+        right: 15px !important;
+        width: 48px !important;
+        height: 48px !important;
+    }
+    
+    .mobile-refresh-confirmation {
+        padding: 20px !important;
+        max-width: 280px !important;
+    }
+    
+    .mobile-refresh-confirmation h3 {
+        font-size: 16px !important;
+    }
+    
+    .mobile-refresh-buttons {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    
+    .mobile-refresh-btn-confirm,
+    .mobile-refresh-btn-cancel {
+        width: 100% !important;
+        padding: 14px 20px !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    #mobile-refresh-btn {
+        border: 2px solid white !important;
+    }
+    
+    .mobile-refresh-confirmation {
+        border: 2px solid #374151 !important;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    #mobile-refresh-btn,
+    .mobile-refresh-confirmation,
+    .mobile-refresh-backdrop,
+    .mobile-refresh-toast {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    #mobile-refresh-btn svg {
+        animation: none !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .mobile-refresh-confirmation {
+        background: #1f2937 !important;
+        color: white !important;
+    }
+    
+    .mobile-refresh-confirmation h3 {
+        color: white !important;
+    }
+    
+    .mobile-refresh-confirmation p {
+        color: #d1d5db !important;
+    }
+    
+    .mobile-refresh-btn-cancel {
+        background: #374151 !important;
+        color: #d1d5db !important;
+    }
+    
+    .mobile-refresh-btn-cancel:hover {
+        background: #4b5563 !important;
+    }
+    
+    .mobile-refresh-loading {
+        background: rgba(31, 41, 55, 0.95) !important;
+    }
+    
+    .mobile-refresh-text {
+        color: #f9fafb !important;
+    }
+}
