@@ -31,6 +31,7 @@ if (hamburger && navMenu) {
         // Add or remove auth buttons in mobile menu
         if (navMenu.classList.contains('active')) {
             addAuthButtonsToMobileMenu();
+            addCloseButtonToMobileMenu();
             // Reset all dropdowns when opening mobile menu
             navMenu.querySelectorAll('.dropdown-menu').forEach(menu => {
                 menu.style.display = 'none';
@@ -40,6 +41,7 @@ if (hamburger && navMenu) {
             });
         } else {
             removeAuthButtonsFromMobileMenu();
+            removeCloseButtonFromMobileMenu();
         }
     });
     
@@ -100,6 +102,7 @@ if (hamburger && navMenu) {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
                 removeAuthButtonsFromMobileMenu();
+                removeCloseButtonFromMobileMenu();
                 // Reset all dropdowns
                 navMenu.querySelectorAll('.dropdown-menu').forEach(menu => {
                     menu.style.display = 'none';
@@ -118,6 +121,7 @@ if (hamburger && navMenu) {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
                 removeAuthButtonsFromMobileMenu();
+                removeCloseButtonFromMobileMenu();
                 // Reset all dropdowns
                 navMenu.querySelectorAll('.dropdown-menu').forEach(menu => {
                     menu.style.display = 'none';
@@ -183,6 +187,48 @@ function removeAuthButtonsFromMobileMenu() {
     const mobileAuthButtons = document.querySelector('.mobile-auth-buttons');
     if (mobileAuthButtons) {
         mobileAuthButtons.remove();
+    }
+}
+
+// Function to add close button to mobile menu
+function addCloseButtonToMobileMenu() {
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (navMenu && !navMenu.querySelector('.nav-close')) {
+        const closeButton = document.createElement('button');
+        closeButton.className = 'nav-close';
+        closeButton.setAttribute('aria-label', 'Close navigation menu');
+        closeButton.innerHTML = `
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        `;
+        
+        // Add click event to close the menu
+        closeButton.addEventListener('click', () => {
+            const hamburger = document.querySelector('.hamburger');
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            removeAuthButtonsFromMobileMenu();
+            removeCloseButtonFromMobileMenu();
+            // Reset all dropdowns
+            navMenu.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.style.display = 'none';
+            });
+            navMenu.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+                toggle.classList.remove('expanded');
+            });
+        });
+        
+        navMenu.appendChild(closeButton);
+    }
+}
+
+// Function to remove close button from mobile menu
+function removeCloseButtonFromMobileMenu() {
+    const closeButton = document.querySelector('.nav-close');
+    if (closeButton) {
+        closeButton.remove();
     }
 }
 
