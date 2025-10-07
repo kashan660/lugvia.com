@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="mobile-improvements.css">
     <style>
+        /* Ensure header styles are applied */
+        .header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 1000 !important;
+            background: white !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+        }
+        
         .test-info {
             background: #f8f9fa;
             border: 2px solid #007bff;
@@ -32,9 +43,27 @@
             cursor: pointer;
             font-size: 16px;
             margin: 10px;
+            transition: all 0.3s ease;
         }
         .refresh-btn:hover {
             background: #0056b3;
+            transform: translateY(-2px);
+        }
+        .refresh-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Status indicator */
+        .status-indicator {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            z-index: 1001;
         }
     </style>
 </head>
@@ -79,6 +108,11 @@
             </div>
         </nav>
     </header>
+
+    <!-- Status Indicator -->
+    <div class="status-indicator" id="statusIndicator">
+        ✅ Page Loaded
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -146,37 +180,60 @@
 
     <script src="script.js"></script>
     <script>
+        // Update status indicator
+        function updateStatus(message, color = '#28a745') {
+            const indicator = document.getElementById('statusIndicator');
+            if (indicator) {
+                indicator.textContent = message;
+                indicator.style.background = color;
+            }
+        }
+        
         // Display current timestamp for cache busting
         document.getElementById('timestamp').textContent = new Date().toISOString();
         
         // Hard refresh function
         function hardRefresh() {
+            updateStatus('🔄 Hard Refreshing...', '#007bff');
+            
             // Clear all caches and reload
             if ('caches' in window) {
                 caches.keys().then(function(names) {
                     for (let name of names) {
                         caches.delete(name);
                     }
+                    // Force reload with cache bypass
+                    setTimeout(() => {
+                        window.location.href = window.location.href + '?t=' + Date.now();
+                    }, 500);
                 });
+            } else {
+                // Force reload with cache bypass
+                setTimeout(() => {
+                    window.location.href = window.location.href + '?t=' + Date.now();
+                }, 500);
             }
-            
-            // Force reload with cache bypass
-            window.location.reload(true);
         }
         
         // Clear cache function
         function clearCache() {
+            updateStatus('🗑️ Clearing Cache...', '#ffc107');
+            
             if ('caches' in window) {
                 caches.keys().then(function(names) {
                     for (let name of names) {
                         caches.delete(name);
                     }
-                    alert('Cache cleared! Page will reload.');
-                    window.location.reload(true);
+                    updateStatus('✅ Cache Cleared! Reloading...', '#28a745');
+                    setTimeout(() => {
+                        window.location.href = window.location.href + '?cleared=' + Date.now();
+                    }, 1000);
                 });
             } else {
-                alert('Cache API not supported. Using hard refresh.');
-                window.location.reload(true);
+                updateStatus('⚠️ Cache API not supported. Hard refreshing...', '#ffc107');
+                setTimeout(() => {
+                    window.location.href = window.location.href + '?refresh=' + Date.now();
+                }, 1000);
             }
         }
         
