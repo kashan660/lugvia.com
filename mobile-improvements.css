@@ -153,33 +153,56 @@
         box-shadow: none !important;
         border: none !important;
         border-radius: 0 !important;
-        padding: 0 !important;
+        padding: 8px 0 !important;
         margin: 0 !important;
-        display: none !important;
+        margin-left: 16px !important;
+        margin-top: 8px !important;
+        border-left: 3px solid var(--primary-blue) !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        z-index: 1001 !important;
     }
     
-    .dropdown.active .dropdown-menu {
+    /* Support both JavaScript-controlled display and CSS classes */
+    .dropdown.active .dropdown-menu,
+    .dropdown-menu[style*="display: block"] {
         display: block !important;
     }
     
+    .dropdown-menu .dropdown-link,
     .dropdown-menu .dropdown-item {
-        padding: 12px 40px !important;
+        padding: 12px 20px !important;
         color: #6b7280 !important;
         font-size: 14px !important;
         border-bottom: 1px solid #e5e7eb !important;
         min-height: 44px !important;
         display: flex !important;
         align-items: center !important;
+        text-decoration: none !important;
+        transition: all 0.2s ease !important;
+        -webkit-tap-highlight-color: transparent !important;
     }
     
+    .dropdown-menu .dropdown-link:hover,
+    .dropdown-menu .dropdown-link:focus,
     .dropdown-menu .dropdown-item:hover,
     .dropdown-menu .dropdown-item:focus {
         background: white !important;
         color: var(--primary-blue) !important;
+        transform: translateX(4px) !important;
     }
     
+    .dropdown-menu .dropdown-link:last-child,
     .dropdown-menu .dropdown-item:last-child {
         border-bottom: none !important;
+    }
+    
+    .dropdown-divider {
+        height: 1px !important;
+        background: #e5e7eb !important;
+        margin: 8px 20px !important;
+        border: none !important;
     }
     
     /* Hero Section Mobile Optimizations */
