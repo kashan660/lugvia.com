@@ -202,8 +202,8 @@
     }
     
     /* Support both JavaScript-controlled display and CSS classes */
-    .dropdown.active .dropdown-menu,
-    .dropdown-menu[style*="display: block"] {
+    .nav-menu.active .dropdown.active .dropdown-menu,
+    .nav-menu.active .dropdown-menu[style*="display: block"] {
         display: block !important;
     }
     
@@ -244,7 +244,7 @@
     
     /* Hero Section Mobile Optimizations */
     .hero {
-        padding: 80px 16px 40px 16px !important;
+        padding: 120px 16px 40px 16px !important;
         min-height: 60vh !important;
         text-align: center !important;
         overflow: hidden !important;
